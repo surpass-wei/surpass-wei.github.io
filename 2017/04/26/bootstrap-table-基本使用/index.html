@@ -1,0 +1,802 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="原创,jQuery插件," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Surpass's blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="http://oji4bqzc7.bkt.clouddn.com/blog/20170705/174921309.jpeg?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="前言bootstrap tabel是基于 Bootstrap 的 jQuery 表格插件，通过简单的设置，就可以拥有强大的单选、多选、排序、分页，以及编辑、导出、过滤（扩展）等等的功能。 主要功能 支持 Bootstrap 3 和 Bootstrap 2 自适应界面 固定表头 非常丰富的配置参数 直接通过标签使用 显示/隐藏列 显示/隐藏表头 通过 AJAX 获取 JSON 格式的数据 支持排序">
+<meta name="keywords" content="原创,jQuery插件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="bootstrap table 基本使用">
+<meta property="og:url" content="https://surpass-wei.github.io/2017/04/26/bootstrap-table-基本使用/index.html">
+<meta property="og:site_name" content="Surpass&#39;s blog">
+<meta property="og:description" content="前言bootstrap tabel是基于 Bootstrap 的 jQuery 表格插件，通过简单的设置，就可以拥有强大的单选、多选、排序、分页，以及编辑、导出、过滤（扩展）等等的功能。 主要功能 支持 Bootstrap 3 和 Bootstrap 2 自适应界面 固定表头 非常丰富的配置参数 直接通过标签使用 显示/隐藏列 显示/隐藏表头 通过 AJAX 获取 JSON 格式的数据 支持排序">
+<meta property="og:updated_time" content="2017-07-06T07:01:31.329Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="bootstrap table 基本使用">
+<meta name="twitter:description" content="前言bootstrap tabel是基于 Bootstrap 的 jQuery 表格插件，通过简单的设置，就可以拥有强大的单选、多选、排序、分页，以及编辑、导出、过滤（扩展）等等的功能。 主要功能 支持 Bootstrap 3 和 Bootstrap 2 自适应界面 固定表头 非常丰富的配置参数 直接通过标签使用 显示/隐藏列 显示/隐藏表头 通过 AJAX 获取 JSON 格式的数据 支持排序">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: false,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://surpass-wei.github.io/2017/04/26/bootstrap-table-基本使用/"/>
+
+
+
+
+
+  <title> bootstrap table 基本使用 | Surpass's blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Surpass's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://surpass-wei.github.io/2017/04/26/bootstrap-table-基本使用/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Surpass Wei">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://oji4bqzc7.bkt.clouddn.com/blog/20170705/174921309.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Surpass's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                bootstrap table 基本使用
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-26T09:37:12+08:00">
+                2017-04-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/开发/" itemprop="url" rel="index">
+                    <span itemprop="name">开发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><code>bootstrap tabel</code>是基于 Bootstrap 的 jQuery 表格插件，通过简单的设置，就可以拥有强大的单选、多选、排序、分页，以及编辑、导出、过滤（扩展）等等的功能。</p>
+<h3 id="主要功能"><a href="#主要功能" class="headerlink" title="主要功能"></a>主要功能</h3><ol>
+<li>支持 Bootstrap 3 和 Bootstrap 2</li>
+<li>自适应界面</li>
+<li>固定表头</li>
+<li>非常丰富的配置参数</li>
+<li>直接通过标签使用</li>
+<li>显示/隐藏列</li>
+<li>显示/隐藏表头</li>
+<li>通过 AJAX 获取 JSON 格式的数据</li>
+<li>支持排序</li>
+<li>格式化表格</li>
+<li>支持单选或者多选</li>
+<li>强大的分页功能</li>
+<li>支持卡片视图</li>
+<li>支持多语言</li>
+<li>支持插件</li>
+</ol>
+<blockquote>
+<p>相关文档<br><a href="http://bootstrap-table.wenzhixin.net.cn/zh-cn/documentation/" title="官方网站" target="_blank" rel="external">官方网站</a></p>
+</blockquote>
+<h2 id="示例（后台分页，动态获取数据）"><a href="#示例（后台分页，动态获取数据）" class="headerlink" title="示例（后台分页，动态获取数据）"></a>示例（后台分页，动态获取数据）</h2><p><em>html部分</em><br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- 用来实例化表格的容器 --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">table</span> <span class="attr">id</span>=<span class="string">"example-table"</span> <span class="attr">class</span>=<span class="string">"table table-striped mb-none"</span>&gt;</span><span class="tag">&lt;/<span class="name">table</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p><em>js部分</em><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line">$traineesTable.bootstrapTable(<span class="string">'destroy'</span>);</div><div class="line">$traineesTable.bootstrapTable(&#123;</div><div class="line">    <span class="attr">url</span>: <span class="string">'/users/***'</span>,</div><div class="line">    <span class="attr">method</span>: <span class="string">'GET'</span>,</div><div class="line">    <span class="attr">dataType</span>: <span class="string">'json'</span>,</div><div class="line">    <span class="attr">striped</span>: <span class="literal">true</span>,</div><div class="line">    <span class="attr">pagination</span>: <span class="literal">true</span>,</div><div class="line">    <span class="attr">sidePagination</span>: <span class="string">"server"</span>,</div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 这是一个大坑！</div><div class="line">     * 设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder</div><div class="line">     * 设置为limit可以获取limit, offset, search, sort, order</div><div class="line">     * */</div><div class="line">    queryParamsType: <span class="string">"undefined"</span>,</div><div class="line">    <span class="attr">queryParams</span>: <span class="function"><span class="keyword">function</span> (<span class="params">params</span>) </span>&#123;</div><div class="line">        <span class="keyword">return</span> &#123;</div><div class="line">            <span class="attr">currentPage</span>: params.pageNumber,   <span class="comment">//页码</span></div><div class="line">            pageSize: params.pageSize,  <span class="comment">//页面大小</span></div><div class="line">            realName: <span class="string">'abc'</span>  <span class="comment">// 自定义参数</span></div><div class="line">        &#125;;</div><div class="line">    &#125;,</div><div class="line">    <span class="comment">//这里我查看源码的，在ajax请求成功后，发放数据之前可以对返回的数据进行处理，返回什么部分的数据，比如我的就需要进行整改的！</span></div><div class="line">    responseHandler: <span class="function"><span class="keyword">function</span> (<span class="params">res</span>) </span>&#123;</div><div class="line">        <span class="keyword">return</span> &#123;</div><div class="line">            <span class="attr">total</span>: res.data.total,</div><div class="line">            <span class="attr">rows</span>: res.data.traineeList</div><div class="line">        &#125;;</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">columns</span>: [&#123;</div><div class="line">    <span class="attr">field</span>: <span class="string">'id'</span>,</div><div class="line">    <span class="attr">title</span>: <span class="string">'序号'</span>,</div><div class="line">    <span class="attr">visible</span>: <span class="literal">false</span></div><div class="line">    &#125;, &#123;</div><div class="line">    <span class="attr">field</span>: <span class="string">'loginName'</span>,</div><div class="line">    <span class="attr">title</span>: <span class="string">'账号'</span></div><div class="line">    &#125;, &#123;</div><div class="line">    <span class="attr">field</span>: <span class="string">'realName'</span>,</div><div class="line">    <span class="attr">title</span>: <span class="string">'姓名'</span></div><div class="line">    &#125;, &#123;</div><div class="line">    <span class="attr">title</span>: <span class="string">'操作'</span>,</div><div class="line">    <span class="attr">field</span>: <span class="string">'realName'</span>,</div><div class="line">    <span class="attr">align</span>: <span class="string">'center'</span>,</div><div class="line">    <span class="attr">formatter</span>: <span class="function"><span class="keyword">function</span> (<span class="params">value, row, index</span>) </span>&#123;</div><div class="line">    <span class="comment">// value： 默认的值</span></div><div class="line">    <span class="comment">// row: 行对象</span></div><div class="line">    <span class="comment">// index: 行序号，从0开始</span></div><div class="line">    <span class="keyword">return</span> <span class="string">'这里是返回字符串'</span>;</div><div class="line">    &#125;</div><div class="line">    &#125;],</div><div class="line">    <span class="attr">onLoadSuccess</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="comment">// 当表格实例化成功后调用的函数</span></div><div class="line">    &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/原创/" rel="tag"># 原创</a>
+          
+            <a href="/tags/jQuery插件/" rel="tag"># jQuery插件</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/14/bootstrap-multiselect的refresh方法不起作用的解决方案/" rel="next" title="bootstrap multiselect的refresh方法不起作用的解决方案">
+                <i class="fa fa-chevron-left"></i> bootstrap multiselect的refresh方法不起作用的解决方案
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/26/jQuery树组件-jstree使用/" rel="prev" title="jQuery树组件-jstree使用">
+                jQuery树组件-jstree使用 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://oji4bqzc7.bkt.clouddn.com/blog/20170705/174921309.jpeg"
+               alt="Surpass Wei" />
+          <p class="site-author-name" itemprop="name">Surpass Wei</p>
+           
+              <p class="site-description motion-element" itemprop="description">尽管风雨 生活依旧要阳光下去</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/surpass-wei" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/6045261234" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/u/882af274b0f5" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-book"></i>
+                  
+                  简书
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#主要功能"><span class="nav-number">1.1.</span> <span class="nav-text">主要功能</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#示例（后台分页，动态获取数据）"><span class="nav-number">2.</span> <span class="nav-text">示例（后台分页，动态获取数据）</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Surpass Wei</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

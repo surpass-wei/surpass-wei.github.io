@@ -288,7 +288,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://surpass-wei.github.io/2017/07/03/spring-boot-e4-b8-adweblistener-e3-80-81webfilter-ef-bc-88-e4-b9-9f-e5-b0-b1-e6-98-af-e8-87-aa-e5-ae-9a-e4-b9-89servlet-ef-bc-89-e4-b8-8d-e8-b5-b7-e4-bd-9c-e7-94-a8-e7-9a-84-e8-a7-a3-e5-86-b3/">
+    <link itemprop="mainEntityOfPage" href="https://surpass-wei.github.io/2017/07/03/spring-boot中@WebListener、@WebFilter（也就是自定义servlet）不起作用的解决方案/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Surpass Wei">
@@ -310,7 +310,7 @@
             
               
                 
-                <a class="post-title-link" href="/2017/07/03/spring-boot-e4-b8-adweblistener-e3-80-81webfilter-ef-bc-88-e4-b9-9f-e5-b0-b1-e6-98-af-e8-87-aa-e5-ae-9a-e4-b9-89servlet-ef-bc-89-e4-b8-8d-e8-b5-b7-e4-bd-9c-e7-94-a8-e7-9a-84-e8-a7-a3-e5-86-b3/" itemprop="url">
+                <a class="post-title-link" href="/2017/07/03/spring-boot中@WebListener、@WebFilter（也就是自定义servlet）不起作用的解决方案/" itemprop="url">
                   spring boot中@WebListener、@WebFilter（也就是自定义servlet）不起作用的解决方案
                 </a>
               
@@ -393,121 +393,16 @@
 <ol>
 <li>定义过滤器</li>
 </ol>
-<pre class="prettyprint linenums prettyprinted">
-
-1.  `<span class="kwd">import</span><span class="pln"> org</span><span class="pun">.</span><span class="pln">slf4j</span><span class="pun">.</span><span class="typ">Logger</span><span class="pun">;</span>`
-2.  `<span class="kwd">import</span><span class="pln"> org</span><span class="pun">.</span><span class="pln">slf4j</span><span class="pun">.</span><span class="typ">LoggerFactory</span><span class="pun">;</span>`
-3.4.  `<span class="kwd">import</span><span class="pln"> javax</span><span class="pun">.</span><span class="pln">servlet</span><span class="pun">.*;</span>`
-5.  `<span class="kwd">import</span><span class="pln"> javax</span><span class="pun">.</span><span class="pln">servlet</span><span class="pun">.</span><span class="pln">annotation</span><span class="pun">.</span><span class="typ">WebFilter</span><span class="pun">;</span>`
-6.  `<span class="kwd">import</span><span class="pln"> java</span><span class="pun">.</span><span class="pln">io</span><span class="pun">.</span><span class="typ">IOException</span><span class="pun">;</span>`
-7.8.  `<span class="com">/**</span>`
-9.  `<span class="com"> * 使用注解标注过滤器@WebFilter将一个实现了javax.servlet.Filter接口的类定义为过滤器</span>`
-10.  `<span class="com"> * filterName声明过滤器的名称（可选）</span>`
-11.  `<span class="com"> * urlPatterns指定要过滤的URL模式,也可使用属性value来声明.(指定要过滤的URL模式是必选属性)</span>`
-12.  `<span class="com"> * &lt;p&gt;</span>`
-13.  `<span class="com"> * Created by surpass.wei@gmail.com on 2017/2/24.</span>`
-14.  `<span class="com"> */</span>`
-15.  `<span class="lit">@WebFilter</span><span class="pun">(</span><span class="pln">filterName </span><span class="pun">=</span><span class="pln"> </span><span class="str">"myFilter"</span><span class="pun">,</span><span class="pln"> urlPatterns </span><span class="pun">=</span><span class="pln"> </span><span class="str">"/*"</span><span class="pun">)</span>`
-16.  `<span class="kwd">public</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">MyFilter</span><span class="pln"> </span><span class="kwd">implements</span><span class="pln"> </span><span class="typ">Filter</span><span class="pln"> </span><span class="pun">{</span>`
-17.  `<span class="pln">    </span><span class="kwd">private</span><span class="pln"> </span><span class="typ">Logger</span><span class="pln"> logger </span><span class="pun">=</span><span class="pln"> </span><span class="typ">LoggerFactory</span><span class="pun">.</span><span class="pln">getLogger</span><span class="pun">(</span><span class="typ">MyFilter</span><span class="pun">.</span><span class="kwd">class</span><span class="pun">);</span>`
-18.19.  `<span class="pln">    </span><span class="lit">@Override</span>`
-20.  `<span class="pln">    </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> init</span><span class="pun">(</span><span class="typ">FilterConfig</span><span class="pln"> filterConfig</span><span class="pun">)</span><span class="pln"> </span><span class="kwd">throws</span><span class="pln"> </span><span class="typ">ServletException</span><span class="pln"> </span><span class="pun">{</span>`
-21.  `<span class="pln">        logger</span><span class="pun">.</span><span class="pln">info</span><span class="pun">(</span><span class="str">"过滤器：myFilter &gt;&gt;&gt;&gt; 初始化"</span><span class="pun">);</span>`
-22.  `<span class="pln">    </span><span class="pun">}</span>`
-23.24.  `<span class="pln">    </span><span class="lit">@Override</span>`
-25.  `<span class="pln">    </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> doFilter</span><span class="pun">(</span><span class="typ">ServletRequest</span><span class="pln"> servletRequest</span><span class="pun">,</span><span class="pln"> </span><span class="typ">ServletResponse</span><span class="pln"> servletResponse</span><span class="pun">,</span><span class="pln"> </span><span class="typ">FilterChain</span><span class="pln"> filterChain</span><span class="pun">)</span><span class="pln"> </span><span class="kwd">throws</span><span class="pln"> </span><span class="typ">IOException</span><span class="pun">,</span><span class="pln"> </span><span class="typ">ServletException</span><span class="pln"> </span><span class="pun">{</span>`
-26.  `<span class="pln">        logger</span><span class="pun">.</span><span class="pln">info</span><span class="pun">(</span><span class="str">"过滤器：myFilter &gt;&gt;&gt;&gt; 执行过滤操作"</span><span class="pun">);</span>`
-27.  `<span class="pln">        filterChain</span><span class="pun">.</span><span class="pln">doFilter</span><span class="pun">(</span><span class="pln">servletRequest</span><span class="pun">,</span><span class="pln"> servletResponse</span><span class="pun">);</span>`
-28.  `<span class="pln">    </span><span class="pun">}</span>`
-29.30.  `<span class="pln">    </span><span class="lit">@Override</span>`
-31.  `<span class="pln">    </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> destroy</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span>`
-32.  `<span class="pln">        logger</span><span class="pun">.</span><span class="pln">info</span><span class="pun">(</span><span class="str">"过滤器：myFilter &gt;&gt;&gt;&gt; 销毁"</span><span class="pun">);</span>`
-33.  `<span class="pln">    </span><span class="pun">}</span>`
-34.  `<span class="pun">}</span>`</pre>
-
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> org.slf4j.Logger;</div><div class="line"><span class="keyword">import</span> org.slf4j.LoggerFactory;</div><div class="line"></div><div class="line"><span class="keyword">import</span> javax.servlet.*;</div><div class="line"><span class="keyword">import</span> javax.servlet.annotation.WebFilter;</div><div class="line"><span class="keyword">import</span> java.io.IOException;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 使用注解标注过滤器<span class="doctag">@WebFilter</span>将一个实现了javax.servlet.Filter接口的类定义为过滤器</div><div class="line"> * filterName声明过滤器的名称（可选）</div><div class="line"> * urlPatterns指定要过滤的URL模式,也可使用属性value来声明.(指定要过滤的URL模式是必选属性)</div><div class="line"> * &lt;p&gt;</div><div class="line"> * Created by surpass.wei@gmail.com on 2017/2/24.</div><div class="line"> */</div><div class="line"><span class="meta">@WebFilter</span>(filterName = <span class="string">"myFilter"</span>, urlPatterns = <span class="string">"/*"</span>)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyFilter</span> <span class="keyword">implements</span> <span class="title">Filter</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> Logger logger = LoggerFactory.getLogger(MyFilter.class);</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">(FilterConfig filterConfig)</span> <span class="keyword">throws</span> ServletException </span>&#123;</div><div class="line">        logger.info(<span class="string">"过滤器：myFilter &gt;&gt;&gt;&gt; 初始化"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doFilter</span><span class="params">(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)</span> <span class="keyword">throws</span> IOException, ServletException </span>&#123;</div><div class="line">        logger.info(<span class="string">"过滤器：myFilter &gt;&gt;&gt;&gt; 执行过滤操作"</span>);</div><div class="line">        filterChain.doFilter(servletRequest, servletResponse);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">destroy</span><span class="params">()</span> </span>&#123;</div><div class="line">        logger.info(<span class="string">"过滤器：myFilter &gt;&gt;&gt;&gt; 销毁"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <ol>
 <li>定义监听器</li>
 </ol>
-<pre class="prettyprint linenums prettyprinted">
-
-1.  `<span class="kwd">import</span><span class="pln"> org</span><span class="pun">.</span><span class="pln">slf4j</span><span class="pun">.</span><span class="typ">Logger</span><span class="pun">;</span>`
-2.  `<span class="kwd">import</span><span class="pln"> org</span><span class="pun">.</span><span class="pln">slf4j</span><span class="pun">.</span><span class="typ">LoggerFactory</span><span class="pun">;</span>`
-3.4.  `<span class="kwd">import</span><span class="pln"> javax</span><span class="pun">.</span><span class="pln">servlet</span><span class="pun">.</span><span class="pln">annotation</span><span class="pun">.</span><span class="typ">WebListener</span><span class="pun">;</span>`
-5.  `<span class="kwd">import</span><span class="pln"> javax</span><span class="pun">.</span><span class="pln">servlet</span><span class="pun">.</span><span class="pln">http</span><span class="pun">.</span><span class="typ">HttpSessionEvent</span><span class="pun">;</span>`
-6.  `<span class="kwd">import</span><span class="pln"> javax</span><span class="pun">.</span><span class="pln">servlet</span><span class="pun">.</span><span class="pln">http</span><span class="pun">.</span><span class="typ">HttpSessionListener</span><span class="pun">;</span>`
-7.8.  `<span class="com">/**</span>`
-9.  `<span class="com"> * HttpSession监听器</span>`
-10.  `<span class="com"> * &lt;p&gt;</span>`
-11.  `<span class="com"> * Created by surpass.wei@gmail.com on 2017/2/24.</span>`
-12.  `<span class="com"> */</span>`
-13.  `<span class="lit">@WebListener</span>`
-14.  `<span class="kwd">public</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">MyHttpSessionListener</span><span class="pln"> </span><span class="kwd">implements</span><span class="pln"> </span><span class="typ">HttpSessionListener</span><span class="pln"> </span><span class="pun">{</span>`
-15.  `<span class="pln">    </span><span class="kwd">private</span><span class="pln"> </span><span class="typ">Logger</span><span class="pln"> logger </span><span class="pun">=</span><span class="pln"> </span><span class="typ">LoggerFactory</span><span class="pun">.</span><span class="pln">getLogger</span><span class="pun">(</span><span class="typ">MyHttpSessionListener</span><span class="pun">.</span><span class="kwd">class</span><span class="pun">);</span>`
-16.17.  `<span class="pln">    </span><span class="lit">@Override</span>`
-18.  `<span class="pln">    </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> sessionCreated</span><span class="pun">(</span><span class="typ">HttpSessionEvent</span><span class="pln"> httpSessionEvent</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span>`
-19.  `<span class="pln">        logger</span><span class="pun">.</span><span class="pln">info</span><span class="pun">(</span><span class="str">"监听器：Session &gt;&gt;&gt;&gt; 创建"</span><span class="pun">);</span>`
-20.  `<span class="pln">    </span><span class="pun">}</span>`
-21.22.  `<span class="pln">    </span><span class="lit">@Override</span>`
-23.  `<span class="pln">    </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> sessionDestroyed</span><span class="pun">(</span><span class="typ">HttpSessionEvent</span><span class="pln"> httpSessionEvent</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span>`
-24.  `<span class="pln">        logger</span><span class="pun">.</span><span class="pln">info</span><span class="pun">(</span><span class="str">"监听器：Session &gt;&gt;&gt;&gt; 销毁"</span><span class="pun">);</span>`
-25.  `<span class="pln">    </span><span class="pun">}</span>`
-26.  `<span class="pun">}</span>`</pre>
-
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> org.slf4j.Logger;</div><div class="line"><span class="keyword">import</span> org.slf4j.LoggerFactory;</div><div class="line"></div><div class="line"><span class="keyword">import</span> javax.servlet.annotation.WebListener;</div><div class="line"><span class="keyword">import</span> javax.servlet.http.HttpSessionEvent;</div><div class="line"><span class="keyword">import</span> javax.servlet.http.HttpSessionListener;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * HttpSession监听器</div><div class="line"> * &lt;p&gt;</div><div class="line"> * Created by surpass.wei@gmail.com on 2017/2/24.</div><div class="line"> */</div><div class="line"><span class="meta">@WebListener</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyHttpSessionListener</span> <span class="keyword">implements</span> <span class="title">HttpSessionListener</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> Logger logger = LoggerFactory.getLogger(MyHttpSessionListener.class);</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sessionCreated</span><span class="params">(HttpSessionEvent httpSessionEvent)</span> </span>&#123;</div><div class="line">        logger.info(<span class="string">"监听器：Session &gt;&gt;&gt;&gt; 创建"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sessionDestroyed</span><span class="params">(HttpSessionEvent httpSessionEvent)</span> </span>&#123;</div><div class="line">        logger.info(<span class="string">"监听器：Session &gt;&gt;&gt;&gt; 销毁"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <ol>
 <li>自定义servlet</li>
 </ol>
-<pre class="prettyprint linenums prettyprinted">
-
-1.  `<span class="kwd">import</span><span class="pln"> org</span><span class="pun">.</span><span class="pln">slf4j</span><span class="pun">.</span><span class="typ">Logger</span><span class="pun">;</span>`
-2.  `<span class="kwd">import</span><span class="pln"> org</span><span class="pun">.</span><span class="pln">slf4j</span><span class="pun">.</span><span class="typ">LoggerFactory</span><span class="pun">;</span>`
-3.4.  `<span class="kwd">import</span><span class="pln"> javax</span><span class="pun">.</span><span class="pln">servlet</span><span class="pun">.</span><span class="typ">ServletException</span><span class="pun">;</span>`
-5.  `<span class="kwd">import</span><span class="pln"> javax</span><span class="pun">.</span><span class="pln">servlet</span><span class="pun">.</span><span class="pln">http</span><span class="pun">.</span><span class="typ">HttpServlet</span><span class="pun">;</span>`
-6.  `<span class="kwd">import</span><span class="pln"> javax</span><span class="pun">.</span><span class="pln">servlet</span><span class="pun">.</span><span class="pln">http</span><span class="pun">.</span><span class="typ">HttpServletRequest</span><span class="pun">;</span>`
-7.  `<span class="kwd">import</span><span class="pln"> javax</span><span class="pun">.</span><span class="pln">servlet</span><span class="pun">.</span><span class="pln">http</span><span class="pun">.</span><span class="typ">HttpServletResponse</span><span class="pun">;</span>`
-8.  `<span class="kwd">import</span><span class="pln"> java</span><span class="pun">.</span><span class="pln">io</span><span class="pun">.</span><span class="typ">IOException</span><span class="pun">;</span>`
-9.  `<span class="kwd">import</span><span class="pln"> java</span><span class="pun">.</span><span class="pln">io</span><span class="pun">.</span><span class="typ">PrintWriter</span><span class="pun">;</span>`
-10.11.  `<span class="com">/**</span>`
-12.  `<span class="com"> * 自定义Servlet</span>`
-13.  `<span class="com"> * &lt;p&gt;</span>`
-14.  `<span class="com"> * Created by surpass.wei@gmail.com on 2017/2/24.</span>`
-15.  `<span class="com"> */</span>`
-16.  `<span class="kwd">public</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">MyServlet1</span><span class="pln"> </span><span class="kwd">extends</span><span class="pln"> </span><span class="typ">HttpServlet</span><span class="pln"> </span><span class="pun">{</span>`
-17.  `<span class="pln">    </span><span class="kwd">private</span><span class="pln"> </span><span class="typ">Logger</span><span class="pln"> logger </span><span class="pun">=</span><span class="pln"> </span><span class="typ">LoggerFactory</span><span class="pun">.</span><span class="pln">getLogger</span><span class="pun">(</span><span class="typ">MyServlet1</span><span class="pun">.</span><span class="kwd">class</span><span class="pun">);</span>`
-18.19.  `<span class="pln">    </span><span class="lit">@Override</span>`
-20.  `<span class="pln">    </span><span class="kwd">protected</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> doGet</span><span class="pun">(</span><span class="typ">HttpServletRequest</span><span class="pln"> req</span><span class="pun">,</span><span class="pln"> </span><span class="typ">HttpServletResponse</span><span class="pln"> resp</span><span class="pun">)</span><span class="pln"> </span><span class="kwd">throws</span><span class="pln"> </span><span class="typ">ServletException</span><span class="pun">,</span><span class="pln"> </span><span class="typ">IOException</span><span class="pln"> </span><span class="pun">{</span>`
-21.  `<span class="pln">        logger</span><span class="pun">.</span><span class="pln">info</span><span class="pun">(</span><span class="str">"已执行：MyServlet1.doGet()"</span><span class="pun">);</span>`
-22.  `<span class="pln">        doPost</span><span class="pun">(</span><span class="pln">req</span><span class="pun">,</span><span class="pln"> resp</span><span class="pun">);</span>`
-23.  `<span class="pln">    </span><span class="pun">}</span>`
-24.25.  `<span class="pln">    </span><span class="lit">@Override</span>`
-26.  `<span class="pln">    </span><span class="kwd">protected</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> doPost</span><span class="pun">(</span><span class="typ">HttpServletRequest</span><span class="pln"> req</span><span class="pun">,</span><span class="pln"> </span><span class="typ">HttpServletResponse</span><span class="pln"> resp</span><span class="pun">)</span><span class="pln"> </span><span class="kwd">throws</span><span class="pln"> </span><span class="typ">ServletException</span><span class="pun">,</span><span class="pln"> </span><span class="typ">IOException</span><span class="pln"> </span><span class="pun">{</span>`
-27.  `<span class="pln">        logger</span><span class="pun">.</span><span class="pln">info</span><span class="pun">(</span><span class="str">"已执行：MyServlet1.doPost()"</span><span class="pun">);</span>`
-28.  `<span class="pln">        resp</span><span class="pun">.</span><span class="pln">setContentType</span><span class="pun">(</span><span class="str">"text/html"</span><span class="pun">);</span>`
-29.  `<span class="pln">        resp</span><span class="pun">.</span><span class="pln">setCharacterEncoding</span><span class="pun">(</span><span class="str">"UTF-8"</span><span class="pun">);</span><span class="pln"> </span><span class="com">//  设置编码，解决中文乱码问题</span>`
-30.31.  `<span class="pln">        </span><span class="typ">PrintWriter</span><span class="pln"> out </span><span class="pun">=</span><span class="pln"> resp</span><span class="pun">.</span><span class="pln">getWriter</span><span class="pun">();</span>`
-32.  `<span class="pln">        out</span><span class="pun">.</span><span class="pln">println</span><span class="pun">(</span><span class="str">"&lt;html&gt;"</span><span class="pun">);</span>`
-33.  `<span class="pln">        out</span><span class="pun">.</span><span class="pln">println</span><span class="pun">(</span><span class="str">"&lt;head&gt;"</span><span class="pun">);</span>`
-34.  `<span class="pln">        out</span><span class="pun">.</span><span class="pln">println</span><span class="pun">(</span><span class="str">"&lt;title&gt;Hello World&lt;/title&gt;"</span><span class="pun">);</span>`
-35.  `<span class="pln">        out</span><span class="pun">.</span><span class="pln">println</span><span class="pun">(</span><span class="str">"&lt;/head&gt;"</span><span class="pun">);</span>`
-36.  `<span class="pln">        out</span><span class="pun">.</span><span class="pln">println</span><span class="pun">(</span><span class="str">"&lt;body&gt;"</span><span class="pun">);</span>`
-37.  `<span class="pln">        out</span><span class="pun">.</span><span class="pln">println</span><span class="pun">(</span><span class="str">"&lt;h1&gt;这是：MyServlet1&lt;/h1&gt;"</span><span class="pun">);</span>`
-38.  `<span class="pln">        out</span><span class="pun">.</span><span class="pln">println</span><span class="pun">(</span><span class="str">"&lt;/body&gt;"</span><span class="pun">);</span>`
-39.  `<span class="pln">        out</span><span class="pun">.</span><span class="pln">println</span><span class="pun">(</span><span class="str">"&lt;/html&gt;"</span><span class="pun">);</span>`
-40.  `<span class="pln">    </span><span class="pun">}</span>`
-41.  `<span class="pun">}</span>`</pre>
-
-<h2 id="配置-ServletComponentScan以使以上servlet生效"><a href="#配置-ServletComponentScan以使以上servlet生效" class="headerlink" title="配置@ServletComponentScan以使以上servlet生效"></a>配置<code>@ServletComponentScan</code>以使以上servlet生效</h2><pre class="prettyprint linenums prettyprinted">
-
-1.  `<span class="lit">@SpringBootApplication</span>`
-2.  `<span class="lit">@ServletComponentScan</span>`
-3.  `<span class="kwd">public</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">BasicApp</span><span class="pln"> </span><span class="kwd">extends</span><span class="pln"> </span><span class="typ">WebMvcConfigurerAdapter</span><span class="pun">{</span>`
-4.5.  `<span class="pln">    </span><span class="lit">@Bean</span>`
-6.  `<span class="pln">    </span><span class="kwd">public</span><span class="pln"> </span><span class="typ">ServletRegistrationBean</span><span class="pln"> myServlet1</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span>`
-7.  `<span class="pln">        </span><span class="kwd">return</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">ServletRegistrationBean</span><span class="pun">(</span><span class="kwd">new</span><span class="pln"> </span><span class="typ">MyServlet1</span><span class="pun">(),</span><span class="str">"/myServlet1/*"</span><span class="pun">);</span>`
-8.  `<span class="pln">    </span><span class="pun">}</span>`
-9.10.  `<span class="pln">    </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">static</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> main</span><span class="pun">(</span><span class="typ">String</span><span class="pun">[]</span><span class="pln"> args</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span>`
-11.  `<span class="pln">        </span><span class="typ">SpringApplication</span><span class="pun">.</span><span class="pln">run</span><span class="pun">(</span><span class="typ">BasicApp</span><span class="pun">.</span><span class="kwd">class</span><span class="pun">,</span><span class="pln"> args</span><span class="pun">);</span>`
-12.  `<span class="pln">    </span><span class="pun">}</span>`
-13.  `<span class="pun">}</span>`</pre>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> org.slf4j.Logger;</div><div class="line"><span class="keyword">import</span> org.slf4j.LoggerFactory;</div><div class="line"></div><div class="line"><span class="keyword">import</span> javax.servlet.ServletException;</div><div class="line"><span class="keyword">import</span> javax.servlet.http.HttpServlet;</div><div class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</div><div class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</div><div class="line"><span class="keyword">import</span> java.io.IOException;</div><div class="line"><span class="keyword">import</span> java.io.PrintWriter;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 自定义Servlet</div><div class="line"> * &lt;p&gt;</div><div class="line"> * Created by surpass.wei@gmail.com on 2017/2/24.</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyServlet1</span> <span class="keyword">extends</span> <span class="title">HttpServlet</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> Logger logger = LoggerFactory.getLogger(MyServlet1.class);</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doGet</span><span class="params">(HttpServletRequest req, HttpServletResponse resp)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</div><div class="line">        logger.info(<span class="string">"已执行：MyServlet1.doGet()"</span>);</div><div class="line">        doPost(req, resp);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doPost</span><span class="params">(HttpServletRequest req, HttpServletResponse resp)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</div><div class="line">        logger.info(<span class="string">"已执行：MyServlet1.doPost()"</span>);</div><div class="line">        resp.setContentType(<span class="string">"text/html"</span>);</div><div class="line">        resp.setCharacterEncoding(<span class="string">"UTF-8"</span>); <span class="comment">//  设置编码，解决中文乱码问题</span></div><div class="line"></div><div class="line">        PrintWriter out = resp.getWriter();</div><div class="line">        out.println(<span class="string">"&lt;html&gt;"</span>);</div><div class="line">        out.println(<span class="string">"&lt;head&gt;"</span>);</div><div class="line">        out.println(<span class="string">"&lt;title&gt;Hello World&lt;/title&gt;"</span>);</div><div class="line">        out.println(<span class="string">"&lt;/head&gt;"</span>);</div><div class="line">        out.println(<span class="string">"&lt;body&gt;"</span>);</div><div class="line">        out.println(<span class="string">"&lt;h1&gt;这是：MyServlet1&lt;/h1&gt;"</span>);</div><div class="line">        out.println(<span class="string">"&lt;/body&gt;"</span>);</div><div class="line">        out.println(<span class="string">"&lt;/html&gt;"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="配置-ServletComponentScan以使以上servlet生效"><a href="#配置-ServletComponentScan以使以上servlet生效" class="headerlink" title="配置@ServletComponentScan以使以上servlet生效"></a>配置<code>@ServletComponentScan</code>以使以上servlet生效</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@SpringBootApplication</span></div><div class="line"><span class="meta">@ServletComponentScan</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BasicApp</span> <span class="keyword">extends</span> <span class="title">WebMvcConfigurerAdapter</span></span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Bean</span></div><div class="line">    <span class="function"><span class="keyword">public</span> ServletRegistrationBean <span class="title">myServlet1</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ServletRegistrationBean(<span class="keyword">new</span> MyServlet1(),<span class="string">"/myServlet1/*"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        SpringApplication.run(BasicApp.class, args);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
           
         
       
@@ -550,7 +445,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://surpass-wei.github.io/2017/06/21/java-e5-ae-b9-e5-99-a8-e7-9b-b8-e5-85-b3-e7-9f-a5-e8-af-86-e7-82-b9/">
+    <link itemprop="mainEntityOfPage" href="https://surpass-wei.github.io/2017/06/21/JAVA容器相关知识点整理/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Surpass Wei">
@@ -572,7 +467,7 @@
             
               
                 
-                <a class="post-title-link" href="/2017/06/21/java-e5-ae-b9-e5-99-a8-e7-9b-b8-e5-85-b3-e7-9f-a5-e8-af-86-e7-82-b9/" itemprop="url">
+                <a class="post-title-link" href="/2017/06/21/JAVA容器相关知识点整理/" itemprop="url">
                   JAVA容器相关知识点整理
                 </a>
               
@@ -648,19 +543,125 @@
 
       
         
-          <h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><ol>
+          
+            <h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><ol>
 <li>整理容器的基本知识</li>
 <li>整理关于不同容器线程安全方面的知识</li>
 </ol>
 <h3 id="根据以下资料整理"><a href="#根据以下资料整理" class="headerlink" title="根据以下资料整理"></a>根据以下资料整理</h3><blockquote>
-<p><a href="http://www.jianshu.com/p/047e33fdefd2" target="_blank" rel="external">http://www.jianshu.com/p/047e33fdefd2</a>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/06/21/java-e5-ae-b9-e5-99-a8-e7-9b-b8-e5-85-b3-e7-9f-a5-e8-af-86-e7-82-b9/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
+<p><a href="http://www.jianshu.com/p/047e33fdefd2" target="_blank" rel="external">http://www.jianshu.com/p/047e33fdefd2</a><br><a href="http://blog.csdn.net/jiyiqinlovexx/article/details/51030720" target="_blank" rel="external">http://blog.csdn.net/jiyiqinlovexx/article/details/51030720</a></p>
+</blockquote>
+<h3 id="常用容器关系图"><a href="#常用容器关系图" class="headerlink" title="常用容器关系图"></a>常用容器关系图</h3><p><img src="http://oji4bqzc7.bkt.clouddn.com/blog/20170621/160319389.png" alt=""></p>
+<h4 id="快速了解"><a href="#快速了解" class="headerlink" title="快速了解"></a>快速了解</h4><hr>
+<h5 id="Collection（接口）"><a href="#Collection（接口）" class="headerlink" title="Collection（接口）"></a>Collection（接口）</h5><ol>
+<li>代表的是单个元素对象的序列，（可以有序/无序，可重复/不可重复 等，具体依据具体的子接口Set，List，Queue等）；</li>
+<li>调用<code>toArray(T[] a)</code>可以转为数组</li>
+<li>区别于<code>java.util.Collections</code>:<code>Collections</code>是一个正对于Conllection的工具类，提供了许多实用的静态方法</li>
+</ol>
+<h5 id="Map（接口）"><a href="#Map（接口）" class="headerlink" title="Map（接口）"></a>Map（接口）</h5><ol>
+<li>代表的是“键值对”对象的集合（同样可以有序/无序 等依据具体实现）</li>
+<li>提供了三种遍历方式：<ol>
+<li><code>Set&lt;K&gt; keySet()</code>: 返回所有key的Set集合</li>
+<li><code>Collection&lt;V&gt; values()</code>: 返回所有values的集合</li>
+<li><code>Set&lt; Map.Entry&lt; K, V&gt;&gt; entrySet()</code>： 是将整个Entry对象（也就是返回<code>键-值</code>形式的集合）作为元素返回所有的数据，这种方式比先通过<code>keySet()</code>获取所有key再根据key获取值效率要高</li>
+</ol>
+</li>
+</ol>
+<hr>
+<h5 id="List（Collection的子接口）"><a href="#List（Collection的子接口）" class="headerlink" title="List（Collection的子接口）"></a>List（Collection的子接口）</h5><ol>
+<li>一个有序的Collection（或者叫做序列）。使用这个接口可以精确掌控元素的插入，还可以根据index获取相应位置的元素。</li>
+<li>可重复</li>
+<li>有顺序</li>
+<li>提供了特殊的iterator遍历器，叫做<code>ListIterator</code>。这种遍历器允许遍历时插入，替换，删除，双向访问。 并且还有一个重载方法允许从一个指定位置开始遍历。</li>
+</ol>
+<h6 id="ArrayList（List接口的实现）"><a href="#ArrayList（List接口的实现）" class="headerlink" title="ArrayList（List接口的实现）"></a>ArrayList（List接口的实现）</h6><ol>
+<li>ArrayList是一个实现了List接口的可变数组</li>
+<li>可以插入null</li>
+<li>它的size, isEmpty, get, set, iterator,add这些方法的时间复杂度是O(1),如果add n个数据则时间复杂度是O(n).</li>
+<li>ArrayList不是synchronized的。</li>
+</ol>
+<h6 id="LinkedList（List接口的实现）"><a href="#LinkedList（List接口的实现）" class="headerlink" title="LinkedList（List接口的实现）"></a>LinkedList（List接口的实现）</h6><ol>
+<li>LinkedList是一个链表维护的序列容器。和ArrayList都是序列容器，一个使用数组存储，一个使用链表存储。</li>
+<li>数组和链表2种数据结构的对比：<ol>
+<li>查找方面。数组的效率更高，可以直接索引出查找，而链表必须从头查找。</li>
+<li>插入删除方面。特别是在中间进行插入删除，这时候链表体现出了极大的便利性，只需要在插入或者删除的地方断掉链然后插入或者移除元素，然后再将前后链重新组装，但是数组必须重新复制一份将所有数据后移或者前移。</li>
+<li>在内存申请方面，当数组达到初始的申请长度后，需要重新申请一个更大的数组然后把数据迁移过去才行（<code>所以当创建ArrayList，最好能给一个合理的初始大小</code>）。而链表只需要动态创建即可。</li>
+</ol>
+</li>
+<li>LinkedList还实现了Deque接口，Deque接口是继承Queue的。所以LinkedList还支持队列的pop，push，peek操作</li>
+</ol>
+<p><img src="http://oji4bqzc7.bkt.clouddn.com/blog/20170621/164101259.png" alt="mark"></p>
+<h5 id="Set（Collection的子接口）"><a href="#Set（Collection的子接口）" class="headerlink" title="Set（Collection的子接口）"></a>Set（Collection的子接口）</h5><ol>
+<li>存储不重复的元素集合</li>
+</ol>
+<h6 id="HashSet（Set接口的实现）"><a href="#HashSet（Set接口的实现）" class="headerlink" title="HashSet（Set接口的实现）"></a>HashSet（Set接口的实现）</h6><ol>
+<li>基于HashMap进行存储（所以所有的add，remove等操作其实都是HashMap的add、remove操作。遍历操作其实就是HashMap的keySet的遍历）</li>
+<li>不保证顺序，且不保证下次遍历的顺序和之前一样</li>
+<li>允许null元素</li>
+</ol>
+<h6 id="LinkedHashSet（Set接口的实现）"><a href="#LinkedHashSet（Set接口的实现）" class="headerlink" title="LinkedHashSet（Set接口的实现）"></a>LinkedHashSet（Set接口的实现）</h6><ol>
+<li>基于LinkedHashMap</li>
+<li>相对于HashSet来说就是一个可以保持顺序的Set集合</li>
+</ol>
+<h6 id="TreeSet（Set接口的实现）"><a href="#TreeSet（Set接口的实现）" class="headerlink" title="TreeSet（Set接口的实现）"></a>TreeSet（Set接口的实现）</h6><ol>
+<li>基于TreeMap</li>
+<li>TreeSet内的元素必须实现Comparable接口</li>
+<li>一组有次序的集合，如果没有指定排序规则Comparator，则会按照自然排序。（自然排序即e1.compareTo(e2) == 0作为比较）</li>
+</ol>
+<p><img src="http://oji4bqzc7.bkt.clouddn.com/blog/20170621/164140060.png" alt="mark"></p>
+<h5 id="Queue（Collection的子接口）"><a href="#Queue（Collection的子接口）" class="headerlink" title="Queue（Collection的子接口）"></a>Queue（Collection的子接口）</h5><h5 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h5><h6 id="HashMap"><a href="#HashMap" class="headerlink" title="HashMap"></a>HashMap</h6><ol>
+<li>最基础最常用的一种Map，它无序，以散列表的方式进行存储</li>
+</ol>
+<h6 id="LinkedHashMap"><a href="#LinkedHashMap" class="headerlink" title="LinkedHashMap"></a>LinkedHashMap</h6><ol>
+<li>相对于HashMap来说区别是，LinkedHashMap遍历的时候具有顺序，可以保存插入的顺序，（还可以设置最近访问的元素也放在前面，即LRU）</li>
+<li>其实LinkedHashMap的存储还是跟HashMap一样，采用哈希表方法存储，只不过LinkedHashMap多维护了一份head，tail链表。</li>
+</ol>
+<h6 id="TreeMap"><a href="#TreeMap" class="headerlink" title="TreeMap"></a>TreeMap</h6><ol>
+<li>TreeMap平时用的不多，TreeMap会实现SortMap接口，定义一个排序规则，这样当遍历TreeMap的时候，会根据规定的排序规则返回元素。</li>
+</ol>
+<h6 id="WeakHashMap"><a href="#WeakHashMap" class="headerlink" title="WeakHashMap"></a>WeakHashMap</h6><ol>
+<li>特点是，当除了自身有对key的引用外，此key没有其他引用那么此map会自动丢弃此值</li>
+</ol>
+<p><img src="http://oji4bqzc7.bkt.clouddn.com/blog/20170621/164740370.png" alt="mark"></p>
+<blockquote>
+<p>以上，感谢<a href="http://www.jianshu.com/p/047e33fdefd2" target="_blank" rel="external">http://www.jianshu.com/p/047e33fdefd2</a> ，如有冒犯，请联系我删除</p>
+</blockquote>
+<hr>
+<h4 id="关于容器的线程安全"><a href="#关于容器的线程安全" class="headerlink" title="关于容器的线程安全"></a>关于容器的线程安全</h4><h5 id="同步容器类"><a href="#同步容器类" class="headerlink" title="同步容器类"></a>同步容器类</h5><p>JDK1.0开始有两个很老的同步容器类：Vector和HashTable<br>JDK1.2之后Collections工具类中添加了一些工厂方法返回类似的同步封装器类：<br><code>Collections.synchronizedXXX(XXX xxx)</code></p>
+<h6 id="实现方式："><a href="#实现方式：" class="headerlink" title="实现方式："></a>实现方式：</h6><blockquote>
+<p>将它们的状态封装起来，并对每一个公有方法进行同步。<br>其中Vector就是Object[]+synchronized方法，Hashtable是HashtableEntry[]+synchronized方法。而synchronizedXXX()方法返回的同步封装器类更是简单地将传进来的Collection的所有方法封装为synchronized方法而已。</p>
+</blockquote>
+<h6 id="缺点："><a href="#缺点：" class="headerlink" title="缺点："></a>缺点：</h6><blockquote>
+<ol>
+<li>通过同步方法将访问操作串行化，导致并发环境下效率低下</li>
+<li>复合操作（迭代、条件运算如没有则添加等）非线程安全，需要客户端代码来实现加锁。</li>
+</ol>
+</blockquote>
+<h5 id="并发容器类"><a href="#并发容器类" class="headerlink" title="并发容器类"></a>并发容器类</h5><p>并发容器出现的最大的需求就是提升同步容器类的性能！<br>可以对比（非并发容器类）看看，将单线程版本和并发版本做一个比较。</p>
+<h6 id="HashMap和HashSet的并发版本"><a href="#HashMap和HashSet的并发版本" class="headerlink" title="HashMap和HashSet的并发版本"></a>HashMap和HashSet的并发版本</h6><ol>
+<li><p><code>ConcurrentHashMap&lt;K, V&gt;</code>（HashMap的并发版本）<br>版本：JDK5<br>目标：代替Hashtable、synchronizedMap，支持复合操作<br>原理：采用一种更加细粒度的加锁机制“分段锁”，任意数量读取线程可以并发读取，任意数量的读取线程和一个写线程可以并发访问，一定数量的写入线程可以并发访问。并发环境下ConcurrentHashMap带来了更高的吞吐量，而在单线程环境下只损失了很小的性能。</p>
+</li>
+<li><p><code>CopyOnWriteArraySet&lt;E&gt;</code>（HashSet的并发版本）<br>版本：JDK5<br>目标：代替synchronizedSet<br>原理：CopyOnWriteArraySet基于CopyOnWriteArrayList实现，其唯一的不同是在add时调用的是CopyOnWriteArrayList的addIfAbsent方法，其遍历当前Object数组，如Object数组中已有了当前元素，则直接返回，如果没有则放入Object数组的尾部，并返回。</p>
+</li>
+</ol>
+<h6 id="TreeMap和TreeSet的并发版本"><a href="#TreeMap和TreeSet的并发版本" class="headerlink" title="TreeMap和TreeSet的并发版本"></a>TreeMap和TreeSet的并发版本</h6><ol>
+<li><p><code>ConcurrentSkipListMap&lt;K, V&gt;</code>（TreeMap的并发版本）<br>版本：JDK6<br>目标：代替synchronizedSortedMap(TreeMap)<br>原理：Skip list（跳表）是一种可以代替平衡树的数据结构，默认是按照Key值升序的。Skip list让已排序的数据分布在多层链表中，以0-1随机数决定一个数据的向上攀升与否，通过”空间来换取时间”的一个算法。ConcurrentSkipListMap提供了一种线程安全的并发访问的排序映射表。内部是SkipList（跳表）结构实现，在理论上能够在O（log（n））时间内完成查找、插入、删除操作。</p>
+</li>
+<li><p><code>ConcurrentSkipListSet&lt;E&gt;</code>（TreeSet的并发版本）<br>版本：JDK6<br>目标：代替synchronizedSortedSet<br>原理：内部基于ConcurrentSkipListMap实现！</p>
+</li>
+</ol>
+<h6 id="ArrayList和LinkedList的并发版本"><a href="#ArrayList和LinkedList的并发版本" class="headerlink" title="ArrayList和LinkedList的并发版本"></a>ArrayList和LinkedList的并发版本</h6><ol>
+<li><p><code>CopyOnWriteArrayList&lt;E&gt;</code>（ArrayList的并发版本）<br>目标：代替Vector、synchronizedList<br>原理：CopyOnWriteArrayList的核心思想是利用高并发往往是读多写少的特性，对读操作不加锁，对写操作，先复制一份新的集合，在新的集合上面修改，然后将新集合赋值给旧的引用，并通过volatile 保证其可见性，当然写操作的锁是必不可少的了。</p>
+</li>
+<li><p><code>ConcurrentLinkedQueue&lt;E&gt;</code>（LinkedList的并发版本）<br>目标：代替Vector、synchronizedList<br>特点：基于链表实现的FIFO队列，特别注意单线程环境中LinkedList除了可以用作链表，也可用作队列，并发版本也一样</p>
+</li>
+</ol>
+<h6 id="阻塞队列：BlockingQueue"><a href="#阻塞队列：BlockingQueue" class="headerlink" title="阻塞队列：BlockingQueue"></a>阻塞队列：BlockingQueue</h6><p>版本：JDK1.5<br>特点：拓展了Queue，增加了可阻塞的插入和获取等操作<br>实现类<br><code>LinkedBlockingQueue</code>：基于链表实现的可阻塞的FIFO队列<br><code>ArrayBlockingQueue</code>：基于数组实现的可阻塞的FIFO队列<br><code>PriorityBlockingQueue</code>：按优先级排序的队列<br>原理：通过ReentrantLock实现线程安全，通过Condition实现阻塞和唤醒。</p>
+<blockquote>
+<p>以上，感谢<a href="http://blog.csdn.net/jiyiqinlovexx/article/details/51030720" target="_blank" rel="external">http://blog.csdn.net/jiyiqinlovexx/article/details/51030720</a> ，如有冒犯，请联系我删除</p>
+</blockquote>
+
+          
         
       
     </div>
@@ -702,7 +703,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://surpass-wei.github.io/2017/06/19/mysql-e5-88-a9-e7-94-a8concat-e5-87-bd-e6-95-b0-e6-89-b9-e9-87-8f-e6-b8-85-e7-a9-ba-e8-a1-a8-e6-95-b0-e6-8d-ae/">
+    <link itemprop="mainEntityOfPage" href="https://surpass-wei.github.io/2017/06/19/mysql利用CONCAT函数批量清空表数据/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Surpass Wei">
@@ -724,7 +725,7 @@
             
               
                 
-                <a class="post-title-link" href="/2017/06/19/mysql-e5-88-a9-e7-94-a8concat-e5-87-bd-e6-95-b0-e6-89-b9-e9-87-8f-e6-b8-85-e7-a9-ba-e8-a1-a8-e6-95-b0-e6-8d-ae/" itemprop="url">
+                <a class="post-title-link" href="/2017/06/19/mysql利用CONCAT函数批量清空表数据/" itemprop="url">
                   mysql利用CONCAT函数批量清空表数据
                 </a>
               
@@ -800,28 +801,13 @@
 
       
         
-          <h3 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h3><p>利用concat()拼接从information_schema读取出来的表信息，构建清除字符串SQL语句</p>
-<h3 id="基本"><a href="#基本" class="headerlink" title="基本"></a>基本</h3><p><code>CONCAT(str1,str2,…)</code>：mysql函数，用于拼接字符串 </p>
-<p><code>information_schema</code>：读取表信息</p>
-<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><pre class="prettyprint linenums prettyprinted">
+          
+            <h3 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h3><p>利用concat()拼接从information_schema读取出来的表信息，构建清除字符串SQL语句</p>
+<h3 id="基本"><a href="#基本" class="headerlink" title="基本"></a>基本</h3><p><code>CONCAT(str1,str2,…)</code>：mysql函数，用于拼接字符串<br><code>information_schema</code>：读取表信息</p>
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span></div><div class="line">    <span class="keyword">CONCAT</span>(</div><div class="line">        <span class="string">'delete from '</span>,</div><div class="line">        table_name,</div><div class="line">        <span class="string">';'</span></div><div class="line">    )</div><div class="line"><span class="keyword">FROM</span></div><div class="line">    information_schema. <span class="keyword">TABLES</span></div><div class="line"><span class="keyword">WHERE</span></div><div class="line">    table_name <span class="keyword">LIKE</span> <span class="string">'topic_%'</span>;</div></pre></td></tr></table></figure>
+<p>执行完将生成以”topic_”开头的所有表的清除语句，选择需要的粘贴到mysql命令行，即可达到批量清除表数据的目的（更多用法自己想象）；</p>
 
-1.  `<span class="pln">SELECT</span>`
-2.  `<span class="pln">    CONCAT</span><span class="pun">(</span>`
-3.  `<span class="pln">        </span><span class="str">'delete from '</span><span class="pun">,</span>`
-4.  `<span class="pln">        table_name</span><span class="pun">,</span>`
-5.  `<span class="pln">        </span><span class="str">';'</span>`
-6.  `<span class="pln">    </span><span class="pun">)</span>`
-7.  `<span class="pln">FROM</span>`
-8.  `<span class="pln">    information_schema</span><span class="pun">.</span><span class="pln"> TABLES</span>`
-9.  `<span class="pln">WHERE</span>`
-10.  `<span class="pln">    table_name LIKE </span><span class="str">'topic_%'</span><span class="pun">;</span>`</pre>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/06/19/mysql-e5-88-a9-e7-94-a8concat-e5-87-bd-e6-95-b0-e6-89-b9-e9-87-8f-e6-b8-85-e7-a9-ba-e8-a1-a8-e6-95-b0-e6-8d-ae/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
+          
         
       
     </div>
@@ -863,7 +849,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://surpass-wei.github.io/2017/06/19/jrebel-e5-85-8d-e8-b4-b9-e8-8e-b7-e5-8f-96-e4-b8-aa-e4-ba-ba-e6-bf-80-e6-b4-bb-e7-a0-81/">
+    <link itemprop="mainEntityOfPage" href="https://surpass-wei.github.io/2017/06/19/Jrebel免费获取个人激活码/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Surpass Wei">
@@ -885,7 +871,7 @@
             
               
                 
-                <a class="post-title-link" href="/2017/06/19/jrebel-e5-85-8d-e8-b4-b9-e8-8e-b7-e5-8f-96-e4-b8-aa-e4-ba-ba-e6-bf-80-e6-b4-bb-e7-a0-81/" itemprop="url">
+                <a class="post-title-link" href="/2017/06/19/Jrebel免费获取个人激活码/" itemprop="url">
                   Jrebel免费获取个人激活码
                 </a>
               
@@ -1012,7 +998,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://surpass-wei.github.io/2017/06/17/string-e3-80-81stringbuffer-e4-bb-a5-e5-8f-8astringbuilder/">
+    <link itemprop="mainEntityOfPage" href="https://surpass-wei.github.io/2017/06/17/String、StringBuffer以及StringBuilder/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Surpass Wei">
@@ -1034,7 +1020,7 @@
             
               
                 
-                <a class="post-title-link" href="/2017/06/17/string-e3-80-81stringbuffer-e4-bb-a5-e5-8f-8astringbuilder/" itemprop="url">
+                <a class="post-title-link" href="/2017/06/17/String、StringBuffer以及StringBuilder/" itemprop="url">
                   String、StringBuffer以及StringBuilder
                 </a>
               
@@ -1110,18 +1096,25 @@
 
       
         
-          <h3 id="String"><a href="#String" class="headerlink" title="String"></a>String</h3><blockquote>
-<p>① 字符串是常量；它们的值在创建之后不能更改。 </p>
-<p>  ② Java 语言提供对字符串串联符号（”+”）以及将其他对象转换为字符串的特殊支持。字符串串联是通过 StringBuilder（或 StringBuffer）类及其 append 方法实现的。字符串转换是通过 toString 方法实现的。</p>
+          
+            <h3 id="String"><a href="#String" class="headerlink" title="String"></a>String</h3><blockquote>
+<p>① 字符串是常量；它们的值在创建之后不能更改。<br>② Java 语言提供对字符串串联符号（”+”）以及将其他对象转换为字符串的特殊支持。字符串串联是通过 StringBuilder（或 StringBuffer）类及其 append 方法实现的。字符串转换是通过 toString 方法实现的。</p>
 </blockquote>
 <h3 id="StringBuffer"><a href="#StringBuffer" class="headerlink" title="StringBuffer"></a>StringBuffer</h3><blockquote>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/06/17/string-e3-80-81stringbuffer-e4-bb-a5-e5-8f-8astringbuilder/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
+<p>① <code>线程安全</code>的可变字符序列。类似于 String 的字符串缓冲区，但不能修改。<br>② <code>StringBuffer</code> 上的主要操作是 <code>append</code> 和 <code>insert</code> 方法</p>
+</blockquote>
+<h3 id="StringBuilder"><a href="#StringBuilder" class="headerlink" title="StringBuilder"></a>StringBuilder</h3><blockquote>
+<p>① 一个可变的字符序列。但不保证同步。<br>② <code>StringBuffer</code> 的一个简易替换，用在字符串缓冲区被单个线程使用的时候（这种情况很普遍），建议优先采用该类，因为在它比 <code>StringBuffer</code> 要快。</p>
+</blockquote>
+<p><em>以上内容源于jdk1.6 API文档</em></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol>
+<li><p>在实际开发中，由于String是不可变的，所以，为了避免内存资源的浪费以及从性能上考虑，所以建议<code>对于需要经常变动的字符串，采用StringBuffer或StringBuilder</code>，对于这二者的选择，<code>多线程操作使用StringBuffer，否则，优先使用StringBuilder</code>（处理速度更快），其实一般来说，基本都是用<code>StringBuilder</code></p>
+</li>
+<li><p>对于字符串的拼接，例如：<code>String str = &quot;a&quot;+&quot;b&quot;+&quot;c&quot;</code>，我们应该直接使用String,因为经过JVM的处理，它相当于<code>String str = &quot;abc&quot;</code>，而且，处理速度是比你自己创建StringBuffer一个一个append是要更加高效的。</p>
+</li>
+</ol>
+
+          
         
       
     </div>
@@ -1163,7 +1156,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://surpass-wei.github.io/2017/06/13/java-e7-9a-84-e7-b1-bb-e5-9e-8b-e8-bd-ac-e6-8d-a2/">
+    <link itemprop="mainEntityOfPage" href="https://surpass-wei.github.io/2017/06/13/JAVA的类型转换/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Surpass Wei">
@@ -1185,7 +1178,7 @@
             
               
                 
-                <a class="post-title-link" href="/2017/06/13/java-e7-9a-84-e7-b1-bb-e5-9e-8b-e8-bd-ac-e6-8d-a2/" itemprop="url">
+                <a class="post-title-link" href="/2017/06/13/JAVA的类型转换/" itemprop="url">
                   JAVA的类型转换
                 </a>
               
@@ -1261,22 +1254,34 @@
 
       
         
-          <h2 id="基本数据类型之间的转换（值转换）"><a href="#基本数据类型之间的转换（值转换）" class="headerlink" title="基本数据类型之间的转换（值转换）"></a>基本数据类型之间的转换（值转换）</h2><ol>
+          
+            <h2 id="基本数据类型之间的转换（值转换）"><a href="#基本数据类型之间的转换（值转换）" class="headerlink" title="基本数据类型之间的转换（值转换）"></a>基本数据类型之间的转换（值转换）</h2><ol>
 <li><p>boolean类型不可以和其他基本数据类型进行转换</p>
 </li>
 <li><p>整型，字符型，浮点型之间的转换遵行一下原则：</p>
-</li>
-</ol>
 <blockquote>
 <ol>
-<li><p>容量小的类型会自动转换成容量大的类型，类型由小到大：<br>  <code>byte,short,char&amp;lt;int&amp;lt;long&amp;lt;float&amp;lt;double</code>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/06/13/java-e7-9a-84-e7-b1-bb-e5-9e-8b-e8-bd-ac-e6-8d-a2/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
+<li>容量小的类型会自动转换成容量大的类型，类型由小到大：<br><code>byte,short,char&lt;int&lt;long&lt;float&lt;double</code><br>byte,shor,char之间不会转换，他们三者在计算时会转换为int型<br><strong><em>PS：int型可以 直接（不能是多个(byte/short/char)相加后转换为了int的值（以后能不能看懂。。。。。。））赋值给byte,short,char型，但是不能超出他们的范围。</em></strong></li>
+<li>容量大的类型在转换为容量小的类型时要加强制转换符，可能会造成精度降低或溢出，要 格外注意</li>
+<li>不同数据类型在计算时会都先转换成里面最大的那种数据类型，然后计算</li>
+</ol>
+</blockquote>
+</li>
+<li><p>实数常量：默认为double型<br>整型常量：默认为int型</p>
+</li>
+</ol>
+<h2 id="引用数据类型之间的转换（引用转换）"><a href="#引用数据类型之间的转换（引用转换）" class="headerlink" title="引用数据类型之间的转换（引用转换）"></a>引用数据类型之间的转换（引用转换）</h2><ol>
+<li>把一个Stirng类型表示的值转换成基本数据类型：<br><code>Integer.parseInt(Stirng s)</code><br><code>Double.parseDouble(String s)</code><br><code>Boolean.parseBoolean(String s)</code>等等（char有另外的方法）</li>
+<li><p>把一个基本数据类型转换成String类型：<br><code>Interger.toString(int i)</code></p>
+</li>
+<li><p>由于JAVA的多态，子类可以隐式的转换为父类（其实也就是父类引用指向之类对象），这样的转换过后，父类的引用仍然可以通过强转转化为子类（子类原有的属性和方法不会丢失，因为子类对象在内存中并未发生变化），示例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//父类强转回子类后，子类仍可以使用自身属性和方法</span></div><div class="line">Father father = <span class="keyword">new</span> Son();</div><div class="line">Son son = (Son)father;</div></pre></td></tr></table></figure>
+</li>
+<li><p>但是！父类直接强转为子类会报ClassCastException异常</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//会抛出ClassCastException异常</span></div><div class="line">Father father = <span class="keyword">new</span>  Father();</div><div class="line">Son son = (Son) father;</div></pre></td></tr></table></figure></li>
+</ol>
+
+          
         
       
     </div>
@@ -1318,7 +1323,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://surpass-wei.github.io/2017/06/08/spring-mvc-e6-97-a5-e6-9c-9f-e6-97-b6-e9-97-b4-e5-8f-82-e6-95-b0-e7-9a-84-e5-a4-84-e7-90-86/">
+    <link itemprop="mainEntityOfPage" href="https://surpass-wei.github.io/2017/06/08/Spring-MVC日期时间参数的处理/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Surpass Wei">
@@ -1340,7 +1345,7 @@
             
               
                 
-                <a class="post-title-link" href="/2017/06/08/spring-mvc-e6-97-a5-e6-9c-9f-e6-97-b6-e9-97-b4-e5-8f-82-e6-95-b0-e7-9a-84-e5-a4-84-e7-90-86/" itemprop="url">
+                <a class="post-title-link" href="/2017/06/08/Spring-MVC日期时间参数的处理/" itemprop="url">
                   Spring MVC日期时间参数的处理
                 </a>
               
@@ -1416,18 +1421,16 @@
 
       
         
-          <h5 id="当Controller需要接收日期时间参数时，可以使用-DateTimeFormat注解，示例："><a href="#当Controller需要接收日期时间参数时，可以使用-DateTimeFormat注解，示例：" class="headerlink" title="当Controller需要接收日期时间参数时，可以使用@DateTimeFormat注解，示例："></a>当Controller需要接收日期时间参数时，可以使用<code>@DateTimeFormat</code>注解，示例：</h5><hr>
-<p><strong>错误示例：</strong></p>
-<pre class="prettyprint linenums prettyprinted">
+          
+            <h5 id="当Controller需要接收日期时间参数时，可以使用-DateTimeFormat注解，示例："><a href="#当Controller需要接收日期时间参数时，可以使用-DateTimeFormat注解，示例：" class="headerlink" title="当Controller需要接收日期时间参数时，可以使用@DateTimeFormat注解，示例："></a>当Controller需要接收日期时间参数时，可以使用<code>@DateTimeFormat</code>注解，示例：</h5><hr>
+<p><strong>错误示例：</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@RequestParam</span> Date deadline</div></pre></td></tr></table></figure></p>
+<p>如果直接使用<code>Date</code>接收，会报无法将String类型转化为Date类型的错误</p>
+<p><strong>正确做法：</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@RequestParam</span> <span class="meta">@DateTimeFormat</span>(pattern = <span class="string">"yyyy-MM-dd HH:mm"</span>) Date deadline</div></pre></td></tr></table></figure></p>
+<p>####当需要后台将日期数据格式化后传给前台时，则可以使用<code>@JsonFormat</code>注解，示例：</p>
+<hr>
+<p>在bean的属性值上面使用<code>@JsonFormat</code>，<code>pattern</code>指定格式，还可以用<code>timezone</code>指定时区<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@JsonFormat</span>(pattern = <span class="string">"yyyy-MM-dd HH:ss"</span>, timezone = <span class="string">"Asia/Shanghai"</span>)</div><div class="line"><span class="keyword">private</span> Date createTime;</div></pre></td></tr></table></figure></p>
 
-1.  `<span class="lit">@RequestParam</span><span class="pln"> </span><span class="typ">Date</span><span class="pln"> deadline</span>`</pre>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/06/08/spring-mvc-e6-97-a5-e6-9c-9f-e6-97-b6-e9-97-b4-e5-8f-82-e6-95-b0-e7-9a-84-e5-a4-84-e7-90-86/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
+          
         
       
     </div>
@@ -1469,7 +1472,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://surpass-wei.github.io/2017/04/26/4457b2083adb425e48f76e2c04f2ba6f/">
+    <link itemprop="mainEntityOfPage" href="https://surpass-wei.github.io/2017/04/26/jQuery树组件-jstree使用/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Surpass Wei">
@@ -1491,7 +1494,7 @@
             
               
                 
-                <a class="post-title-link" href="/2017/04/26/4457b2083adb425e48f76e2c04f2ba6f/" itemprop="url">
+                <a class="post-title-link" href="/2017/04/26/jQuery树组件-jstree使用/" itemprop="url">
                   jQuery树组件-jstree使用
                 </a>
               
@@ -1567,17 +1570,13 @@
 
       
         
-          <div id="MathJax_Message" style="display: none;"></div>
-
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><code>jstree</code>是一个比较好用的，可定制化支持较好的一个jQuery树组件，最近项目里用到了它，但是发现网上的文档以及使用方式并不适合当前项目的实际开发，又或者是英文看起来比较复杂，因此对这次使用做出相关记录，以备不时之需。</p>
+          
+            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><code>jstree</code>是一个比较好用的，可定制化支持较好的一个jQuery树组件，最近项目里用到了它，但是发现网上的文档以及使用方式并不适合当前项目的实际开发，又或者是英文看起来比较复杂，因此对这次使用做出相关记录，以备不时之需。</p>
 <blockquote>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/04/26/4457b2083adb425e48f76e2c04f2ba6f/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
+<p>相关文档<br><a href="https://www.jstree.com/" title="官网" target="_blank" rel="external">官网地址</a><br><a href="https://github.com/vakata/jstree" title="github" target="_blank" rel="external">github 地址</a></p>
+</blockquote>
+<h3 id="实例代码"><a href="#实例代码" class="headerlink" title="实例代码"></a>实例代码</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 构建课程结构树</div><div class="line"> */</div><div class="line"><span class="keyword">var</span> jsTreeComponent = &#123;</div><div class="line">    <span class="attr">init</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="comment">/*发起ajax请求*/</span></div><div class="line">        $.getJSON(<span class="string">'/你后台获取树结构的api'</span>), <span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;</div><div class="line">            <span class="comment">/*这一块的逻辑根据自己的需求进行处理*/</span></div><div class="line">            <span class="keyword">if</span> (data.success != <span class="literal">true</span>) &#123;</div><div class="line">                $jsTree.html(<span class="string">'加载失败'</span>);</div><div class="line">                <span class="keyword">return</span>;</div><div class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (data.data.structureList.length == <span class="number">0</span>) &#123;</div><div class="line">                $jsTree.html(<span class="string">'暂无数据'</span>);</div><div class="line">                <span class="keyword">return</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">var</span> structList = data.data.structureList;</div><div class="line"></div><div class="line">            <span class="comment">/*以下是jstree所需对象的特定格式（如果是异步请求，那么是另外一种格式，这里就不多介绍了）*/</span></div><div class="line">            <span class="keyword">var</span> jsTreeBean = &#123;</div><div class="line">                <span class="attr">id</span>: <span class="string">"string"</span>, <span class="comment">// 必要的参数</span></div><div class="line">                parent: <span class="string">"string"</span>, <span class="comment">// 必要的参数</span></div><div class="line">                text: <span class="string">"string"</span>, <span class="comment">// 节点名称</span></div><div class="line">                icon: <span class="string">"glyphicon glyphicon-tag"</span>, <span class="comment">// 图标，可使用自定义样式</span></div><div class="line">                state: &#123;</div><div class="line">                    <span class="attr">opened</span>: <span class="literal">true</span>,  <span class="comment">// 配置是否打开</span></div><div class="line">                    disabled: <span class="literal">false</span>,  <span class="comment">// 配置是否不可选中</span></div><div class="line">                    selected: <span class="literal">false</span>  <span class="comment">// 配置是否选中</span></div><div class="line">                &#125;,</div><div class="line">                <span class="attr">li_attr</span>: &#123;&#125;,  <span class="comment">// attributes for the generated LI node</span></div><div class="line">                a_attr: &#123;&#125;  <span class="comment">// attributes for the generated A node</span></div><div class="line">            &#125;;</div><div class="line">            <span class="keyword">var</span> jsTreeBeanList = [];</div><div class="line"></div><div class="line">            <span class="comment">/*根据后台返回来构建jsTreeBean对象，且填充到jsTreeBeanList数组*/</span></div><div class="line">            <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; structList.length; i++) &#123;</div><div class="line">                <span class="keyword">var</span> current = structList[i];</div><div class="line">                <span class="keyword">var</span> newObj = <span class="built_in">Object</span>.assign(&#123;&#125;, jsTreeBean);</div><div class="line"></div><div class="line">                newObj.id = current.id;</div><div class="line">                newObj.text = current.name;</div><div class="line">                newObj.cusLevel = current.level;    <span class="comment">//自定义的层级，0是章，1是节</span></div><div class="line">                <span class="keyword">if</span> (current.level == <span class="number">0</span>) &#123;</div><div class="line">                    newObj.icon = <span class="string">'glyphicon glyphicon-bookmark'</span>;</div><div class="line">                    newObj.parent = <span class="string">'#'</span>;</div><div class="line">                &#125; <span class="keyword">else</span> &#123;</div><div class="line">                    newObj.parent = current.parentId;</div><div class="line">                &#125;</div><div class="line"></div><div class="line">                jsTreeBeanList.push(newObj);</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="comment">/*核型配置类，用于使用构建好的数组生成树*/</span></div><div class="line">            $jsTree.jstree(&#123;</div><div class="line">                <span class="string">'core'</span>: &#123;</div><div class="line">                    <span class="string">'check_callback'</span>: <span class="literal">true</span>,</div><div class="line">                    <span class="string">'data'</span>: jsTreeBeanList</div><div class="line">                &#125;</div><div class="line">            &#125;);</div><div class="line">        &#125;);</div><div class="line">    &#125;,</div><div class="line"></div><div class="line">    <span class="comment">/*事件对象*/</span></div><div class="line">    eventListener: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="comment">/*监听'改选'这个事件，其他事件的监听参考官方文档*/</span></div><div class="line">        $jsTree.on(<span class="string">"changed.jstree"</span>, <span class="function"><span class="keyword">function</span> (<span class="params">e, data</span>) </span>&#123;</div><div class="line">            <span class="comment">/*如果点击的cusLevel是1（节），则获取学习资源*/</span></div><div class="line">            <span class="keyword">if</span> (data.node.original.cusLevel == <span class="number">1</span>) &#123;</div><div class="line">                service.loadLearnResources(data.node.id)</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+          
         
       
     </div>
@@ -1619,7 +1618,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://surpass-wei.github.io/2017/04/26/bootstrap-table-e5-9f-ba-e6-9c-ac-e4-bd-bf-e7-94-a8/">
+    <link itemprop="mainEntityOfPage" href="https://surpass-wei.github.io/2017/04/26/bootstrap-table-基本使用/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Surpass Wei">
@@ -1641,7 +1640,7 @@
             
               
                 
-                <a class="post-title-link" href="/2017/04/26/bootstrap-table-e5-9f-ba-e6-9c-ac-e4-bd-bf-e7-94-a8/" itemprop="url">
+                <a class="post-title-link" href="/2017/04/26/bootstrap-table-基本使用/" itemprop="url">
                   bootstrap table 基本使用
                 </a>
               
@@ -1717,9 +1716,8 @@
 
       
         
-          <div id="MathJax_Message" style="display: none;"></div>
-
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><code>bootstrap tabel</code>是基于 Bootstrap 的 jQuery 表格插件，通过简单的设置，就可以拥有强大的单选、多选、排序、分页，以及编辑、导出、过滤（扩展）等等的功能。</p>
+          
+            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><code>bootstrap tabel</code>是基于 Bootstrap 的 jQuery 表格插件，通过简单的设置，就可以拥有强大的单选、多选、排序、分页，以及编辑、导出、过滤（扩展）等等的功能。</p>
 <h3 id="主要功能"><a href="#主要功能" class="headerlink" title="主要功能"></a>主要功能</h3><ol>
 <li>支持 Bootstrap 3 和 Bootstrap 2</li>
 <li>自适应界面</li>
@@ -1738,13 +1736,12 @@
 <li>支持插件</li>
 </ol>
 <blockquote>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/04/26/bootstrap-table-e5-9f-ba-e6-9c-ac-e4-bd-bf-e7-94-a8/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
+<p>相关文档<br><a href="http://bootstrap-table.wenzhixin.net.cn/zh-cn/documentation/" title="官方网站" target="_blank" rel="external">官方网站</a></p>
+</blockquote>
+<h2 id="示例（后台分页，动态获取数据）"><a href="#示例（后台分页，动态获取数据）" class="headerlink" title="示例（后台分页，动态获取数据）"></a>示例（后台分页，动态获取数据）</h2><p><em>html部分</em><br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- 用来实例化表格的容器 --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">table</span> <span class="attr">id</span>=<span class="string">"example-table"</span> <span class="attr">class</span>=<span class="string">"table table-striped mb-none"</span>&gt;</span><span class="tag">&lt;/<span class="name">table</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p><em>js部分</em><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line">$traineesTable.bootstrapTable(<span class="string">'destroy'</span>);</div><div class="line">$traineesTable.bootstrapTable(&#123;</div><div class="line">    <span class="attr">url</span>: <span class="string">'/users/***'</span>,</div><div class="line">    <span class="attr">method</span>: <span class="string">'GET'</span>,</div><div class="line">    <span class="attr">dataType</span>: <span class="string">'json'</span>,</div><div class="line">    <span class="attr">striped</span>: <span class="literal">true</span>,</div><div class="line">    <span class="attr">pagination</span>: <span class="literal">true</span>,</div><div class="line">    <span class="attr">sidePagination</span>: <span class="string">"server"</span>,</div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 这是一个大坑！</div><div class="line">     * 设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder</div><div class="line">     * 设置为limit可以获取limit, offset, search, sort, order</div><div class="line">     * */</div><div class="line">    queryParamsType: <span class="string">"undefined"</span>,</div><div class="line">    <span class="attr">queryParams</span>: <span class="function"><span class="keyword">function</span> (<span class="params">params</span>) </span>&#123;</div><div class="line">        <span class="keyword">return</span> &#123;</div><div class="line">            <span class="attr">currentPage</span>: params.pageNumber,   <span class="comment">//页码</span></div><div class="line">            pageSize: params.pageSize,  <span class="comment">//页面大小</span></div><div class="line">            realName: <span class="string">'abc'</span>  <span class="comment">// 自定义参数</span></div><div class="line">        &#125;;</div><div class="line">    &#125;,</div><div class="line">    <span class="comment">//这里我查看源码的，在ajax请求成功后，发放数据之前可以对返回的数据进行处理，返回什么部分的数据，比如我的就需要进行整改的！</span></div><div class="line">    responseHandler: <span class="function"><span class="keyword">function</span> (<span class="params">res</span>) </span>&#123;</div><div class="line">        <span class="keyword">return</span> &#123;</div><div class="line">            <span class="attr">total</span>: res.data.total,</div><div class="line">            <span class="attr">rows</span>: res.data.traineeList</div><div class="line">        &#125;;</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">columns</span>: [&#123;</div><div class="line">    <span class="attr">field</span>: <span class="string">'id'</span>,</div><div class="line">    <span class="attr">title</span>: <span class="string">'序号'</span>,</div><div class="line">    <span class="attr">visible</span>: <span class="literal">false</span></div><div class="line">    &#125;, &#123;</div><div class="line">    <span class="attr">field</span>: <span class="string">'loginName'</span>,</div><div class="line">    <span class="attr">title</span>: <span class="string">'账号'</span></div><div class="line">    &#125;, &#123;</div><div class="line">    <span class="attr">field</span>: <span class="string">'realName'</span>,</div><div class="line">    <span class="attr">title</span>: <span class="string">'姓名'</span></div><div class="line">    &#125;, &#123;</div><div class="line">    <span class="attr">title</span>: <span class="string">'操作'</span>,</div><div class="line">    <span class="attr">field</span>: <span class="string">'realName'</span>,</div><div class="line">    <span class="attr">align</span>: <span class="string">'center'</span>,</div><div class="line">    <span class="attr">formatter</span>: <span class="function"><span class="keyword">function</span> (<span class="params">value, row, index</span>) </span>&#123;</div><div class="line">    <span class="comment">// value： 默认的值</span></div><div class="line">    <span class="comment">// row: 行对象</span></div><div class="line">    <span class="comment">// index: 行序号，从0开始</span></div><div class="line">    <span class="keyword">return</span> <span class="string">'这里是返回字符串'</span>;</div><div class="line">    &#125;</div><div class="line">    &#125;],</div><div class="line">    <span class="attr">onLoadSuccess</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="comment">// 当表格实例化成功后调用的函数</span></div><div class="line">    &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+
+          
         
       
     </div>
@@ -1786,7 +1783,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://surpass-wei.github.io/2017/04/14/bootstrap-multiselect-e7-9a-84refresh-e6-96-b9-e6-b3-95-e4-b8-8d-e8-b5-b7-e4-bd-9c-e7-94-a8-e7-9a-84-e8-a7-a3-e5-86-b3-e6-96-b9-e6-a1-88/">
+    <link itemprop="mainEntityOfPage" href="https://surpass-wei.github.io/2017/04/14/bootstrap-multiselect的refresh方法不起作用的解决方案/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Surpass Wei">
@@ -1808,7 +1805,7 @@
             
               
                 
-                <a class="post-title-link" href="/2017/04/14/bootstrap-multiselect-e7-9a-84refresh-e6-96-b9-e6-b3-95-e4-b8-8d-e8-b5-b7-e4-bd-9c-e7-94-a8-e7-9a-84-e8-a7-a3-e5-86-b3-e6-96-b9-e6-a1-88/" itemprop="url">
+                <a class="post-title-link" href="/2017/04/14/bootstrap-multiselect的refresh方法不起作用的解决方案/" itemprop="url">
                   bootstrap multiselect的refresh方法不起作用的解决方案
                 </a>
               
@@ -1885,12 +1882,8 @@
       
         
           
-            <div id="MathJax_Message" style="display: none;"></div>
+            <p><strong>最近做一个多级联动，使用的是<code>bootstrap-multiselect.js</code>，然而发现<code>$(&#39;#select1&#39;).multiselect(&#39;refresh&#39;)</code>并没有刷新选项，目前使用的方式是先使用<code>destroy</code>方法摧毁指定<code>select</code>元素再调用<code>refresh</code>方法来刷新，示例：</strong><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$(<span class="string">'#select1'</span>).multiselect(<span class="string">'destroy'</span>).multiselect(<span class="string">'refresh'</span>);</div></pre></td></tr></table></figure></p>
 
-<p><strong>最近做一个多级联动，使用的是<code>bootstrap-multiselect.js</code>，然而发现<code>$(&#39;#select1&#39;).multiselect(&#39;refresh&#39;)</code>并没有刷新选项，目前使用的方式是先使用<code>destroy</code>方法摧毁指定<code>select</code>元素再调用<code>refresh</code>方法来刷新，示例：</strong></p>
-<pre class="prettyprint linenums prettyprinted">
-
-1.  `<span class="pln">$</span><span class="pun">(</span><span class="str">'#select1'</span><span class="pun">).</span><span class="pln">multiselect</span><span class="pun">(</span><span class="str">'destroy'</span><span class="pun">).</span><span class="pln">multiselect</span><span class="pun">(</span><span class="str">'refresh'</span><span class="pun">);</span>`</pre>
           
         
       
@@ -1973,7 +1966,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-count">22</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

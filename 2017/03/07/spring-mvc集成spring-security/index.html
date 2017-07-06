@@ -1,0 +1,803 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Surpass's blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="http://oji4bqzc7.bkt.clouddn.com/blog/20170705/174921309.jpeg?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="代码结构总共涉及到7个类文件和添加角色配置文件以及需要在web.xml中添加一个过滤器（如果是spring boot的话则不需要配置web.xml）    涉及文件及其作用简单分析  role-config.properties：用来配置所有角色及所持权限信息 Role.java:将配置文件中的权限信息分装到java类中，方便处理 RoleHandler.java:构建Role对象列表，以便可以通">
+<meta property="og:type" content="article">
+<meta property="og:title" content="spring mvc集成spring security">
+<meta property="og:url" content="https://surpass-wei.github.io/2017/03/07/spring-mvc集成spring-security/index.html">
+<meta property="og:site_name" content="Surpass&#39;s blog">
+<meta property="og:description" content="代码结构总共涉及到7个类文件和添加角色配置文件以及需要在web.xml中添加一个过滤器（如果是spring boot的话则不需要配置web.xml）    涉及文件及其作用简单分析  role-config.properties：用来配置所有角色及所持权限信息 Role.java:将配置文件中的权限信息分装到java类中，方便处理 RoleHandler.java:构建Role对象列表，以便可以通">
+<meta property="og:image" content="http://oji4bqzc7.bkt.clouddn.com/blog/20170307/184149588.png">
+<meta property="og:image" content="http://oji4bqzc7.bkt.clouddn.com/blog/20170307/185209507.png">
+<meta property="og:updated_time" content="2017-07-06T07:11:51.022Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="spring mvc集成spring security">
+<meta name="twitter:description" content="代码结构总共涉及到7个类文件和添加角色配置文件以及需要在web.xml中添加一个过滤器（如果是spring boot的话则不需要配置web.xml）    涉及文件及其作用简单分析  role-config.properties：用来配置所有角色及所持权限信息 Role.java:将配置文件中的权限信息分装到java类中，方便处理 RoleHandler.java:构建Role对象列表，以便可以通">
+<meta name="twitter:image" content="http://oji4bqzc7.bkt.clouddn.com/blog/20170307/184149588.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: false,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://surpass-wei.github.io/2017/03/07/spring-mvc集成spring-security/"/>
+
+
+
+
+
+  <title> spring mvc集成spring security | Surpass's blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Surpass's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://surpass-wei.github.io/2017/03/07/spring-mvc集成spring-security/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Surpass Wei">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://oji4bqzc7.bkt.clouddn.com/blog/20170705/174921309.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Surpass's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                spring mvc集成spring security
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-07T11:42:10+08:00">
+                2017-03-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/开发/" itemprop="url" rel="index">
+                    <span itemprop="name">开发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="代码结构"><a href="#代码结构" class="headerlink" title="代码结构"></a>代码结构</h2><p><strong>总共涉及到<code>7个类文件</code>和添加<code>角色配置文件</code>以及需要在<code>web.xml</code>中添加一个过滤器（如果是spring boot的话则不需要配置web.xml）</strong></p>
+<p><img src="http://oji4bqzc7.bkt.clouddn.com/blog/20170307/184149588.png" alt="mark"></p>
+<hr>
+<blockquote>
+<p><strong>涉及文件及其作用简单分析</strong></p>
+<ol>
+<li><code>role-config.properties</code>：用来配置所有角色及所持权限信息</li>
+<li><code>Role.java</code>:将配置文件中的权限信息分装到java类中，方便处理</li>
+<li><code>RoleHandler.java</code>:构建Role对象列表，以便可以通过配置文件的key获取到相关Role对象</li>
+<li>‘UserDtailsBean.java’:根绝具体业务需求来给用户对象添加（自定义）security需要的属性</li>
+<li>‘UserDetailsServiceCustom’:自定义用户信息获取服务，主要是重写loadUserByUsername方法</li>
+<li><code>AuthenticationProviderCustom.java</code>:自定义授权认证类，当用户登录，则会调用该方法，授权操作就是在这里进行的</li>
+<li><code>CustomSuccessHandler</code>:当登录成功后的处理操作，可以省去或直接跳转到某个页面</li>
+<li><code>SecurityConfig</code>:Security的核心配置类，在这里使用了自定义的AuthenticationProviderCustom和AuthenticationProviderCustom进行用户信息的构建以及授权类,具体配置内容可参考官网（当然，也可以用XML进行配置，而不是Java Config的形式）</li>
+<li><code>web.xml</code>:配置security过滤器（使用spring boot的话无须配置）</li>
+</ol>
+</blockquote>
+<hr>
+<h3 id="具体代码案例"><a href="#具体代码案例" class="headerlink" title="具体代码案例"></a>具体代码案例</h3><p>1.在配置文件中配置好各个角色的信息，security会默认解析以<code>ROLE_</code>开头的权限内容作为角色，例如<code>ROLE_ADMIN</code>，则将作为<code>ADMIN</code>角色</p>
+<p><img src="http://oji4bqzc7.bkt.clouddn.com/blog/20170307/185209507.png" alt="mark"></p>
+<p>2.添加角色Bean对象</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.util.List;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Role</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> String name;    <span class="comment">//  名称</span></div><div class="line">    <span class="keyword">private</span> List&lt;String&gt; privileges;    <span class="comment">//  分配的角色/权限</span></div><div class="line"></div><div class="line">    Role()&#123;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    Role(String name, List&lt;String&gt; privileges)&#123;</div><div class="line">        <span class="keyword">this</span>.name = name;</div><div class="line">        <span class="keyword">this</span>.privileges = privileges;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function">List&lt;String&gt; <span class="title">getPrivileges</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.privileges;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function">String <span class="title">getName</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.name = name;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>3.提供角色权限初始化类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> com.x.x.common.UserType;</div><div class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Value;</div><div class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.util.ArrayList;</div><div class="line"><span class="keyword">import</span> java.util.List;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 角色权限管理以及初始化</div><div class="line"> * 目前是读取配置文件来初始化用户权限</div><div class="line"> * &lt;p&gt;</div><div class="line"> * Created by surpass.wei@gmail.com on 2017/3/6.</div><div class="line"> */</div><div class="line"><span class="meta">@Component</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RoleHandler</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;role.admin&#125;"</span>)</div><div class="line">    <span class="keyword">private</span> String adminRoleStr;</div><div class="line"></div><div class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;role.teacher&#125;"</span>)</div><div class="line">    <span class="keyword">private</span> String teacherRoleStr;</div><div class="line"></div><div class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;role.trainee&#125;"</span>)</div><div class="line">    <span class="keyword">private</span> String traineeRoleStr;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> List&lt;Role&gt; roleList = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 根据config.properties配置文件中的角色权限控制来初始化roles</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</div><div class="line">        UserType[] userTypes = UserType.values();</div><div class="line"></div><div class="line">        Role role;</div><div class="line">        List&lt;String&gt; privilegeList;</div><div class="line">        <span class="comment">/**</span></div><div class="line">         * 循环角色类型获取相应的配置字符串，根据“,”分隔</div><div class="line">         * 构建Role的List</div><div class="line">         */</div><div class="line">        <span class="keyword">for</span> (UserType userType : userTypes) &#123;</div><div class="line"></div><div class="line">            String currentRoleStr;  <span class="comment">//  当前角色的权限信息</span></div><div class="line">            <span class="keyword">if</span> (userType.equals(UserType.ADMIN)) &#123;</div><div class="line">                currentRoleStr = adminRoleStr;</div><div class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (userType.equals(UserType.TEACHER)) &#123;</div><div class="line">                currentRoleStr = teacherRoleStr;</div><div class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (userType.equals(UserType.TRAINEE)) &#123;</div><div class="line">                currentRoleStr = traineeRoleStr;</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                <span class="keyword">continue</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span> (currentRoleStr.isEmpty()) &#123;</div><div class="line">                <span class="keyword">return</span>;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            privilegeList = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">            String[] roleArr = currentRoleStr.split(<span class="string">","</span>);</div><div class="line">            <span class="keyword">for</span> (String s : roleArr) &#123;</div><div class="line">                privilegeList.add(s.trim());</div><div class="line">            &#125;</div><div class="line">            role = <span class="keyword">new</span> Role(userType.getRoleName(), privilegeList);</div><div class="line"></div><div class="line">            roleList.add(role);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> Role <span class="title">getRole</span><span class="params">(String roleName)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (roleList.isEmpty()) &#123;</div><div class="line">            <span class="keyword">this</span>.init();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (roleName == <span class="keyword">null</span> || roleName.isEmpty()) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        Role role = <span class="keyword">new</span> Role();</div><div class="line">        <span class="keyword">for</span> (Role temp_role : roleList) &#123;</div><div class="line">            <span class="keyword">if</span> (temp_role.getName().compareToIgnoreCase(roleName) == <span class="number">0</span>) &#123;</div><div class="line">                role = temp_role;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> role;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>4.封装UserDetailBean<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> com.x.x.common.UserType;</div><div class="line"><span class="keyword">import</span> com.x.x.entity.User;</div><div class="line"><span class="keyword">import</span> com.x.x.util.BeanUtil;</div><div class="line"><span class="keyword">import</span> com.x.x.util.SpringContextUtil;</div><div class="line"><span class="keyword">import</span> org.springframework.security.core.GrantedAuthority;</div><div class="line"><span class="keyword">import</span> org.springframework.security.core.authority.SimpleGrantedAuthority;</div><div class="line"><span class="keyword">import</span> org.springframework.security.core.userdetails.UserDetails;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.util.ArrayList;</div><div class="line"><span class="keyword">import</span> java.util.Collection;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 基于User包装一个UserDetailsBean(用于security权限认证)</div><div class="line"> * 主要为了实现 getAuthorities()</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserDetailsBean</span> <span class="keyword">extends</span> <span class="title">User</span> <span class="keyword">implements</span> <span class="title">UserDetails</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">UserDetailsBean</span><span class="params">(User user)</span> </span>&#123;</div><div class="line">        BeanUtil.copyObjValue(user, <span class="keyword">this</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="keyword">public</span> Collection&lt;? extends GrantedAuthority&gt; getAuthorities() &#123;</div><div class="line">        <span class="comment">//  获取用户的角色/权限信息</span></div><div class="line"></div><div class="line">        Collection&lt;SimpleGrantedAuthority&gt; authorities = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">        RoleHandler roleHandler = SpringContextUtil.getApplicationContext().getBean(RoleHandler.class);</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (roleHandler == <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">// 根据用户的类型, 构建用户对应的Role</span></div><div class="line">        String roleName;</div><div class="line"></div><div class="line">        roleName = UserType.getRoleName(<span class="keyword">this</span>.getUserType());</div><div class="line">        Role role = roleHandler.getRole(roleName);</div><div class="line"></div><div class="line">        <span class="comment">//  循环角色的权限信息, 构建authorities</span></div><div class="line">        <span class="keyword">for</span> (String privilege : role.getPrivileges()) &#123;</div><div class="line">            authorities.add(<span class="keyword">new</span> SimpleGrantedAuthority(privilege));</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> authorities;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getPassword</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.getPwd();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getUsername</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.getLoginName();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isAccountNonExpired</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="comment">//  账户是否未过期</span></div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isAccountNonLocked</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="comment">//  账户是否未锁定</span></div><div class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.getUserState() == <span class="number">0</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isCredentialsNonExpired</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="comment">// 凭证是否未过期</span></div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isEnabled</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="comment">//  是否有效</span></div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>5.实现UserDetailsService重写loadUserByUsername方法<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> com.x.x.entity.User;</div><div class="line"><span class="keyword">import</span> com.x.x.service.IUserService;</div><div class="line"><span class="keyword">import</span> org.slf4j.Logger;</div><div class="line"><span class="keyword">import</span> org.slf4j.LoggerFactory;</div><div class="line"><span class="keyword">import</span> org.springframework.security.core.userdetails.UserDetails;</div><div class="line"><span class="keyword">import</span> org.springframework.security.core.userdetails.UserDetailsService;</div><div class="line"><span class="keyword">import</span> org.springframework.security.core.userdetails.UsernameNotFoundException;</div><div class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</div><div class="line"></div><div class="line"><span class="keyword">import</span> javax.annotation.Resource;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 重写loadUserByUsername</div><div class="line"> * Created by surpass.wei@gmail.com on 2016/12/16.</div><div class="line"> */</div><div class="line"><span class="meta">@Component</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserDetailsServiceCustom</span> <span class="keyword">implements</span> <span class="title">UserDetailsService</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> Logger logger = LoggerFactory.getLogger(UserDetailsServiceCustom.class);</div><div class="line"></div><div class="line">    <span class="meta">@Resource</span></div><div class="line">    <span class="keyword">private</span> IUserService userService;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> UserDetails <span class="title">loadUserByUsername</span><span class="params">(String username)</span> <span class="keyword">throws</span> UsernameNotFoundException </span>&#123;</div><div class="line"></div><div class="line">        UserDetailsBean userDetailsBean;</div><div class="line"></div><div class="line">        User search = <span class="keyword">new</span> User();</div><div class="line">        search.setLoginName(username);</div><div class="line">        User user = userService.findOneByEntity(search);</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (user==<span class="keyword">null</span>) &#123;</div><div class="line">            logger.warn(<span class="string">"该用户不存在："</span> + username);</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> UsernameNotFoundException(<span class="string">"该用户不存在："</span> + username);</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            userDetailsBean = <span class="keyword">new</span> UserDetailsBean(user);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> userDetailsBean;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>6.自定义的授权认证类<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> com.x.x.entity.User;</div><div class="line"><span class="keyword">import</span> com.x.x.service.IUserService;</div><div class="line"><span class="keyword">import</span> org.slf4j.Logger;</div><div class="line"><span class="keyword">import</span> org.slf4j.LoggerFactory;</div><div class="line"><span class="keyword">import</span> org.springframework.security.authentication.AuthenticationProvider;</div><div class="line"><span class="keyword">import</span> org.springframework.security.authentication.BadCredentialsException;</div><div class="line"><span class="keyword">import</span> org.springframework.security.authentication.UsernamePasswordAuthenticationToken;</div><div class="line"><span class="keyword">import</span> org.springframework.security.core.Authentication;</div><div class="line"><span class="keyword">import</span> org.springframework.security.core.AuthenticationException;</div><div class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</div><div class="line"></div><div class="line"><span class="keyword">import</span> javax.annotation.Resource;</div><div class="line"></div><div class="line"><span class="meta">@Component</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AuthenticationProviderCustom</span> <span class="keyword">implements</span> <span class="title">AuthenticationProvider</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> Logger logger = LoggerFactory.getLogger(AuthenticationProviderCustom.class);</div><div class="line"></div><div class="line">    <span class="meta">@Resource</span></div><div class="line">    <span class="keyword">private</span> IUserService userService;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Authentication <span class="title">authenticate</span><span class="params">(Authentication authentication)</span> <span class="keyword">throws</span> AuthenticationException </span>&#123;</div><div class="line">        UsernamePasswordAuthenticationToken token = (UsernamePasswordAuthenticationToken) authentication;</div><div class="line">        String loginName = token.getName();</div><div class="line">        String password = token.getCredentials().toString();</div><div class="line">        User user = userService.getUserByLoginNameAndPwd(loginName, password);</div><div class="line"></div><div class="line">        UserDetailsBean userDetailsBean;</div><div class="line">        <span class="keyword">if</span>(user != <span class="keyword">null</span>) &#123;</div><div class="line">            userDetailsBean = <span class="keyword">new</span> UserDetailsBean(user);</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            logger.error(<span class="string">"用户名或密码错误"</span>);</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> BadCredentialsException(<span class="string">"用户名或密码错误"</span>);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> UsernamePasswordAuthenticationToken(userDetailsBean, password, userDetailsBean.getAuthorities());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">supports</span><span class="params">(Class&lt;?&gt; aClass)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>7.配置Security<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</div><div class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</div><div class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</div><div class="line"><span class="keyword">import</span> org.springframework.security.authentication.AuthenticationProvider;</div><div class="line"><span class="keyword">import</span> org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;</div><div class="line"><span class="keyword">import</span> org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;</div><div class="line"><span class="keyword">import</span> org.springframework.security.config.annotation.web.builders.HttpSecurity;</div><div class="line"><span class="keyword">import</span> org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;</div><div class="line"><span class="keyword">import</span> org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;</div><div class="line"><span class="keyword">import</span> org.springframework.security.core.userdetails.UserDetailsService;</div><div class="line"></div><div class="line"><span class="keyword">import</span> javax.annotation.Resource;</div><div class="line"></div><div class="line"></div><div class="line"><span class="meta">@Configuration</span></div><div class="line"><span class="meta">@EnableGlobalMethodSecurity</span>(prePostEnabled = <span class="keyword">true</span>)</div><div class="line"><span class="meta">@EnableWebSecurity</span> <span class="comment">//这里如果放开js文件将不被允许执行，注释掉也没有影响，不知道为什么</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SecurityConfig</span> <span class="keyword">extends</span> <span class="title">WebSecurityConfigurerAdapter</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Resource</span></div><div class="line">    <span class="keyword">private</span> CustomSuccessHandler customSuccessHandler;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">configure</span><span class="params">(HttpSecurity http)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        http.authorizeRequests()</div><div class="line">                .antMatchers(<span class="string">"/**"</span>).permitAll()</div><div class="line">                <span class="comment">//.antMatchers("/static/**").permitAll()  //  允许所有用户对根路径以及匹配"/static/"开头的路径的访问</span></div><div class="line">                <span class="comment">//.antMatchers("/", "/index").hasRole("TEACHER")</span></div><div class="line">                .anyRequest().authenticated()   <span class="comment">//  任何尚未匹配的的URL地址只需要对用户进行权限验证</span></div><div class="line">                .and()</div><div class="line">                .formLogin()</div><div class="line">                    .successHandler(customSuccessHandler)</div><div class="line">                    .failureUrl(<span class="string">"/login?error=true"</span>)</div><div class="line">                    <span class="comment">//.defaultSuccessUrl("/home")</span></div><div class="line">                    <span class="comment">//.defaultSuccessUrl("/swagger-ui.html")  //  登陆成功后默认默认跳转到swagger页</span></div><div class="line">                    .permitAll()</div><div class="line">                    .and()</div><div class="line">                    .rememberMe().tokenValiditySeconds(<span class="number">604800</span>);</div><div class="line">        http.logout();</div><div class="line">        http.csrf().disable();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Autowired</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">configureGlobal</span><span class="params">(AuthenticationManagerBuilder auth)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        <span class="comment">//  将验证过程交给自定义的授权认证类</span></div><div class="line">        auth.authenticationProvider(authenticationProvider());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Bean</span></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> UserDetailsService <span class="title">userDetailsService</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> UserDetailsServiceCustom();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Bean</span></div><div class="line">    <span class="function"><span class="keyword">public</span> AuthenticationProvider <span class="title">authenticationProvider</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> AuthenticationProviderCustom();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>8.自定义成功处理类(<code>可选</code>)<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> org.springframework.security.core.Authentication;</div><div class="line"><span class="keyword">import</span> org.springframework.security.web.DefaultRedirectStrategy;</div><div class="line"><span class="keyword">import</span> org.springframework.security.web.RedirectStrategy;</div><div class="line"><span class="keyword">import</span> org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;</div><div class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</div><div class="line"></div><div class="line"><span class="keyword">import</span> javax.servlet.ServletException;</div><div class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</div><div class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</div><div class="line"><span class="keyword">import</span> java.io.IOException;</div><div class="line"></div><div class="line"></div><div class="line"><span class="meta">@Component</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CustomSuccessHandler</span> <span class="keyword">extends</span> <span class="title">SimpleUrlAuthenticationSuccessHandler</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> RedirectStrategy redirectStrategy = <span class="keyword">new</span> DefaultRedirectStrategy();</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">handle</span><span class="params">(HttpServletRequest request, HttpServletResponse response,</span></span></div><div class="line">                          Authentication authentication) <span class="keyword">throws</span> IOException, ServletException &#123;</div><div class="line">        UserDetailsBean user = (UserDetailsBean) authentication.getPrincipal();</div><div class="line"></div><div class="line">        String targetUrl;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (UserType.ADMIN.getValue().equals(user.getUserType())) &#123;</div><div class="line">            targetUrl = <span class="string">"/swagger-ui.html"</span>;</div><div class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (UserType.TEACHER.getValue().equals(user.getUserType())) &#123;</div><div class="line">            targetUrl = <span class="string">"/teacher"</span>;</div><div class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (UserType.TRAINEE.getValue().equals(user.getUserType()))&#123;</div><div class="line">            targetUrl = <span class="string">"/trainee"</span>;</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            targetUrl = <span class="string">"/login?error"</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        redirectStrategy.sendRedirect(request, response, targetUrl);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>9.添加security过滤器<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!--spring security--&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">filter</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>springSecurityFilterChain<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">filter-class</span>&gt;</span>org.springframework.web.filter.DelegatingFilterProxy<span class="tag">&lt;/<span class="name">filter-class</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">filter</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">filter-mapping</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>springSecurityFilterChain<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/*<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">filter-mapping</span>&gt;</span></div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/24/spring-boot1.5以上版本@ConfigurationProperties取消location注解后的替代方案/" rel="next" title="spring boot1.5以上版本@ConfigurationProperties取消location注解后的替代方案">
+                <i class="fa fa-chevron-left"></i> spring boot1.5以上版本@ConfigurationProperties取消location注解后的替代方案
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/10/div中连续英文和数字，自动换行的处理方式/" rel="prev" title="div中连续英文和数字，自动换行的处理方式">
+                div中连续英文和数字，自动换行的处理方式 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://oji4bqzc7.bkt.clouddn.com/blog/20170705/174921309.jpeg"
+               alt="Surpass Wei" />
+          <p class="site-author-name" itemprop="name">Surpass Wei</p>
+           
+              <p class="site-description motion-element" itemprop="description">尽管风雨 生活依旧要阳光下去</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/surpass-wei" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/6045261234" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/u/882af274b0f5" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-book"></i>
+                  
+                  简书
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#代码结构"><span class="nav-number">1.</span> <span class="nav-text">代码结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#具体代码案例"><span class="nav-number">1.1.</span> <span class="nav-text">具体代码案例</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Surpass Wei</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
