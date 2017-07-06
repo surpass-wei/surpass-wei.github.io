@@ -2,11 +2,11 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>Surpass&#39;s blog</title>
   
-  <link href="/blog/atom.xml" rel="self"/>
+  <link href="/atom.xml" rel="self"/>
   
-  <link href="http://yoursite.com/"/>
-  <updated>2017-07-05T09:25:56.966Z</updated>
-  <id>http://yoursite.com/</id>
+  <link href="https://surpass-wei.github.io/"/>
+  <updated>2017-07-05T09:25:56.000Z</updated>
+  <id>https://surpass-wei.github.io/</id>
   
   <author>
     <name>Surpass Wei</name>
@@ -17,10 +17,10 @@
   
   <entry>
     <title>Hello World</title>
-    <link href="http://yoursite.com/2017/07/05/hello-world/"/>
-    <id>http://yoursite.com/2017/07/05/hello-world/</id>
+    <link href="https://surpass-wei.github.io/2017/07/05/hello-world/"/>
+    <id>https://surpass-wei.github.io/2017/07/05/hello-world/</id>
     <published>2017-07-05T09:25:56.964Z</published>
-    <updated>2017-07-05T09:25:56.966Z</updated>
+    <updated>2017-07-05T09:25:56.000Z</updated>
     
     <summary type="html">
     
