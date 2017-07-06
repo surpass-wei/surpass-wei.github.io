@@ -288,7 +288,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://surpass-wei.github.io/2017/07/05/hello-world/">
+    <link itemprop="mainEntityOfPage" href="https://surpass-wei.github.io/2017/07/03/spring-boot-e4-b8-adweblistener-e3-80-81webfilter-ef-bc-88-e4-b9-9f-e5-b0-b1-e6-98-af-e8-87-aa-e5-ae-9a-e4-b9-89servlet-ef-bc-89-e4-b8-8d-e8-b5-b7-e4-bd-9c-e7-94-a8-e7-9a-84-e8-a7-a3-e5-86-b3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Surpass Wei">
@@ -310,8 +310,8 @@
             
               
                 
-                <a class="post-title-link" href="/2017/07/05/hello-world/" itemprop="url">
-                  Hello World
+                <a class="post-title-link" href="/2017/07/03/spring-boot-e4-b8-adweblistener-e3-80-81webfilter-ef-bc-88-e4-b9-9f-e5-b0-b1-e6-98-af-e8-87-aa-e5-ae-9a-e4-b9-89servlet-ef-bc-89-e4-b8-8d-e8-b5-b7-e4-bd-9c-e7-94-a8-e7-9a-84-e8-a7-a3-e5-86-b3/" itemprop="url">
+                  spring boot中@WebListener、@WebFilter（也就是自定义servlet）不起作用的解决方案
                 </a>
               
             
@@ -327,8 +327,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-05T17:25:56+08:00">
-                2017-07-05
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-03T11:05:49+08:00">
+                2017-07-03
               </time>
             
 
@@ -337,6 +337,28 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/开发/" itemprop="url" rel="index">
+                    <span itemprop="name">开发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -365,16 +387,1510 @@
       
         
           
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+            <blockquote>
+<p>在Spring Boot中，当需要以注解的方式添加session监听器或其他servlet(包括监听器、过滤器、以及自定义的servlet)时，为了让其生效，还需要在配置类上添加<code>@ServletComponentScan</code>注解，该注解的作用是告诉spring boot,让其自动管理servlet，否则<code>注解方式注册的servlet不起作用</code></p>
+</blockquote>
+<ol>
+<li>定义过滤器</li>
+</ol>
+<pre class="prettyprint linenums prettyprinted">
 
+1.  `<span class="kwd">import</span><span class="pln"> org</span><span class="pun">.</span><span class="pln">slf4j</span><span class="pun">.</span><span class="typ">Logger</span><span class="pun">;</span>`
+2.  `<span class="kwd">import</span><span class="pln"> org</span><span class="pun">.</span><span class="pln">slf4j</span><span class="pun">.</span><span class="typ">LoggerFactory</span><span class="pun">;</span>`
+3.4.  `<span class="kwd">import</span><span class="pln"> javax</span><span class="pun">.</span><span class="pln">servlet</span><span class="pun">.*;</span>`
+5.  `<span class="kwd">import</span><span class="pln"> javax</span><span class="pun">.</span><span class="pln">servlet</span><span class="pun">.</span><span class="pln">annotation</span><span class="pun">.</span><span class="typ">WebFilter</span><span class="pun">;</span>`
+6.  `<span class="kwd">import</span><span class="pln"> java</span><span class="pun">.</span><span class="pln">io</span><span class="pun">.</span><span class="typ">IOException</span><span class="pun">;</span>`
+7.8.  `<span class="com">/**</span>`
+9.  `<span class="com"> * 使用注解标注过滤器@WebFilter将一个实现了javax.servlet.Filter接口的类定义为过滤器</span>`
+10.  `<span class="com"> * filterName声明过滤器的名称（可选）</span>`
+11.  `<span class="com"> * urlPatterns指定要过滤的URL模式,也可使用属性value来声明.(指定要过滤的URL模式是必选属性)</span>`
+12.  `<span class="com"> * &lt;p&gt;</span>`
+13.  `<span class="com"> * Created by surpass.wei@gmail.com on 2017/2/24.</span>`
+14.  `<span class="com"> */</span>`
+15.  `<span class="lit">@WebFilter</span><span class="pun">(</span><span class="pln">filterName </span><span class="pun">=</span><span class="pln"> </span><span class="str">"myFilter"</span><span class="pun">,</span><span class="pln"> urlPatterns </span><span class="pun">=</span><span class="pln"> </span><span class="str">"/*"</span><span class="pun">)</span>`
+16.  `<span class="kwd">public</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">MyFilter</span><span class="pln"> </span><span class="kwd">implements</span><span class="pln"> </span><span class="typ">Filter</span><span class="pln"> </span><span class="pun">{</span>`
+17.  `<span class="pln">    </span><span class="kwd">private</span><span class="pln"> </span><span class="typ">Logger</span><span class="pln"> logger </span><span class="pun">=</span><span class="pln"> </span><span class="typ">LoggerFactory</span><span class="pun">.</span><span class="pln">getLogger</span><span class="pun">(</span><span class="typ">MyFilter</span><span class="pun">.</span><span class="kwd">class</span><span class="pun">);</span>`
+18.19.  `<span class="pln">    </span><span class="lit">@Override</span>`
+20.  `<span class="pln">    </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> init</span><span class="pun">(</span><span class="typ">FilterConfig</span><span class="pln"> filterConfig</span><span class="pun">)</span><span class="pln"> </span><span class="kwd">throws</span><span class="pln"> </span><span class="typ">ServletException</span><span class="pln"> </span><span class="pun">{</span>`
+21.  `<span class="pln">        logger</span><span class="pun">.</span><span class="pln">info</span><span class="pun">(</span><span class="str">"过滤器：myFilter &gt;&gt;&gt;&gt; 初始化"</span><span class="pun">);</span>`
+22.  `<span class="pln">    </span><span class="pun">}</span>`
+23.24.  `<span class="pln">    </span><span class="lit">@Override</span>`
+25.  `<span class="pln">    </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> doFilter</span><span class="pun">(</span><span class="typ">ServletRequest</span><span class="pln"> servletRequest</span><span class="pun">,</span><span class="pln"> </span><span class="typ">ServletResponse</span><span class="pln"> servletResponse</span><span class="pun">,</span><span class="pln"> </span><span class="typ">FilterChain</span><span class="pln"> filterChain</span><span class="pun">)</span><span class="pln"> </span><span class="kwd">throws</span><span class="pln"> </span><span class="typ">IOException</span><span class="pun">,</span><span class="pln"> </span><span class="typ">ServletException</span><span class="pln"> </span><span class="pun">{</span>`
+26.  `<span class="pln">        logger</span><span class="pun">.</span><span class="pln">info</span><span class="pun">(</span><span class="str">"过滤器：myFilter &gt;&gt;&gt;&gt; 执行过滤操作"</span><span class="pun">);</span>`
+27.  `<span class="pln">        filterChain</span><span class="pun">.</span><span class="pln">doFilter</span><span class="pun">(</span><span class="pln">servletRequest</span><span class="pun">,</span><span class="pln"> servletResponse</span><span class="pun">);</span>`
+28.  `<span class="pln">    </span><span class="pun">}</span>`
+29.30.  `<span class="pln">    </span><span class="lit">@Override</span>`
+31.  `<span class="pln">    </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> destroy</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span>`
+32.  `<span class="pln">        logger</span><span class="pun">.</span><span class="pln">info</span><span class="pun">(</span><span class="str">"过滤器：myFilter &gt;&gt;&gt;&gt; 销毁"</span><span class="pun">);</span>`
+33.  `<span class="pln">    </span><span class="pun">}</span>`
+34.  `<span class="pun">}</span>`</pre>
+
+<ol>
+<li>定义监听器</li>
+</ol>
+<pre class="prettyprint linenums prettyprinted">
+
+1.  `<span class="kwd">import</span><span class="pln"> org</span><span class="pun">.</span><span class="pln">slf4j</span><span class="pun">.</span><span class="typ">Logger</span><span class="pun">;</span>`
+2.  `<span class="kwd">import</span><span class="pln"> org</span><span class="pun">.</span><span class="pln">slf4j</span><span class="pun">.</span><span class="typ">LoggerFactory</span><span class="pun">;</span>`
+3.4.  `<span class="kwd">import</span><span class="pln"> javax</span><span class="pun">.</span><span class="pln">servlet</span><span class="pun">.</span><span class="pln">annotation</span><span class="pun">.</span><span class="typ">WebListener</span><span class="pun">;</span>`
+5.  `<span class="kwd">import</span><span class="pln"> javax</span><span class="pun">.</span><span class="pln">servlet</span><span class="pun">.</span><span class="pln">http</span><span class="pun">.</span><span class="typ">HttpSessionEvent</span><span class="pun">;</span>`
+6.  `<span class="kwd">import</span><span class="pln"> javax</span><span class="pun">.</span><span class="pln">servlet</span><span class="pun">.</span><span class="pln">http</span><span class="pun">.</span><span class="typ">HttpSessionListener</span><span class="pun">;</span>`
+7.8.  `<span class="com">/**</span>`
+9.  `<span class="com"> * HttpSession监听器</span>`
+10.  `<span class="com"> * &lt;p&gt;</span>`
+11.  `<span class="com"> * Created by surpass.wei@gmail.com on 2017/2/24.</span>`
+12.  `<span class="com"> */</span>`
+13.  `<span class="lit">@WebListener</span>`
+14.  `<span class="kwd">public</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">MyHttpSessionListener</span><span class="pln"> </span><span class="kwd">implements</span><span class="pln"> </span><span class="typ">HttpSessionListener</span><span class="pln"> </span><span class="pun">{</span>`
+15.  `<span class="pln">    </span><span class="kwd">private</span><span class="pln"> </span><span class="typ">Logger</span><span class="pln"> logger </span><span class="pun">=</span><span class="pln"> </span><span class="typ">LoggerFactory</span><span class="pun">.</span><span class="pln">getLogger</span><span class="pun">(</span><span class="typ">MyHttpSessionListener</span><span class="pun">.</span><span class="kwd">class</span><span class="pun">);</span>`
+16.17.  `<span class="pln">    </span><span class="lit">@Override</span>`
+18.  `<span class="pln">    </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> sessionCreated</span><span class="pun">(</span><span class="typ">HttpSessionEvent</span><span class="pln"> httpSessionEvent</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span>`
+19.  `<span class="pln">        logger</span><span class="pun">.</span><span class="pln">info</span><span class="pun">(</span><span class="str">"监听器：Session &gt;&gt;&gt;&gt; 创建"</span><span class="pun">);</span>`
+20.  `<span class="pln">    </span><span class="pun">}</span>`
+21.22.  `<span class="pln">    </span><span class="lit">@Override</span>`
+23.  `<span class="pln">    </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> sessionDestroyed</span><span class="pun">(</span><span class="typ">HttpSessionEvent</span><span class="pln"> httpSessionEvent</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span>`
+24.  `<span class="pln">        logger</span><span class="pun">.</span><span class="pln">info</span><span class="pun">(</span><span class="str">"监听器：Session &gt;&gt;&gt;&gt; 销毁"</span><span class="pun">);</span>`
+25.  `<span class="pln">    </span><span class="pun">}</span>`
+26.  `<span class="pun">}</span>`</pre>
+
+<ol>
+<li>自定义servlet</li>
+</ol>
+<pre class="prettyprint linenums prettyprinted">
+
+1.  `<span class="kwd">import</span><span class="pln"> org</span><span class="pun">.</span><span class="pln">slf4j</span><span class="pun">.</span><span class="typ">Logger</span><span class="pun">;</span>`
+2.  `<span class="kwd">import</span><span class="pln"> org</span><span class="pun">.</span><span class="pln">slf4j</span><span class="pun">.</span><span class="typ">LoggerFactory</span><span class="pun">;</span>`
+3.4.  `<span class="kwd">import</span><span class="pln"> javax</span><span class="pun">.</span><span class="pln">servlet</span><span class="pun">.</span><span class="typ">ServletException</span><span class="pun">;</span>`
+5.  `<span class="kwd">import</span><span class="pln"> javax</span><span class="pun">.</span><span class="pln">servlet</span><span class="pun">.</span><span class="pln">http</span><span class="pun">.</span><span class="typ">HttpServlet</span><span class="pun">;</span>`
+6.  `<span class="kwd">import</span><span class="pln"> javax</span><span class="pun">.</span><span class="pln">servlet</span><span class="pun">.</span><span class="pln">http</span><span class="pun">.</span><span class="typ">HttpServletRequest</span><span class="pun">;</span>`
+7.  `<span class="kwd">import</span><span class="pln"> javax</span><span class="pun">.</span><span class="pln">servlet</span><span class="pun">.</span><span class="pln">http</span><span class="pun">.</span><span class="typ">HttpServletResponse</span><span class="pun">;</span>`
+8.  `<span class="kwd">import</span><span class="pln"> java</span><span class="pun">.</span><span class="pln">io</span><span class="pun">.</span><span class="typ">IOException</span><span class="pun">;</span>`
+9.  `<span class="kwd">import</span><span class="pln"> java</span><span class="pun">.</span><span class="pln">io</span><span class="pun">.</span><span class="typ">PrintWriter</span><span class="pun">;</span>`
+10.11.  `<span class="com">/**</span>`
+12.  `<span class="com"> * 自定义Servlet</span>`
+13.  `<span class="com"> * &lt;p&gt;</span>`
+14.  `<span class="com"> * Created by surpass.wei@gmail.com on 2017/2/24.</span>`
+15.  `<span class="com"> */</span>`
+16.  `<span class="kwd">public</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">MyServlet1</span><span class="pln"> </span><span class="kwd">extends</span><span class="pln"> </span><span class="typ">HttpServlet</span><span class="pln"> </span><span class="pun">{</span>`
+17.  `<span class="pln">    </span><span class="kwd">private</span><span class="pln"> </span><span class="typ">Logger</span><span class="pln"> logger </span><span class="pun">=</span><span class="pln"> </span><span class="typ">LoggerFactory</span><span class="pun">.</span><span class="pln">getLogger</span><span class="pun">(</span><span class="typ">MyServlet1</span><span class="pun">.</span><span class="kwd">class</span><span class="pun">);</span>`
+18.19.  `<span class="pln">    </span><span class="lit">@Override</span>`
+20.  `<span class="pln">    </span><span class="kwd">protected</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> doGet</span><span class="pun">(</span><span class="typ">HttpServletRequest</span><span class="pln"> req</span><span class="pun">,</span><span class="pln"> </span><span class="typ">HttpServletResponse</span><span class="pln"> resp</span><span class="pun">)</span><span class="pln"> </span><span class="kwd">throws</span><span class="pln"> </span><span class="typ">ServletException</span><span class="pun">,</span><span class="pln"> </span><span class="typ">IOException</span><span class="pln"> </span><span class="pun">{</span>`
+21.  `<span class="pln">        logger</span><span class="pun">.</span><span class="pln">info</span><span class="pun">(</span><span class="str">"已执行：MyServlet1.doGet()"</span><span class="pun">);</span>`
+22.  `<span class="pln">        doPost</span><span class="pun">(</span><span class="pln">req</span><span class="pun">,</span><span class="pln"> resp</span><span class="pun">);</span>`
+23.  `<span class="pln">    </span><span class="pun">}</span>`
+24.25.  `<span class="pln">    </span><span class="lit">@Override</span>`
+26.  `<span class="pln">    </span><span class="kwd">protected</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> doPost</span><span class="pun">(</span><span class="typ">HttpServletRequest</span><span class="pln"> req</span><span class="pun">,</span><span class="pln"> </span><span class="typ">HttpServletResponse</span><span class="pln"> resp</span><span class="pun">)</span><span class="pln"> </span><span class="kwd">throws</span><span class="pln"> </span><span class="typ">ServletException</span><span class="pun">,</span><span class="pln"> </span><span class="typ">IOException</span><span class="pln"> </span><span class="pun">{</span>`
+27.  `<span class="pln">        logger</span><span class="pun">.</span><span class="pln">info</span><span class="pun">(</span><span class="str">"已执行：MyServlet1.doPost()"</span><span class="pun">);</span>`
+28.  `<span class="pln">        resp</span><span class="pun">.</span><span class="pln">setContentType</span><span class="pun">(</span><span class="str">"text/html"</span><span class="pun">);</span>`
+29.  `<span class="pln">        resp</span><span class="pun">.</span><span class="pln">setCharacterEncoding</span><span class="pun">(</span><span class="str">"UTF-8"</span><span class="pun">);</span><span class="pln"> </span><span class="com">//  设置编码，解决中文乱码问题</span>`
+30.31.  `<span class="pln">        </span><span class="typ">PrintWriter</span><span class="pln"> out </span><span class="pun">=</span><span class="pln"> resp</span><span class="pun">.</span><span class="pln">getWriter</span><span class="pun">();</span>`
+32.  `<span class="pln">        out</span><span class="pun">.</span><span class="pln">println</span><span class="pun">(</span><span class="str">"&lt;html&gt;"</span><span class="pun">);</span>`
+33.  `<span class="pln">        out</span><span class="pun">.</span><span class="pln">println</span><span class="pun">(</span><span class="str">"&lt;head&gt;"</span><span class="pun">);</span>`
+34.  `<span class="pln">        out</span><span class="pun">.</span><span class="pln">println</span><span class="pun">(</span><span class="str">"&lt;title&gt;Hello World&lt;/title&gt;"</span><span class="pun">);</span>`
+35.  `<span class="pln">        out</span><span class="pun">.</span><span class="pln">println</span><span class="pun">(</span><span class="str">"&lt;/head&gt;"</span><span class="pun">);</span>`
+36.  `<span class="pln">        out</span><span class="pun">.</span><span class="pln">println</span><span class="pun">(</span><span class="str">"&lt;body&gt;"</span><span class="pun">);</span>`
+37.  `<span class="pln">        out</span><span class="pun">.</span><span class="pln">println</span><span class="pun">(</span><span class="str">"&lt;h1&gt;这是：MyServlet1&lt;/h1&gt;"</span><span class="pun">);</span>`
+38.  `<span class="pln">        out</span><span class="pun">.</span><span class="pln">println</span><span class="pun">(</span><span class="str">"&lt;/body&gt;"</span><span class="pun">);</span>`
+39.  `<span class="pln">        out</span><span class="pun">.</span><span class="pln">println</span><span class="pun">(</span><span class="str">"&lt;/html&gt;"</span><span class="pun">);</span>`
+40.  `<span class="pln">    </span><span class="pun">}</span>`
+41.  `<span class="pun">}</span>`</pre>
+
+<h2 id="配置-ServletComponentScan以使以上servlet生效"><a href="#配置-ServletComponentScan以使以上servlet生效" class="headerlink" title="配置@ServletComponentScan以使以上servlet生效"></a>配置<code>@ServletComponentScan</code>以使以上servlet生效</h2><pre class="prettyprint linenums prettyprinted">
+
+1.  `<span class="lit">@SpringBootApplication</span>`
+2.  `<span class="lit">@ServletComponentScan</span>`
+3.  `<span class="kwd">public</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">BasicApp</span><span class="pln"> </span><span class="kwd">extends</span><span class="pln"> </span><span class="typ">WebMvcConfigurerAdapter</span><span class="pun">{</span>`
+4.5.  `<span class="pln">    </span><span class="lit">@Bean</span>`
+6.  `<span class="pln">    </span><span class="kwd">public</span><span class="pln"> </span><span class="typ">ServletRegistrationBean</span><span class="pln"> myServlet1</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span>`
+7.  `<span class="pln">        </span><span class="kwd">return</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">ServletRegistrationBean</span><span class="pun">(</span><span class="kwd">new</span><span class="pln"> </span><span class="typ">MyServlet1</span><span class="pun">(),</span><span class="str">"/myServlet1/*"</span><span class="pun">);</span>`
+8.  `<span class="pln">    </span><span class="pun">}</span>`
+9.10.  `<span class="pln">    </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">static</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> main</span><span class="pun">(</span><span class="typ">String</span><span class="pun">[]</span><span class="pln"> args</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span>`
+11.  `<span class="pln">        </span><span class="typ">SpringApplication</span><span class="pun">.</span><span class="pln">run</span><span class="pun">(</span><span class="typ">BasicApp</span><span class="pun">.</span><span class="kwd">class</span><span class="pun">,</span><span class="pln"> args</span><span class="pun">);</span>`
+12.  `<span class="pln">    </span><span class="pun">}</span>`
+13.  `<span class="pun">}</span>`</pre>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://surpass-wei.github.io/2017/06/21/java-e5-ae-b9-e5-99-a8-e7-9b-b8-e5-85-b3-e7-9f-a5-e8-af-86-e7-82-b9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Surpass Wei">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://oji4bqzc7.bkt.clouddn.com/blog/20170705/174921309.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Surpass's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/06/21/java-e5-ae-b9-e5-99-a8-e7-9b-b8-e5-85-b3-e7-9f-a5-e8-af-86-e7-82-b9/" itemprop="url">
+                  JAVA容器相关知识点整理
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-21T09:55:33+08:00">
+                2017-06-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/开发/" itemprop="url" rel="index">
+                    <span itemprop="name">开发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><ol>
+<li>整理容器的基本知识</li>
+<li>整理关于不同容器线程安全方面的知识</li>
+</ol>
+<h3 id="根据以下资料整理"><a href="#根据以下资料整理" class="headerlink" title="根据以下资料整理"></a>根据以下资料整理</h3><blockquote>
+<p><a href="http://www.jianshu.com/p/047e33fdefd2" target="_blank" rel="external">http://www.jianshu.com/p/047e33fdefd2</a>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/06/21/java-e5-ae-b9-e5-99-a8-e7-9b-b8-e5-85-b3-e7-9f-a5-e8-af-86-e7-82-b9/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://surpass-wei.github.io/2017/06/19/mysql-e5-88-a9-e7-94-a8concat-e5-87-bd-e6-95-b0-e6-89-b9-e9-87-8f-e6-b8-85-e7-a9-ba-e8-a1-a8-e6-95-b0-e6-8d-ae/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Surpass Wei">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://oji4bqzc7.bkt.clouddn.com/blog/20170705/174921309.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Surpass's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/06/19/mysql-e5-88-a9-e7-94-a8concat-e5-87-bd-e6-95-b0-e6-89-b9-e9-87-8f-e6-b8-85-e7-a9-ba-e8-a1-a8-e6-95-b0-e6-8d-ae/" itemprop="url">
+                  mysql利用CONCAT函数批量清空表数据
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-19T03:10:31+08:00">
+                2017-06-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/开发/" itemprop="url" rel="index">
+                    <span itemprop="name">开发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h3 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h3><p>利用concat()拼接从information_schema读取出来的表信息，构建清除字符串SQL语句</p>
+<h3 id="基本"><a href="#基本" class="headerlink" title="基本"></a>基本</h3><p><code>CONCAT(str1,str2,…)</code>：mysql函数，用于拼接字符串 </p>
+<p><code>information_schema</code>：读取表信息</p>
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><pre class="prettyprint linenums prettyprinted">
+
+1.  `<span class="pln">SELECT</span>`
+2.  `<span class="pln">    CONCAT</span><span class="pun">(</span>`
+3.  `<span class="pln">        </span><span class="str">'delete from '</span><span class="pun">,</span>`
+4.  `<span class="pln">        table_name</span><span class="pun">,</span>`
+5.  `<span class="pln">        </span><span class="str">';'</span>`
+6.  `<span class="pln">    </span><span class="pun">)</span>`
+7.  `<span class="pln">FROM</span>`
+8.  `<span class="pln">    information_schema</span><span class="pun">.</span><span class="pln"> TABLES</span>`
+9.  `<span class="pln">WHERE</span>`
+10.  `<span class="pln">    table_name LIKE </span><span class="str">'topic_%'</span><span class="pun">;</span>`</pre>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/06/19/mysql-e5-88-a9-e7-94-a8concat-e5-87-bd-e6-95-b0-e6-89-b9-e9-87-8f-e6-b8-85-e7-a9-ba-e8-a1-a8-e6-95-b0-e6-8d-ae/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://surpass-wei.github.io/2017/06/19/jrebel-e5-85-8d-e8-b4-b9-e8-8e-b7-e5-8f-96-e4-b8-aa-e4-ba-ba-e6-bf-80-e6-b4-bb-e7-a0-81/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Surpass Wei">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://oji4bqzc7.bkt.clouddn.com/blog/20170705/174921309.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Surpass's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/06/19/jrebel-e5-85-8d-e8-b4-b9-e8-8e-b7-e5-8f-96-e4-b8-aa-e4-ba-ba-e6-bf-80-e6-b4-bb-e7-a0-81/" itemprop="url">
+                  Jrebel免费获取个人激活码
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-19T01:15:39+08:00">
+                2017-06-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/开发/" itemprop="url" rel="index">
+                    <span itemprop="name">开发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="获取地址"><a href="#获取地址" class="headerlink" title="获取地址"></a>获取地址</h2><p><a href="https://my.jrebel.com/" title="官网网站" target="_blank" rel="external">官网网站</a> </p>
+<p>也可以直接搜索关键字<code>MyJrebel</code></p>
+<ol>
+<li>使用facebook或Twitter登陆</li>
+<li>完善个人信息</li>
+<li>在 Install and Acticvate里面查看个人激活码</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://surpass-wei.github.io/2017/06/17/string-e3-80-81stringbuffer-e4-bb-a5-e5-8f-8astringbuilder/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Surpass Wei">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://oji4bqzc7.bkt.clouddn.com/blog/20170705/174921309.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Surpass's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/06/17/string-e3-80-81stringbuffer-e4-bb-a5-e5-8f-8astringbuilder/" itemprop="url">
+                  String、StringBuffer以及StringBuilder
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-17T09:22:17+08:00">
+                2017-06-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/开发/" itemprop="url" rel="index">
+                    <span itemprop="name">开发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h3 id="String"><a href="#String" class="headerlink" title="String"></a>String</h3><blockquote>
+<p>① 字符串是常量；它们的值在创建之后不能更改。 </p>
+<p>  ② Java 语言提供对字符串串联符号（”+”）以及将其他对象转换为字符串的特殊支持。字符串串联是通过 StringBuilder（或 StringBuffer）类及其 append 方法实现的。字符串转换是通过 toString 方法实现的。</p>
+</blockquote>
+<h3 id="StringBuffer"><a href="#StringBuffer" class="headerlink" title="StringBuffer"></a>StringBuffer</h3><blockquote>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/06/17/string-e3-80-81stringbuffer-e4-bb-a5-e5-8f-8astringbuilder/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://surpass-wei.github.io/2017/06/13/java-e7-9a-84-e7-b1-bb-e5-9e-8b-e8-bd-ac-e6-8d-a2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Surpass Wei">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://oji4bqzc7.bkt.clouddn.com/blog/20170705/174921309.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Surpass's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/06/13/java-e7-9a-84-e7-b1-bb-e5-9e-8b-e8-bd-ac-e6-8d-a2/" itemprop="url">
+                  JAVA的类型转换
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-13T06:30:00+08:00">
+                2017-06-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/开发/" itemprop="url" rel="index">
+                    <span itemprop="name">开发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="基本数据类型之间的转换（值转换）"><a href="#基本数据类型之间的转换（值转换）" class="headerlink" title="基本数据类型之间的转换（值转换）"></a>基本数据类型之间的转换（值转换）</h2><ol>
+<li><p>boolean类型不可以和其他基本数据类型进行转换</p>
+</li>
+<li><p>整型，字符型，浮点型之间的转换遵行一下原则：</p>
+</li>
+</ol>
+<blockquote>
+<ol>
+<li><p>容量小的类型会自动转换成容量大的类型，类型由小到大：<br>  <code>byte,short,char&amp;lt;int&amp;lt;long&amp;lt;float&amp;lt;double</code>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/06/13/java-e7-9a-84-e7-b1-bb-e5-9e-8b-e8-bd-ac-e6-8d-a2/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://surpass-wei.github.io/2017/06/08/spring-mvc-e6-97-a5-e6-9c-9f-e6-97-b6-e9-97-b4-e5-8f-82-e6-95-b0-e7-9a-84-e5-a4-84-e7-90-86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Surpass Wei">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://oji4bqzc7.bkt.clouddn.com/blog/20170705/174921309.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Surpass's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/06/08/spring-mvc-e6-97-a5-e6-9c-9f-e6-97-b6-e9-97-b4-e5-8f-82-e6-95-b0-e7-9a-84-e5-a4-84-e7-90-86/" itemprop="url">
+                  Spring MVC日期时间参数的处理
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-08T07:33:22+08:00">
+                2017-06-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/开发/" itemprop="url" rel="index">
+                    <span itemprop="name">开发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h5 id="当Controller需要接收日期时间参数时，可以使用-DateTimeFormat注解，示例："><a href="#当Controller需要接收日期时间参数时，可以使用-DateTimeFormat注解，示例：" class="headerlink" title="当Controller需要接收日期时间参数时，可以使用@DateTimeFormat注解，示例："></a>当Controller需要接收日期时间参数时，可以使用<code>@DateTimeFormat</code>注解，示例：</h5><hr>
+<p><strong>错误示例：</strong></p>
+<pre class="prettyprint linenums prettyprinted">
+
+1.  `<span class="lit">@RequestParam</span><span class="pln"> </span><span class="typ">Date</span><span class="pln"> deadline</span>`</pre>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/06/08/spring-mvc-e6-97-a5-e6-9c-9f-e6-97-b6-e9-97-b4-e5-8f-82-e6-95-b0-e7-9a-84-e5-a4-84-e7-90-86/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://surpass-wei.github.io/2017/04/26/4457b2083adb425e48f76e2c04f2ba6f/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Surpass Wei">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://oji4bqzc7.bkt.clouddn.com/blog/20170705/174921309.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Surpass's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/04/26/4457b2083adb425e48f76e2c04f2ba6f/" itemprop="url">
+                  jQuery树组件-jstree使用
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-26T09:39:36+08:00">
+                2017-04-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/开发/" itemprop="url" rel="index">
+                    <span itemprop="name">开发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <div id="MathJax_Message" style="display: none;"></div>
+
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><code>jstree</code>是一个比较好用的，可定制化支持较好的一个jQuery树组件，最近项目里用到了它，但是发现网上的文档以及使用方式并不适合当前项目的实际开发，又或者是英文看起来比较复杂，因此对这次使用做出相关记录，以备不时之需。</p>
+<blockquote>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/04/26/4457b2083adb425e48f76e2c04f2ba6f/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://surpass-wei.github.io/2017/04/26/bootstrap-table-e5-9f-ba-e6-9c-ac-e4-bd-bf-e7-94-a8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Surpass Wei">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://oji4bqzc7.bkt.clouddn.com/blog/20170705/174921309.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Surpass's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/04/26/bootstrap-table-e5-9f-ba-e6-9c-ac-e4-bd-bf-e7-94-a8/" itemprop="url">
+                  bootstrap table 基本使用
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-26T09:37:12+08:00">
+                2017-04-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/开发/" itemprop="url" rel="index">
+                    <span itemprop="name">开发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <div id="MathJax_Message" style="display: none;"></div>
+
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><code>bootstrap tabel</code>是基于 Bootstrap 的 jQuery 表格插件，通过简单的设置，就可以拥有强大的单选、多选、排序、分页，以及编辑、导出、过滤（扩展）等等的功能。</p>
+<h3 id="主要功能"><a href="#主要功能" class="headerlink" title="主要功能"></a>主要功能</h3><ol>
+<li>支持 Bootstrap 3 和 Bootstrap 2</li>
+<li>自适应界面</li>
+<li>固定表头</li>
+<li>非常丰富的配置参数</li>
+<li>直接通过标签使用</li>
+<li>显示/隐藏列</li>
+<li>显示/隐藏表头</li>
+<li>通过 AJAX 获取 JSON 格式的数据</li>
+<li>支持排序</li>
+<li>格式化表格</li>
+<li>支持单选或者多选</li>
+<li>强大的分页功能</li>
+<li>支持卡片视图</li>
+<li>支持多语言</li>
+<li>支持插件</li>
+</ol>
+<blockquote>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/04/26/bootstrap-table-e5-9f-ba-e6-9c-ac-e4-bd-bf-e7-94-a8/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://surpass-wei.github.io/2017/04/14/bootstrap-multiselect-e7-9a-84refresh-e6-96-b9-e6-b3-95-e4-b8-8d-e8-b5-b7-e4-bd-9c-e7-94-a8-e7-9a-84-e8-a7-a3-e5-86-b3-e6-96-b9-e6-a1-88/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Surpass Wei">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://oji4bqzc7.bkt.clouddn.com/blog/20170705/174921309.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Surpass's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/04/14/bootstrap-multiselect-e7-9a-84refresh-e6-96-b9-e6-b3-95-e4-b8-8d-e8-b5-b7-e4-bd-9c-e7-94-a8-e7-9a-84-e8-a7-a3-e5-86-b3-e6-96-b9-e6-a1-88/" itemprop="url">
+                  bootstrap multiselect的refresh方法不起作用的解决方案
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-14T08:10:30+08:00">
+                2017-04-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/开发/" itemprop="url" rel="index">
+                    <span itemprop="name">开发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <div id="MathJax_Message" style="display: none;"></div>
+
+<p><strong>最近做一个多级联动，使用的是<code>bootstrap-multiselect.js</code>，然而发现<code>$(&#39;#select1&#39;).multiselect(&#39;refresh&#39;)</code>并没有刷新选项，目前使用的方式是先使用<code>destroy</code>方法摧毁指定<code>select</code>元素再调用<code>refresh</code>方法来刷新，示例：</strong></p>
+<pre class="prettyprint linenums prettyprinted">
+
+1.  `<span class="pln">$</span><span class="pun">(</span><span class="str">'#select1'</span><span class="pun">).</span><span class="pln">multiselect</span><span class="pun">(</span><span class="str">'destroy'</span><span class="pun">).</span><span class="pln">multiselect</span><span class="pun">(</span><span class="str">'refresh'</span><span class="pun">);</span>`</pre>
           
         
       
@@ -411,6 +1927,10 @@
   </section>
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
 
 
           </div>
@@ -453,14 +1973,32 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-count">23</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
           
 
           
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
 
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
           
 
         </nav>

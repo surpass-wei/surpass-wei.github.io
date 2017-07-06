@@ -1,0 +1,886 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Surpass's blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="http://oji4bqzc7.bkt.clouddn.com/blog/20170705/174921309.jpeg?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="在Spring Boot中，当需要以注解的方式添加session监听器或其他servlet(包括监听器、过滤器、以及自定义的servlet)时，为了让其生效，还需要在配置类上添加@ServletComponentScan注解，该注解的作用是告诉spring boot,让其自动管理servlet，否则注解方式注册的servlet不起作用   定义过滤器    1.  `import org.slf">
+<meta property="og:type" content="article">
+<meta property="og:title" content="spring boot中@WebListener、@WebFilter（也就是自定义servlet）不起作用的解决方案">
+<meta property="og:url" content="https://surpass-wei.github.io/2017/07/03/spring-boot-e4-b8-adweblistener-e3-80-81webfilter-ef-bc-88-e4-b9-9f-e5-b0-b1-e6-98-af-e8-87-aa-e5-ae-9a-e4-b9-89servlet-ef-bc-89-e4-b8-8d-e8-b5-b7-e4-bd-9c-e7-94-a8-e7-9a-84-e8-a7-a3-e5-86-b3/index.html">
+<meta property="og:site_name" content="Surpass&#39;s blog">
+<meta property="og:description" content="在Spring Boot中，当需要以注解的方式添加session监听器或其他servlet(包括监听器、过滤器、以及自定义的servlet)时，为了让其生效，还需要在配置类上添加@ServletComponentScan注解，该注解的作用是告诉spring boot,让其自动管理servlet，否则注解方式注册的servlet不起作用   定义过滤器    1.  `import org.slf">
+<meta property="og:updated_time" content="2017-07-06T06:35:51.108Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="spring boot中@WebListener、@WebFilter（也就是自定义servlet）不起作用的解决方案">
+<meta name="twitter:description" content="在Spring Boot中，当需要以注解的方式添加session监听器或其他servlet(包括监听器、过滤器、以及自定义的servlet)时，为了让其生效，还需要在配置类上添加@ServletComponentScan注解，该注解的作用是告诉spring boot,让其自动管理servlet，否则注解方式注册的servlet不起作用   定义过滤器    1.  `import org.slf">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: false,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://surpass-wei.github.io/2017/07/03/spring-boot-e4-b8-adweblistener-e3-80-81webfilter-ef-bc-88-e4-b9-9f-e5-b0-b1-e6-98-af-e8-87-aa-e5-ae-9a-e4-b9-89servlet-ef-bc-89-e4-b8-8d-e8-b5-b7-e4-bd-9c-e7-94-a8-e7-9a-84-e8-a7-a3-e5-86-b3/"/>
+
+
+
+
+
+  <title> spring boot中@WebListener、@WebFilter（也就是自定义servlet）不起作用的解决方案 | Surpass's blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Surpass's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://surpass-wei.github.io/2017/07/03/spring-boot-e4-b8-adweblistener-e3-80-81webfilter-ef-bc-88-e4-b9-9f-e5-b0-b1-e6-98-af-e8-87-aa-e5-ae-9a-e4-b9-89servlet-ef-bc-89-e4-b8-8d-e8-b5-b7-e4-bd-9c-e7-94-a8-e7-9a-84-e8-a7-a3-e5-86-b3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Surpass Wei">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://oji4bqzc7.bkt.clouddn.com/blog/20170705/174921309.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Surpass's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                spring boot中@WebListener、@WebFilter（也就是自定义servlet）不起作用的解决方案
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-03T11:05:49+08:00">
+                2017-07-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/开发/" itemprop="url" rel="index">
+                    <span itemprop="name">开发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>在Spring Boot中，当需要以注解的方式添加session监听器或其他servlet(包括监听器、过滤器、以及自定义的servlet)时，为了让其生效，还需要在配置类上添加<code>@ServletComponentScan</code>注解，该注解的作用是告诉spring boot,让其自动管理servlet，否则<code>注解方式注册的servlet不起作用</code></p>
+</blockquote>
+<ol>
+<li>定义过滤器</li>
+</ol>
+<pre class="prettyprint linenums prettyprinted">
+
+1.  `<span class="kwd">import</span><span class="pln"> org</span><span class="pun">.</span><span class="pln">slf4j</span><span class="pun">.</span><span class="typ">Logger</span><span class="pun">;</span>`
+2.  `<span class="kwd">import</span><span class="pln"> org</span><span class="pun">.</span><span class="pln">slf4j</span><span class="pun">.</span><span class="typ">LoggerFactory</span><span class="pun">;</span>`
+3.4.  `<span class="kwd">import</span><span class="pln"> javax</span><span class="pun">.</span><span class="pln">servlet</span><span class="pun">.*;</span>`
+5.  `<span class="kwd">import</span><span class="pln"> javax</span><span class="pun">.</span><span class="pln">servlet</span><span class="pun">.</span><span class="pln">annotation</span><span class="pun">.</span><span class="typ">WebFilter</span><span class="pun">;</span>`
+6.  `<span class="kwd">import</span><span class="pln"> java</span><span class="pun">.</span><span class="pln">io</span><span class="pun">.</span><span class="typ">IOException</span><span class="pun">;</span>`
+7.8.  `<span class="com">/**</span>`
+9.  `<span class="com"> * 使用注解标注过滤器@WebFilter将一个实现了javax.servlet.Filter接口的类定义为过滤器</span>`
+10.  `<span class="com"> * filterName声明过滤器的名称（可选）</span>`
+11.  `<span class="com"> * urlPatterns指定要过滤的URL模式,也可使用属性value来声明.(指定要过滤的URL模式是必选属性)</span>`
+12.  `<span class="com"> * &lt;p&gt;</span>`
+13.  `<span class="com"> * Created by surpass.wei@gmail.com on 2017/2/24.</span>`
+14.  `<span class="com"> */</span>`
+15.  `<span class="lit">@WebFilter</span><span class="pun">(</span><span class="pln">filterName </span><span class="pun">=</span><span class="pln"> </span><span class="str">"myFilter"</span><span class="pun">,</span><span class="pln"> urlPatterns </span><span class="pun">=</span><span class="pln"> </span><span class="str">"/*"</span><span class="pun">)</span>`
+16.  `<span class="kwd">public</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">MyFilter</span><span class="pln"> </span><span class="kwd">implements</span><span class="pln"> </span><span class="typ">Filter</span><span class="pln"> </span><span class="pun">{</span>`
+17.  `<span class="pln">    </span><span class="kwd">private</span><span class="pln"> </span><span class="typ">Logger</span><span class="pln"> logger </span><span class="pun">=</span><span class="pln"> </span><span class="typ">LoggerFactory</span><span class="pun">.</span><span class="pln">getLogger</span><span class="pun">(</span><span class="typ">MyFilter</span><span class="pun">.</span><span class="kwd">class</span><span class="pun">);</span>`
+18.19.  `<span class="pln">    </span><span class="lit">@Override</span>`
+20.  `<span class="pln">    </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> init</span><span class="pun">(</span><span class="typ">FilterConfig</span><span class="pln"> filterConfig</span><span class="pun">)</span><span class="pln"> </span><span class="kwd">throws</span><span class="pln"> </span><span class="typ">ServletException</span><span class="pln"> </span><span class="pun">{</span>`
+21.  `<span class="pln">        logger</span><span class="pun">.</span><span class="pln">info</span><span class="pun">(</span><span class="str">"过滤器：myFilter &gt;&gt;&gt;&gt; 初始化"</span><span class="pun">);</span>`
+22.  `<span class="pln">    </span><span class="pun">}</span>`
+23.24.  `<span class="pln">    </span><span class="lit">@Override</span>`
+25.  `<span class="pln">    </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> doFilter</span><span class="pun">(</span><span class="typ">ServletRequest</span><span class="pln"> servletRequest</span><span class="pun">,</span><span class="pln"> </span><span class="typ">ServletResponse</span><span class="pln"> servletResponse</span><span class="pun">,</span><span class="pln"> </span><span class="typ">FilterChain</span><span class="pln"> filterChain</span><span class="pun">)</span><span class="pln"> </span><span class="kwd">throws</span><span class="pln"> </span><span class="typ">IOException</span><span class="pun">,</span><span class="pln"> </span><span class="typ">ServletException</span><span class="pln"> </span><span class="pun">{</span>`
+26.  `<span class="pln">        logger</span><span class="pun">.</span><span class="pln">info</span><span class="pun">(</span><span class="str">"过滤器：myFilter &gt;&gt;&gt;&gt; 执行过滤操作"</span><span class="pun">);</span>`
+27.  `<span class="pln">        filterChain</span><span class="pun">.</span><span class="pln">doFilter</span><span class="pun">(</span><span class="pln">servletRequest</span><span class="pun">,</span><span class="pln"> servletResponse</span><span class="pun">);</span>`
+28.  `<span class="pln">    </span><span class="pun">}</span>`
+29.30.  `<span class="pln">    </span><span class="lit">@Override</span>`
+31.  `<span class="pln">    </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> destroy</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span>`
+32.  `<span class="pln">        logger</span><span class="pun">.</span><span class="pln">info</span><span class="pun">(</span><span class="str">"过滤器：myFilter &gt;&gt;&gt;&gt; 销毁"</span><span class="pun">);</span>`
+33.  `<span class="pln">    </span><span class="pun">}</span>`
+34.  `<span class="pun">}</span>`</pre>
+
+<ol>
+<li>定义监听器</li>
+</ol>
+<pre class="prettyprint linenums prettyprinted">
+
+1.  `<span class="kwd">import</span><span class="pln"> org</span><span class="pun">.</span><span class="pln">slf4j</span><span class="pun">.</span><span class="typ">Logger</span><span class="pun">;</span>`
+2.  `<span class="kwd">import</span><span class="pln"> org</span><span class="pun">.</span><span class="pln">slf4j</span><span class="pun">.</span><span class="typ">LoggerFactory</span><span class="pun">;</span>`
+3.4.  `<span class="kwd">import</span><span class="pln"> javax</span><span class="pun">.</span><span class="pln">servlet</span><span class="pun">.</span><span class="pln">annotation</span><span class="pun">.</span><span class="typ">WebListener</span><span class="pun">;</span>`
+5.  `<span class="kwd">import</span><span class="pln"> javax</span><span class="pun">.</span><span class="pln">servlet</span><span class="pun">.</span><span class="pln">http</span><span class="pun">.</span><span class="typ">HttpSessionEvent</span><span class="pun">;</span>`
+6.  `<span class="kwd">import</span><span class="pln"> javax</span><span class="pun">.</span><span class="pln">servlet</span><span class="pun">.</span><span class="pln">http</span><span class="pun">.</span><span class="typ">HttpSessionListener</span><span class="pun">;</span>`
+7.8.  `<span class="com">/**</span>`
+9.  `<span class="com"> * HttpSession监听器</span>`
+10.  `<span class="com"> * &lt;p&gt;</span>`
+11.  `<span class="com"> * Created by surpass.wei@gmail.com on 2017/2/24.</span>`
+12.  `<span class="com"> */</span>`
+13.  `<span class="lit">@WebListener</span>`
+14.  `<span class="kwd">public</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">MyHttpSessionListener</span><span class="pln"> </span><span class="kwd">implements</span><span class="pln"> </span><span class="typ">HttpSessionListener</span><span class="pln"> </span><span class="pun">{</span>`
+15.  `<span class="pln">    </span><span class="kwd">private</span><span class="pln"> </span><span class="typ">Logger</span><span class="pln"> logger </span><span class="pun">=</span><span class="pln"> </span><span class="typ">LoggerFactory</span><span class="pun">.</span><span class="pln">getLogger</span><span class="pun">(</span><span class="typ">MyHttpSessionListener</span><span class="pun">.</span><span class="kwd">class</span><span class="pun">);</span>`
+16.17.  `<span class="pln">    </span><span class="lit">@Override</span>`
+18.  `<span class="pln">    </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> sessionCreated</span><span class="pun">(</span><span class="typ">HttpSessionEvent</span><span class="pln"> httpSessionEvent</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span>`
+19.  `<span class="pln">        logger</span><span class="pun">.</span><span class="pln">info</span><span class="pun">(</span><span class="str">"监听器：Session &gt;&gt;&gt;&gt; 创建"</span><span class="pun">);</span>`
+20.  `<span class="pln">    </span><span class="pun">}</span>`
+21.22.  `<span class="pln">    </span><span class="lit">@Override</span>`
+23.  `<span class="pln">    </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> sessionDestroyed</span><span class="pun">(</span><span class="typ">HttpSessionEvent</span><span class="pln"> httpSessionEvent</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span>`
+24.  `<span class="pln">        logger</span><span class="pun">.</span><span class="pln">info</span><span class="pun">(</span><span class="str">"监听器：Session &gt;&gt;&gt;&gt; 销毁"</span><span class="pun">);</span>`
+25.  `<span class="pln">    </span><span class="pun">}</span>`
+26.  `<span class="pun">}</span>`</pre>
+
+<ol>
+<li>自定义servlet</li>
+</ol>
+<pre class="prettyprint linenums prettyprinted">
+
+1.  `<span class="kwd">import</span><span class="pln"> org</span><span class="pun">.</span><span class="pln">slf4j</span><span class="pun">.</span><span class="typ">Logger</span><span class="pun">;</span>`
+2.  `<span class="kwd">import</span><span class="pln"> org</span><span class="pun">.</span><span class="pln">slf4j</span><span class="pun">.</span><span class="typ">LoggerFactory</span><span class="pun">;</span>`
+3.4.  `<span class="kwd">import</span><span class="pln"> javax</span><span class="pun">.</span><span class="pln">servlet</span><span class="pun">.</span><span class="typ">ServletException</span><span class="pun">;</span>`
+5.  `<span class="kwd">import</span><span class="pln"> javax</span><span class="pun">.</span><span class="pln">servlet</span><span class="pun">.</span><span class="pln">http</span><span class="pun">.</span><span class="typ">HttpServlet</span><span class="pun">;</span>`
+6.  `<span class="kwd">import</span><span class="pln"> javax</span><span class="pun">.</span><span class="pln">servlet</span><span class="pun">.</span><span class="pln">http</span><span class="pun">.</span><span class="typ">HttpServletRequest</span><span class="pun">;</span>`
+7.  `<span class="kwd">import</span><span class="pln"> javax</span><span class="pun">.</span><span class="pln">servlet</span><span class="pun">.</span><span class="pln">http</span><span class="pun">.</span><span class="typ">HttpServletResponse</span><span class="pun">;</span>`
+8.  `<span class="kwd">import</span><span class="pln"> java</span><span class="pun">.</span><span class="pln">io</span><span class="pun">.</span><span class="typ">IOException</span><span class="pun">;</span>`
+9.  `<span class="kwd">import</span><span class="pln"> java</span><span class="pun">.</span><span class="pln">io</span><span class="pun">.</span><span class="typ">PrintWriter</span><span class="pun">;</span>`
+10.11.  `<span class="com">/**</span>`
+12.  `<span class="com"> * 自定义Servlet</span>`
+13.  `<span class="com"> * &lt;p&gt;</span>`
+14.  `<span class="com"> * Created by surpass.wei@gmail.com on 2017/2/24.</span>`
+15.  `<span class="com"> */</span>`
+16.  `<span class="kwd">public</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">MyServlet1</span><span class="pln"> </span><span class="kwd">extends</span><span class="pln"> </span><span class="typ">HttpServlet</span><span class="pln"> </span><span class="pun">{</span>`
+17.  `<span class="pln">    </span><span class="kwd">private</span><span class="pln"> </span><span class="typ">Logger</span><span class="pln"> logger </span><span class="pun">=</span><span class="pln"> </span><span class="typ">LoggerFactory</span><span class="pun">.</span><span class="pln">getLogger</span><span class="pun">(</span><span class="typ">MyServlet1</span><span class="pun">.</span><span class="kwd">class</span><span class="pun">);</span>`
+18.19.  `<span class="pln">    </span><span class="lit">@Override</span>`
+20.  `<span class="pln">    </span><span class="kwd">protected</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> doGet</span><span class="pun">(</span><span class="typ">HttpServletRequest</span><span class="pln"> req</span><span class="pun">,</span><span class="pln"> </span><span class="typ">HttpServletResponse</span><span class="pln"> resp</span><span class="pun">)</span><span class="pln"> </span><span class="kwd">throws</span><span class="pln"> </span><span class="typ">ServletException</span><span class="pun">,</span><span class="pln"> </span><span class="typ">IOException</span><span class="pln"> </span><span class="pun">{</span>`
+21.  `<span class="pln">        logger</span><span class="pun">.</span><span class="pln">info</span><span class="pun">(</span><span class="str">"已执行：MyServlet1.doGet()"</span><span class="pun">);</span>`
+22.  `<span class="pln">        doPost</span><span class="pun">(</span><span class="pln">req</span><span class="pun">,</span><span class="pln"> resp</span><span class="pun">);</span>`
+23.  `<span class="pln">    </span><span class="pun">}</span>`
+24.25.  `<span class="pln">    </span><span class="lit">@Override</span>`
+26.  `<span class="pln">    </span><span class="kwd">protected</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> doPost</span><span class="pun">(</span><span class="typ">HttpServletRequest</span><span class="pln"> req</span><span class="pun">,</span><span class="pln"> </span><span class="typ">HttpServletResponse</span><span class="pln"> resp</span><span class="pun">)</span><span class="pln"> </span><span class="kwd">throws</span><span class="pln"> </span><span class="typ">ServletException</span><span class="pun">,</span><span class="pln"> </span><span class="typ">IOException</span><span class="pln"> </span><span class="pun">{</span>`
+27.  `<span class="pln">        logger</span><span class="pun">.</span><span class="pln">info</span><span class="pun">(</span><span class="str">"已执行：MyServlet1.doPost()"</span><span class="pun">);</span>`
+28.  `<span class="pln">        resp</span><span class="pun">.</span><span class="pln">setContentType</span><span class="pun">(</span><span class="str">"text/html"</span><span class="pun">);</span>`
+29.  `<span class="pln">        resp</span><span class="pun">.</span><span class="pln">setCharacterEncoding</span><span class="pun">(</span><span class="str">"UTF-8"</span><span class="pun">);</span><span class="pln"> </span><span class="com">//  设置编码，解决中文乱码问题</span>`
+30.31.  `<span class="pln">        </span><span class="typ">PrintWriter</span><span class="pln"> out </span><span class="pun">=</span><span class="pln"> resp</span><span class="pun">.</span><span class="pln">getWriter</span><span class="pun">();</span>`
+32.  `<span class="pln">        out</span><span class="pun">.</span><span class="pln">println</span><span class="pun">(</span><span class="str">"&lt;html&gt;"</span><span class="pun">);</span>`
+33.  `<span class="pln">        out</span><span class="pun">.</span><span class="pln">println</span><span class="pun">(</span><span class="str">"&lt;head&gt;"</span><span class="pun">);</span>`
+34.  `<span class="pln">        out</span><span class="pun">.</span><span class="pln">println</span><span class="pun">(</span><span class="str">"&lt;title&gt;Hello World&lt;/title&gt;"</span><span class="pun">);</span>`
+35.  `<span class="pln">        out</span><span class="pun">.</span><span class="pln">println</span><span class="pun">(</span><span class="str">"&lt;/head&gt;"</span><span class="pun">);</span>`
+36.  `<span class="pln">        out</span><span class="pun">.</span><span class="pln">println</span><span class="pun">(</span><span class="str">"&lt;body&gt;"</span><span class="pun">);</span>`
+37.  `<span class="pln">        out</span><span class="pun">.</span><span class="pln">println</span><span class="pun">(</span><span class="str">"&lt;h1&gt;这是：MyServlet1&lt;/h1&gt;"</span><span class="pun">);</span>`
+38.  `<span class="pln">        out</span><span class="pun">.</span><span class="pln">println</span><span class="pun">(</span><span class="str">"&lt;/body&gt;"</span><span class="pun">);</span>`
+39.  `<span class="pln">        out</span><span class="pun">.</span><span class="pln">println</span><span class="pun">(</span><span class="str">"&lt;/html&gt;"</span><span class="pun">);</span>`
+40.  `<span class="pln">    </span><span class="pun">}</span>`
+41.  `<span class="pun">}</span>`</pre>
+
+<h2 id="配置-ServletComponentScan以使以上servlet生效"><a href="#配置-ServletComponentScan以使以上servlet生效" class="headerlink" title="配置@ServletComponentScan以使以上servlet生效"></a>配置<code>@ServletComponentScan</code>以使以上servlet生效</h2><pre class="prettyprint linenums prettyprinted">
+
+1.  `<span class="lit">@SpringBootApplication</span>`
+2.  `<span class="lit">@ServletComponentScan</span>`
+3.  `<span class="kwd">public</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">BasicApp</span><span class="pln"> </span><span class="kwd">extends</span><span class="pln"> </span><span class="typ">WebMvcConfigurerAdapter</span><span class="pun">{</span>`
+4.5.  `<span class="pln">    </span><span class="lit">@Bean</span>`
+6.  `<span class="pln">    </span><span class="kwd">public</span><span class="pln"> </span><span class="typ">ServletRegistrationBean</span><span class="pln"> myServlet1</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span>`
+7.  `<span class="pln">        </span><span class="kwd">return</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">ServletRegistrationBean</span><span class="pun">(</span><span class="kwd">new</span><span class="pln"> </span><span class="typ">MyServlet1</span><span class="pun">(),</span><span class="str">"/myServlet1/*"</span><span class="pun">);</span>`
+8.  `<span class="pln">    </span><span class="pun">}</span>`
+9.10.  `<span class="pln">    </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">static</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> main</span><span class="pun">(</span><span class="typ">String</span><span class="pun">[]</span><span class="pln"> args</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span>`
+11.  `<span class="pln">        </span><span class="typ">SpringApplication</span><span class="pun">.</span><span class="pln">run</span><span class="pun">(</span><span class="typ">BasicApp</span><span class="pun">.</span><span class="kwd">class</span><span class="pun">,</span><span class="pln"> args</span><span class="pun">);</span>`
+12.  `<span class="pln">    </span><span class="pun">}</span>`
+13.  `<span class="pun">}</span>`</pre>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/21/java-e5-ae-b9-e5-99-a8-e7-9b-b8-e5-85-b3-e7-9f-a5-e8-af-86-e7-82-b9/" rel="next" title="JAVA容器相关知识点整理">
+                <i class="fa fa-chevron-left"></i> JAVA容器相关知识点整理
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://oji4bqzc7.bkt.clouddn.com/blog/20170705/174921309.jpeg"
+               alt="Surpass Wei" />
+          <p class="site-author-name" itemprop="name">Surpass Wei</p>
+           
+              <p class="site-description motion-element" itemprop="description">尽管风雨 生活依旧要阳光下去</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/surpass-wei" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/6045261234" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/u/882af274b0f5" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-book"></i>
+                  
+                  简书
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#配置-ServletComponentScan以使以上servlet生效"><span class="nav-number">1.</span> <span class="nav-text">配置@ServletComponentScan以使以上servlet生效</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Surpass Wei</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
