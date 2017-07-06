@@ -387,13 +387,19 @@
       
         
           
-            <h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p>在IDEA下开发maven项目，经常在修改POM文件后，编译器的Language level自动改为了1.5，每次都要改回1.8，很麻烦</p>
-<hr>
-<h1 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h1><p>是Maven插件没有配置最新的Java编译器</p>
-<hr>
-<h1 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h1><p>在<code>pom.xml</code>的<code>project</code>节点下，添加（这里是设置Language level为1.8）：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">properties</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">maven.compiler.source</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">maven.compiler.source</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">maven.compiler.target</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">maven.compiler.target</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">properties</span>&gt;</span></div></pre></td></tr></table></figure></p>
+          问题在IDEA下开发maven项目，经常在修改POM文件后，编译器的Language level自动改为了1.5，每次都要改回1.8，很麻烦
 
-          
+原因是Maven插件没有配置最新的Java编译器
+
+解决方案在pom.xml的project节点下，添加（这里是设置Language level为1.8）：
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/01/07/防止maven更新依赖后Language-level改为1.5/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -534,23 +540,18 @@
       
         
           
-            <h4 id="简单粗暴的流程："><a href="#简单粗暴的流程：" class="headerlink" title="简单粗暴的流程："></a>简单粗暴的流程：</h4><ol>
-<li>下载Ubuntu16.04.iso镜像</li>
-<li>使用<code>rufus-2.11.exe</code>制作Ubuntu系统安装启动盘（UEFI模式下应该直接吧镜像解压到U盘中就可以，它会自动找到efi文件，不过没试过）</li>
-<li>在win10磁盘管理中压缩一个现有磁盘或直接删除一个磁盘，反正目的就是制造一个可用空间或未分配的空间</li>
-<li><code>关闭win10的快速启动</code>以及<code>关闭secure boot</code></li>
-<li>关机，插上U盘，进入boot，选择U盘启动</li>
-<li>选地区时间什么的就不说了，主要是安装类型要选择“其他选项”，因为我们的目的是把系统装到windows盘符以外的盘中。</li>
-<li>最重要的是分区步骤（<code>UEFI模式下会和传统模式有不同的地方（这是个大坑）</code>）<ol>
-<li>找到准备好的设备（磁盘,设备名应该叫空闲（语言选择中文的前提下），否则就是步骤③不到位）</li>
-<li>一下是我的分区情况<br><img src="http://oji4bqzc7.bkt.clouddn.com/blog/20170706/151722804.png" alt="mark"></li>
-</ol>
-</li>
-<li>重启，一切顺利的话应该可以见到一个紫色的界面用来选择启动哪个系统（默认会是Ubuntu，当然，选择带有windows字样的就是启动win10了）</li>
-<li>当然你也可以自己管理引导，但是在win10下，UEFI管理引导不是用EasyBCD（很多地方提到这个软件，但是，值得注意的是UEFI模式是不支持该软件的！），而是用EasyUEFI(当然，也会有别的软件，但是注意，一定要是支持UEFI的，否则找了也没用)，不管理引导的话，可能导致删除ubuntu系统后，也进去win10了，所以最好还是在win10下装一个比较好。</li>
-</ol>
-<h4 id="总结：单独就装上Ubuntu来说，其实是不麻烦的，主要是要搞清楚你电脑的引导模式，然后“对症下药”，在安装过程中注意好Ubuntu的分区（步骤⑥）基本就没什么大问题。"><a href="#总结：单独就装上Ubuntu来说，其实是不麻烦的，主要是要搞清楚你电脑的引导模式，然后“对症下药”，在安装过程中注意好Ubuntu的分区（步骤⑥）基本就没什么大问题。" class="headerlink" title="总结：单独就装上Ubuntu来说，其实是不麻烦的，主要是要搞清楚你电脑的引导模式，然后“对症下药”，在安装过程中注意好Ubuntu的分区（步骤⑥）基本就没什么大问题。"></a>总结：单独就装上Ubuntu来说，其实是不麻烦的，主要是要搞清楚你电脑的引导模式，然后“对症下药”，在安装过程中注意好Ubuntu的分区（步骤⑥）基本就没什么大问题。</h4>
-          
+          简单粗暴的流程：
+下载Ubuntu16.04.iso镜像
+使用rufus-2.11.exe制作Ubuntu系统安装启动盘（UEFI模式下应该直接吧镜像解压到U盘中就可以，它会自动找到efi文件，不过没试过）
+在win10磁盘管理中压缩一个现有磁盘或直接删除一个磁盘，反正目的就是制造一个可用空间或未分
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/01/07/UEFI模式下win10装Ubuntu16.04双系统/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
