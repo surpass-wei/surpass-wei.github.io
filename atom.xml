@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://surpass-wei.github.io/"/>
-  <updated>2017-07-21T09:13:37.479Z</updated>
+  <updated>2017-08-07T03:39:03.609Z</updated>
   <id>https://surpass-wei.github.io/</id>
   
   <author>
@@ -14,6 +14,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>关于Spring boot部署到独立Tomcat时，Servlet未能注入的问题</title>
+    <link href="https://surpass-wei.github.io/2017/08/07/%E5%85%B3%E4%BA%8ESpring-boot%E9%83%A8%E7%BD%B2%E5%88%B0%E7%8B%AC%E7%AB%8BTomcat%E6%97%B6%EF%BC%8CServlet%E6%9C%AA%E8%83%BD%E6%B3%A8%E5%85%A5%E7%9A%84%E9%97%AE%E9%A2%98/"/>
+    <id>https://surpass-wei.github.io/2017/08/07/关于Spring-boot部署到独立Tomcat时，Servlet未能注入的问题/</id>
+    <published>2017-08-07T03:36:56.000Z</published>
+    <updated>2017-08-07T03:39:03.609Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;前文&quot;&gt;&lt;a href=&quot;#前文&quot; class=&quot;headerlink&quot; title=&quot;前文&quot;&gt;&lt;/a&gt;前文&lt;/h1&gt;&lt;p&gt;在将 &lt;code&gt;spring boot&lt;/code&gt; 应用&lt;code&gt;部署到独立的tomcat服务器时&lt;/code&gt;，会因为&lt;code&gt;@
+    
+    </summary>
+    
+      <category term="开发" scheme="https://surpass-wei.github.io/categories/%E5%BC%80%E5%8F%91/"/>
+    
+    
+      <category term="tomcat" scheme="https://surpass-wei.github.io/tags/tomcat/"/>
+    
+      <category term="spring boot" scheme="https://surpass-wei.github.io/tags/spring-boot/"/>
+    
+  </entry>
   
   <entry>
     <title>分享记录下喜欢的IDEA插件</title>
@@ -407,26 +429,6 @@
     
       <category term="开发" scheme="https://surpass-wei.github.io/categories/%E5%BC%80%E5%8F%91/"/>
     
-    
-  </entry>
-  
-  <entry>
-    <title>windows下图床神器（结合markdown和七牛）</title>
-    <link href="https://surpass-wei.github.io/2017/01/14/windows%E4%B8%8B%E5%9B%BE%E5%BA%8A%E7%A5%9E%E5%99%A8%EF%BC%88%E7%BB%93%E5%90%88markdown%E5%92%8C%E4%B8%83%E7%89%9B%EF%BC%89/"/>
-    <id>https://surpass-wei.github.io/2017/01/14/windows下图床神器（结合markdown和七牛）/</id>
-    <published>2017-01-14T03:17:03.000Z</published>
-    <updated>2017-07-06T06:59:47.796Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;&lt;code&gt;markdown&lt;/code&gt;是一种很不错的轻量级标记语言，实现了样式与内容的分离，通过简单的语法学习就能够帮助我们写出一片优雅
-    
-    </summary>
-    
-      <category term="开发" scheme="https://surpass-wei.github.io/categories/%E5%BC%80%E5%8F%91/"/>
-    
-    
-      <category term="markdown" scheme="https://surpass-wei.github.io/tags/markdown/"/>
     
   </entry>
   

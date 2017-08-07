@@ -89,7 +89,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="tomcat,spring boot," />
 
 
 
@@ -107,15 +107,17 @@
 
 
 
-<meta name="description" content="尽管风雨 生活依旧要阳光下去">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Surpass&#39;s blog">
-<meta property="og:url" content="https://surpass-wei.github.io/tags/mySql/index.html">
+<meta name="description" content="前文在将 spring boot 应用部署到独立的tomcat服务器时，会因为@ServletComponentScan注解不起作用，从而导致以注解形式注入的监听器、过滤器以及 Servlet 注入失败（因为独立Tomcat采用的是容器内建的discovery机制），最终导致项目启动失败，为了避免这一情况，最好以 @Bean 的形式注册相关servlet 示例注册 Session 监听器 首先实现">
+<meta name="keywords" content="tomcat,spring boot">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于Spring boot部署到独立Tomcat时，Servlet未能注入的问题">
+<meta property="og:url" content="https://surpass-wei.github.io/2017/08/07/关于Spring-boot部署到独立Tomcat时，Servlet未能注入的问题/index.html">
 <meta property="og:site_name" content="Surpass&#39;s blog">
-<meta property="og:description" content="尽管风雨 生活依旧要阳光下去">
+<meta property="og:description" content="前文在将 spring boot 应用部署到独立的tomcat服务器时，会因为@ServletComponentScan注解不起作用，从而导致以注解形式注入的监听器、过滤器以及 Servlet 注入失败（因为独立Tomcat采用的是容器内建的discovery机制），最终导致项目启动失败，为了避免这一情况，最好以 @Bean 的形式注册相关servlet 示例注册 Session 监听器 首先实现">
+<meta property="og:updated_time" content="2017-08-07T03:39:03.609Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Surpass&#39;s blog">
-<meta name="twitter:description" content="尽管风雨 生活依旧要阳光下去">
+<meta name="twitter:title" content="关于Spring boot部署到独立Tomcat时，Servlet未能注入的问题">
+<meta name="twitter:description" content="前文在将 spring boot 应用部署到独立的tomcat服务器时，会因为@ServletComponentScan注解不起作用，从而导致以注解形式注入的监听器、过滤器以及 Servlet 注入失败（因为独立Tomcat采用的是容器内建的discovery机制），最终导致项目启动失败，为了避免这一情况，最好以 @Bean 的形式注册相关servlet 示例注册 Session 监听器 首先实现">
 
 
 
@@ -143,13 +145,13 @@
 
 
 
-  <link rel="canonical" href="https://surpass-wei.github.io/tags/mySql/"/>
+  <link rel="canonical" href="https://surpass-wei.github.io/2017/08/07/关于Spring-boot部署到独立Tomcat时，Servlet未能注入的问题/"/>
 
 
 
 
 
-  <title> 标签: mySql | Surpass's blog </title>
+  <title> 关于Spring boot部署到独立Tomcat时，Servlet未能注入的问题 | Surpass's blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -174,7 +176,7 @@
     
   
 
-  <div class="container sidebar-position-left  ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -278,46 +280,221 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-collapse">
-    <div class="collection-title">
-      <h2 >
-        mySql
-        <small>标签</small>
-      </h2>
-    </div>
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://surpass-wei.github.io/2017/08/07/关于Spring-boot部署到独立Tomcat时，Servlet未能注入的问题/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Surpass Wei">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://oji4bqzc7.bkt.clouddn.com/blog/20170705/174921309.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Surpass's blog">
+    </span>
 
     
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                关于Spring boot部署到独立Tomcat时，Servlet未能注入的问题
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-07T11:36:56+08:00">
+                2017-08-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/开发/" itemprop="url" rel="index">
+                    <span itemprop="name">开发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/08/07/关于Spring-boot部署到独立Tomcat时，Servlet未能注入的问题/" class="leancloud_visitors" data-flag-title="关于Spring boot部署到独立Tomcat时，Servlet未能注入的问题">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
       
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+      
+        <h1 id="前文"><a href="#前文" class="headerlink" title="前文"></a>前文</h1><p>在将 <code>spring boot</code> 应用<code>部署到独立的tomcat服务器时</code>，会因为<code>@ServletComponentScan注解不起作用</code>，从而导致以注解形式注入的监听器、过滤器以及 Servlet 注入失败（因为独立Tomcat采用的是容器内建的discovery机制），最终导致项目启动失败，为了避免这一情况，最好以 <code>@Bean</code> 的形式注册相关servlet</p>
+<h1 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h1><h2 id="注册-Session-监听器"><a href="#注册-Session-监听器" class="headerlink" title="注册 Session 监听器"></a>注册 Session 监听器</h2><blockquote>
+<p>首先实现 HttpSessionListener 来定义一个 session 监听器，注意，这里将不再使用 @WebListener 注解</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//  @WebListener  // 因为需要在独立的tomcat中部署，所以改为采用ServletListenerRegistrationBean来注册监听器</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SessionHandler</span> <span class="keyword">implements</span> <span class="title">HttpSessionListener</span> </span>&#123;</div><div class="line">    <span class="meta">@Resource</span></div><div class="line">    <span class="keyword">private</span> ILoginLogService loginLogService;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sessionCreated</span><span class="params">(HttpSessionEvent httpSessionEvent)</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"session created"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sessionDestroyed</span><span class="params">(HttpSessionEvent httpSessionEvent)</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"session Destroyed"</span>);</div><div class="line">        UserDetailsBean user = (UserDetailsBean) httpSessionEvent.getSession().getAttribute(<span class="string">"user-detail"</span>);</div><div class="line">        <span class="keyword">if</span> (user != <span class="keyword">null</span> &amp;&amp; loginLogService != <span class="keyword">null</span>) &#123;</div><div class="line">            LoginLog lastLogByUserId = loginLogService.getLastLogByUserId(user.getId());</div><div class="line">            lastLogByUserId.setLogoutTime(<span class="keyword">new</span> Date());</div><div class="line">            loginLogService.update(lastLogByUserId);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>然后在一个配置类中对定义的监听器类进行注册</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Bean</span></div><div class="line"><span class="function"><span class="keyword">public</span> ServletListenerRegistrationBean <span class="title">sessionHandler</span><span class="params">()</span> </span>&#123;</div><div class="line">	<span class="keyword">return</span> <span class="keyword">new</span> ServletListenerRegistrationBean&lt;&gt;(<span class="keyword">new</span> SessionHandler());</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>通过以上方式，可以有效解决 <code>@ServletComponentScan</code> 在独立容器中失效的问题</p>
 
-      <h1 class="post-title">
+      
+    </div>
+
+    <div>
+      
         
-            <a class="post-title-link" href="/2017/06/19/mysql利用CONCAT函数批量清空表数据/" itemprop="url">
-              
-                <span itemprop="name">mysql利用CONCAT函数批量清空表数据</span>
-              
-            </a>
+
+      
+    </div>
+
+    <div>
+      
         
-      </h1>
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>感谢阅读</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://oji4bqzc7.bkt.clouddn.com/blog/20170706/154336978.jpg" alt="Surpass Wei WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="http://oji4bqzc7.bkt.clouddn.com/blog/20170706/154254186.jpg" alt="Surpass Wei Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-06-19T03:10:31+08:00"
-              content="2017-06-19" >
-          06-19
-        </time>
-      </div>
 
-    </header>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/tomcat/" rel="tag"># tomcat</a>
+          
+            <a href="/tags/spring-boot/" rel="tag"># spring boot</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/21/分享记录下喜欢的IDEA插件/" rel="next" title="分享记录下喜欢的IDEA插件">
+                <i class="fa fa-chevron-left"></i> 分享记录下喜欢的IDEA插件
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </article>
 
 
-    
-  </div>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -325,6 +502,12 @@
 
 
           
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTYxMS82MTc5"></div>
+    
+  </div>
+
 
         </div>
         
@@ -344,8 +527,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="http://oji4bqzc7.bkt.clouddn.com/blog/20170705/174921309.jpeg"
@@ -443,6 +635,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前文"><span class="nav-number">1.</span> <span class="nav-text">前文</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#示例"><span class="nav-number">2.</span> <span class="nav-text">示例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#注册-Session-监听器"><span class="nav-number">2.1.</span> <span class="nav-text">注册 Session 监听器</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -550,6 +758,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
 
   
 
