@@ -89,7 +89,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="spring_mvc," />
+  <meta name="keywords" content="SSO,CAS," />
 
 
 
@@ -107,17 +107,17 @@
 
 
 
-<meta name="description" content="区别 转发比重定向快 重定向经过客户端 若需要转到一个外部网站，只能使用重定向 重定向可以避免用户重新加载页面时再次发起请求 转发只有一次请求，而重定向实际是两次请求  总结：">
-<meta name="keywords" content="spring_mvc">
+<meta name="description" content="错误内容在配置 CAS 4.2.1 进行自定义的数据源（Mysql）验证配置时，出现如下错误：1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950org.springframework.beans.factory.BeanCreationException: Error">
+<meta name="keywords" content="SSO,CAS">
 <meta property="og:type" content="article">
-<meta property="og:title" content="spring mvc中的转发与重定向">
-<meta property="og:url" content="https://surpass-wei.github.io/2017/02/18/spring-mvc中的转发与重定向/index.html">
+<meta property="og:title" content="CAS server启动错误：java.lang.ClassNotFoundException: org.jasig.cas.adaptors.jdbc.QueryDatabaseAuthenticationHandler">
+<meta property="og:url" content="https://surpass-wei.github.io/2017/08/09/CAS-server启动错误：java-lang-ClassNotFoundException-org-jasig-cas-adaptors-jdbc-QueryDatabaseAuthenticationHandler/index.html">
 <meta property="og:site_name" content="Surpass&#39;s blog">
-<meta property="og:description" content="区别 转发比重定向快 重定向经过客户端 若需要转到一个外部网站，只能使用重定向 重定向可以避免用户重新加载页面时再次发起请求 转发只有一次请求，而重定向实际是两次请求  总结：">
-<meta property="og:updated_time" content="2017-07-06T06:35:51.105Z">
+<meta property="og:description" content="错误内容在配置 CAS 4.2.1 进行自定义的数据源（Mysql）验证配置时，出现如下错误：1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950org.springframework.beans.factory.BeanCreationException: Error">
+<meta property="og:updated_time" content="2017-08-09T08:45:57.484Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="spring mvc中的转发与重定向">
-<meta name="twitter:description" content="区别 转发比重定向快 重定向经过客户端 若需要转到一个外部网站，只能使用重定向 重定向可以避免用户重新加载页面时再次发起请求 转发只有一次请求，而重定向实际是两次请求  总结：">
+<meta name="twitter:title" content="CAS server启动错误：java.lang.ClassNotFoundException: org.jasig.cas.adaptors.jdbc.QueryDatabaseAuthenticationHandler">
+<meta name="twitter:description" content="错误内容在配置 CAS 4.2.1 进行自定义的数据源（Mysql）验证配置时，出现如下错误：1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950org.springframework.beans.factory.BeanCreationException: Error">
 
 
 
@@ -145,13 +145,13 @@
 
 
 
-  <link rel="canonical" href="https://surpass-wei.github.io/2017/02/18/spring-mvc中的转发与重定向/"/>
+  <link rel="canonical" href="https://surpass-wei.github.io/2017/08/09/CAS-server启动错误：java-lang-ClassNotFoundException-org-jasig-cas-adaptors-jdbc-QueryDatabaseAuthenticationHandler/"/>
 
 
 
 
 
-  <title> spring mvc中的转发与重定向 | Surpass's blog </title>
+  <title> CAS server启动错误：java.lang.ClassNotFoundException: org.jasig.cas.adaptors.jdbc.QueryDatabaseAuthenticationHandler | Surpass's blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -324,7 +324,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://surpass-wei.github.io/2017/02/18/spring-mvc中的转发与重定向/">
+    <link itemprop="mainEntityOfPage" href="https://surpass-wei.github.io/2017/08/09/CAS-server启动错误：java-lang-ClassNotFoundException-org-jasig-cas-adaptors-jdbc-QueryDatabaseAuthenticationHandler/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Surpass Wei">
@@ -345,7 +345,7 @@
             
             
               
-                spring mvc中的转发与重定向
+                CAS server启动错误：java.lang.ClassNotFoundException: org.jasig.cas.adaptors.jdbc.QueryDatabaseAuthenticationHandler
               
             
           </h1>
@@ -360,8 +360,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-18T03:52:48+08:00">
-                2017-02-18
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-09T16:44:00+08:00">
+                2017-08-09
               </time>
             
 
@@ -371,28 +371,6 @@
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/开发/" itemprop="url" rel="index">
-                    <span itemprop="name">开发</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -400,7 +378,7 @@
 
           
           
-             <span id="/2017/02/18/spring-mvc中的转发与重定向/" class="leancloud_visitors" data-flag-title="spring mvc中的转发与重定向">
+             <span id="/2017/08/09/CAS-server启动错误：java-lang-ClassNotFoundException-org-jasig-cas-adaptors-jdbc-QueryDatabaseAuthenticationHandler/" class="leancloud_visitors" data-flag-title="CAS server启动错误：java.lang.ClassNotFoundException: org.jasig.cas.adaptors.jdbc.QueryDatabaseAuthenticationHandler">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -429,28 +407,26 @@
       
 
       
-        <h2 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h2><ol>
-<li><code>转发</code>比<code>重定向</code>快</li>
-<li><code>重定向</code>经过客户端</li>
-<li>若需要转到一个外部网站，只能使用<code>重定向</code></li>
-<li><code>重定向</code>可以避免用户重新加载页面时再次发起请求</li>
-<li><code>转发</code>只有一次请求，而<code>重定向</code>实际是两次请求</li>
-</ol>
-<h3 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h3><a id="more"></a>
-<p><code>转发</code>就好比你拿着请假条去找班长请假，班长知道这应该找班主任，所以就拿着你的申请去找班主任，然后签好字给你了，而<code>重定向</code>就比较懒了，他只告诉你，这该找班主任，然后你就得自己再自个去找班主任了</p>
-<h2 id="使用spring-3的Flash属性让重定向传值"><a href="#使用spring-3的Flash属性让重定向传值" class="headerlink" title="使用spring 3的Flash属性让重定向传值"></a>使用spring 3的Flash属性让重定向传值</h2><p>我们知道由于重定向经过客户端，所以参数会在重定向的过程中丢失，但是在spring 3版本及以上，我们可以通过Flash属性进行传值，方法：</p>
+        <h1 id="错误内容"><a href="#错误内容" class="headerlink" title="错误内容"></a>错误内容</h1><p>在配置 CAS 4.2.1 进行自定义的数据源（Mysql）验证配置时，出现如下错误：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div></pre></td><td class="code"><pre><div class="line">org.springframework.beans.factory.BeanCreationException: Error creating bean with name &apos;centralAuthenticationService&apos; defined in ServletContext resource [/WEB-INF/spring-configuration/applicationContext.xml]: Cannot resolve reference to bean &apos;authenticationManager&apos; while setting constructor argument; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name &apos;authenticationManager&apos; defined in ServletContext resource [/WEB-INF/deployerConfigContext.xml]: Cannot resolve reference to bean &apos;dbAuthHandler&apos; while setting constructor argument; nested exception is org.springframework.beans.factory.CannotLoadBeanClassException: Cannot find class [org.jasig.cas.adaptors.jdbc.QueryDatabaseAuthenticationHandler] for bean with name &apos;dbAuthHandler&apos; defined in ServletContext resource [/WEB-INF/deployerConfigContext.xml]; nested exception is java.lang.ClassNotFoundException: org.jasig.cas.adaptors.jdbc.QueryDatabaseAuthenticationHandler</div><div class="line">    at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:326)</div><div class="line">    at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:107)</div><div class="line">    at org.springframework.beans.factory.support.ConstructorResolver.resolveConstructorArguments(ConstructorResolver.java:623)</div><div class="line">    at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:148)</div><div class="line">    at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1075)</div><div class="line">    at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:979)</div><div class="line">    at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:487)</div><div class="line">    at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:458)</div><div class="line">    at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:296)</div><div class="line">    at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:223)</div><div class="line">    at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:293)</div><div class="line">    at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:194)</div><div class="line">    at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:628)</div><div class="line">    at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:932)</div><div class="line">    at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:479)</div><div class="line">    at org.springframework.web.context.ContextLoader.configureAndRefreshWebApplicationContext(ContextLoader.java:389)</div><div class="line">    at org.springframework.web.context.ContextLoader.initWebApplicationContext(ContextLoader.java:294)</div><div class="line">    at org.springframework.web.context.ContextLoaderListener.contextInitialized(ContextLoaderListener.java:112)</div><div class="line">    at org.jasig.cas.web.init.SafeContextLoaderListener.contextInitialized(SafeContextLoaderListener.java:75)</div><div class="line">    at org.apache.catalina.core.StandardContext.listenerStart(StandardContext.java:5003)</div><div class="line">    at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:5517)</div><div class="line">    at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:150)</div><div class="line">    at org.apache.catalina.core.ContainerBase.addChildInternal(ContainerBase.java:901)</div><div class="line">    at org.apache.catalina.core.ContainerBase.addChild(ContainerBase.java:877)</div><div class="line">    at org.apache.catalina.core.StandardHost.addChild(StandardHost.java:652)</div><div class="line">    at org.apache.catalina.startup.HostConfig.deployWAR(HostConfig.java:1095)</div><div class="line">    at org.apache.catalina.startup.HostConfig$DeployWar.run(HostConfig.java:1960)</div><div class="line">    at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)</div><div class="line">    at java.util.concurrent.FutureTask.run(FutureTask.java:266)</div><div class="line">    at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)</div><div class="line">    at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)</div><div class="line">    at java.lang.Thread.run(Thread.java:745)</div><div class="line">Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name &apos;authenticationManager&apos; defined in ServletContext resource [/WEB-INF/deployerConfigContext.xml]: Cannot resolve reference to bean &apos;dbAuthHandler&apos; while setting constructor argument; nested exception is org.springframework.beans.factory.CannotLoadBeanClassException: Cannot find class [org.jasig.cas.adaptors.jdbc.QueryDatabaseAuthenticationHandler] for bean with name &apos;dbAuthHandler&apos; defined in ServletContext resource [/WEB-INF/deployerConfigContext.xml]; nested exception is java.lang.ClassNotFoundException: org.jasig.cas.adaptors.jdbc.QueryDatabaseAuthenticationHandler</div><div class="line">    at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:326)</div><div class="line">    at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:107)</div><div class="line">    at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveManagedMap(BeanDefinitionValueResolver.java:375)</div><div class="line">    at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:162)</div><div class="line">    at org.springframework.beans.factory.support.ConstructorResolver.resolveConstructorArguments(ConstructorResolver.java:637)</div><div class="line">    at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:148)</div><div class="line">    at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1075)</div><div class="line">    at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:979)</div><div class="line">    at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:487)</div><div class="line">    at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:458)</div><div class="line">    at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:296)</div><div class="line">    at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:223)</div><div class="line">    at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:293)</div><div class="line">    at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:194)</div><div class="line">    at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:320)</div><div class="line">    ... 31 more</div></pre></td></tr></table></figure></p>
+<h1 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h1><p>这是因为缺少数据连接包所导致的, 需要添加相关jar包（可以到<a href="https://mvnrepository.com" title="Maven仓库" target="_blank" rel="external">Maven中央仓库</a>寻找对应的jar）到 <code>tomcat目录\webapps\cas应用\WEB-INF\lib</code> 下：</p>
 <ol>
-<li>spring mvc配置开启<code>&amp;lt;annotation-driven/&amp;gt;</code></li>
-<li>在Controller方法上添加<code>org.springframework.web.servlet.mvc.supportRedirectAttributes</code>参数</li>
+<li><p>cas-server-support-jdbc-4.2.1.jar</p>
+<blockquote>
+<p>编译项目后，可以在 cas-4.2.1\cas-server-support-jdbc\build\libs\cas-server-support-jdbc-4.2.1.jar 找到</p>
+</blockquote>
+</li>
+<li><p>mysql-connector-java-5.1.21.jar</p>
+<blockquote>
+<p>mysql驱动</p>
+</blockquote>
+</li>
+<li><p>c3p0-0.9.1.2</p>
+<blockquote>
+<p>非必要，一般已存在</p>
+</blockquote>
+</li>
 </ol>
-<p>示例：</p>
-<pre class="prettyprint linenums prettyprinted">
 
-1.  `<span class="lit">@RequestMapping</span><span class="pun">(</span><span class="str">"/test"</span><span class="pun">)</span>`
-2.  `<span class="kwd">public</span><span class="pln"> </span><span class="typ">String</span><span class="pln"> test</span><span class="pun">(</span><span class="typ">RedirectAttributes</span><span class="pln"> redirectAttributes</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span>`
-3.  `<span class="pln">        redirectAttributes</span><span class="pun">.</span><span class="pln">addFlashAttribute</span><span class="pun">(</span><span class="str">"test"</span><span class="pun">,</span><span class="pln"> </span><span class="str">"msg"</span><span class="pun">);</span>`
-4.  `<span class="pln">        </span><span class="kwd">return</span><span class="pln"> </span><span class="str">"redirect:/test2"</span><span class="pun">;</span>`
-5.  `<span class="pun">}</span>`</pre>
       
     </div>
 
@@ -500,7 +476,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/spring-mvc/" rel="tag"># spring_mvc</a>
+            <a href="/tags/SSO/" rel="tag"># SSO</a>
+          
+            <a href="/tags/CAS/" rel="tag"># CAS</a>
           
         </div>
       
@@ -513,8 +491,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/02/17/spring-security无法获取到用户信息/" rel="next" title="spring security无法获取到用户信息">
-                <i class="fa fa-chevron-left"></i> spring security无法获取到用户信息
+              <a href="/2017/08/07/关于Spring-boot部署到独立Tomcat时，Servlet未能注入的问题/" rel="next" title="关于Spring boot部署到独立Tomcat时，Servlet未能注入的问题">
+                <i class="fa fa-chevron-left"></i> 关于Spring boot部署到独立Tomcat时，Servlet未能注入的问题
               </a>
             
           </div>
@@ -522,10 +500,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/02/20/Tomcat下部署应用的三种方式/" rel="prev" title="Tomcat下部署应用的三种方式">
-                Tomcat下部署应用的三种方式 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -692,7 +666,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#区别"><span class="nav-number">1.</span> <span class="nav-text">区别</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#总结："><span class="nav-number">1.1.</span> <span class="nav-text">总结：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用spring-3的Flash属性让重定向传值"><span class="nav-number">2.</span> <span class="nav-text">使用spring 3的Flash属性让重定向传值</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#错误内容"><span class="nav-number">1.</span> <span class="nav-text">错误内容</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解决方案"><span class="nav-number">2.</span> <span class="nav-text">解决方案</span></a></li></ol></div>
             
 
           </div>

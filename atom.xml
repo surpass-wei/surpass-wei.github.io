@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://surpass-wei.github.io/"/>
-  <updated>2017-08-07T03:39:03.609Z</updated>
+  <updated>2017-08-09T08:45:57.484Z</updated>
   <id>https://surpass-wei.github.io/</id>
   
   <author>
@@ -14,6 +14,26 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>CAS server启动错误：java.lang.ClassNotFoundException: org.jasig.cas.adaptors.jdbc.QueryDatabaseAuthenticationHandler</title>
+    <link href="https://surpass-wei.github.io/2017/08/09/CAS-server%E5%90%AF%E5%8A%A8%E9%94%99%E8%AF%AF%EF%BC%9Ajava-lang-ClassNotFoundException-org-jasig-cas-adaptors-jdbc-QueryDatabaseAuthenticationHandler/"/>
+    <id>https://surpass-wei.github.io/2017/08/09/CAS-server启动错误：java-lang-ClassNotFoundException-org-jasig-cas-adaptors-jdbc-QueryDatabaseAuthenticationHandler/</id>
+    <published>2017-08-09T08:44:00.000Z</published>
+    <updated>2017-08-09T08:45:57.484Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;错误内容&quot;&gt;&lt;a href=&quot;#错误内容&quot; class=&quot;headerlink&quot; title=&quot;错误内容&quot;&gt;&lt;/a&gt;错误内容&lt;/h1&gt;&lt;p&gt;在配置 CAS 4.2.1 进行自定义的数据源（Mysql）验证配置时，出现如下错误：&lt;br&gt;&lt;figure class=&quot;
+    
+    </summary>
+    
+    
+      <category term="SSO" scheme="https://surpass-wei.github.io/tags/SSO/"/>
+    
+      <category term="CAS" scheme="https://surpass-wei.github.io/tags/CAS/"/>
+    
+  </entry>
   
   <entry>
     <title>关于Spring boot部署到独立Tomcat时，Servlet未能注入的问题</title>
@@ -410,25 +430,6 @@
     
     
       <category term="spring_mvc" scheme="https://surpass-wei.github.io/tags/spring-mvc/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>spring security无法获取到用户信息</title>
-    <link href="https://surpass-wei.github.io/2017/02/17/spring-security%E6%97%A0%E6%B3%95%E8%8E%B7%E5%8F%96%E5%88%B0%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF/"/>
-    <id>https://surpass-wei.github.io/2017/02/17/spring-security无法获取到用户信息/</id>
-    <published>2017-02-17T00:06:18.000Z</published>
-    <updated>2017-07-06T06:35:51.103Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;spring-securit无法获取到用户信息&quot;&gt;&lt;a href=&quot;#spring-securit无法获取到用户信息&quot; class=&quot;headerlink&quot; title=&quot;spring securit无法获取到用户信息&quot;&gt;&lt;/a&gt;spring securit无法获取到用户信息&lt;/h1&gt;&lt;p&gt;最近在前后端对接的工程中，对于前端请求，后端&lt;code&gt;Controller&lt;/code&gt;总是无法获取到用户信息（可以成功登陆，且成功登陆后台测试页面的测试请求是可以正常接收到用户信息的），折腾了两三天，总算找到了&lt;strong&gt;原因&lt;/strong&gt;：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://oji4bqzc7.bkt.clouddn.com/blog/20170217/160428857.png&quot; alt=&quot;mark&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="开发" scheme="https://surpass-wei.github.io/categories/%E5%BC%80%E5%8F%91/"/>
-    
     
   </entry>
   
