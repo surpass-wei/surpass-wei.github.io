@@ -116,7 +116,7 @@
 <meta property="og:description" content="问题最近需要搭建单点登录环境，当在原有已整合了 spring security 的系统上对接 CAS 服务器时，发现实现了 AuthenticationUserDetailsService 接口的 CAS 用户信息加载服务无法生效（断点也无效），也不报错，奇怪的是，当独立搭建一套采用同等配置的 CAS client应用时，却是可以正常生效的。 解决方式经过对系统中可能有影响到用户信息服务的配置进行">
 <meta property="og:image" content="http://oji4bqzc7.bkt.clouddn.com/blog/20170810/145053900.png">
 <meta property="og:image" content="http://oji4bqzc7.bkt.clouddn.com/blog/20170810/145250934.png">
-<meta property="og:updated_time" content="2017-08-10T09:23:23.883Z">
+<meta property="og:updated_time" content="2017-08-10T09:26:03.912Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Security整合CAS过程中，AuthenticationUserDetailsService失效的问题">
 <meta name="twitter:description" content="问题最近需要搭建单点登录环境，当在原有已整合了 spring security 的系统上对接 CAS 服务器时，发现实现了 AuthenticationUserDetailsService 接口的 CAS 用户信息加载服务无法生效（断点也无效），也不报错，奇怪的是，当独立搭建一套采用同等配置的 CAS client应用时，却是可以正常生效的。 解决方式经过对系统中可能有影响到用户信息服务的配置进行">
@@ -411,7 +411,7 @@
 
       
         <h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p>最近需要搭建单点登录环境，当在原有已整合了 spring security 的系统上对接 CAS 服务器时，发现实现了 AuthenticationUserDetailsService 接口的 CAS 用户信息加载服务无法生效（断点也无效），也不报错，奇怪的是，当独立搭建一套采用同等配置的 CAS client应用时，却是可以正常生效的。</p>
-<h2 id="解决方式"><a href="#解决方式" class="headerlink" title="解决方式"></a>解决方式</h2><p>经过对系统中可能有影响到用户信息服务的配置进行一一排查，最终发现，导致这个问题的原因竟然是原有的自定义认证授权类，即使在认证配置中并没有将该配置进行注入，但是它还是影响到CAS认证服务的正常运行<br><img src="http://oji4bqzc7.bkt.clouddn.com/blog/20170810/145053900.png" alt="mark"></p>
+<h1 id="解决方式"><a href="#解决方式" class="headerlink" title="解决方式"></a>解决方式</h1><p>经过对系统中可能有影响到用户信息服务的配置进行一一排查，最终发现，导致这个问题的原因竟然是原有的自定义认证授权类，即使在认证配置中并没有将该配置进行注入，但是它还是影响到CAS认证服务的正常运行<br><img src="http://oji4bqzc7.bkt.clouddn.com/blog/20170810/145053900.png" alt="mark"></p>
 <p><strong>因此，目前的有效解决方案为：</strong></p>
 <p>方式一： 删除原有自定义验证类（<code>或取消对该类注册为Spring Bean</code>）<br><img src="http://oji4bqzc7.bkt.clouddn.com/blog/20170810/145250934.png" alt="mark"></p>
 <p>方式二： 在认证配置中，取消调用<code>surper.configure(auth)</code>方法(不推荐)</p>
@@ -658,7 +658,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#问题"><span class="nav-number">1.</span> <span class="nav-text">问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#解决方式"><span class="nav-number">1.1.</span> <span class="nav-text">解决方式</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#问题"><span class="nav-number">1.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解决方式"><span class="nav-number">2.</span> <span class="nav-text">解决方式</span></a></li></ol></div>
             
 
           </div>
