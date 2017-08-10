@@ -89,7 +89,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="CAS,spring security," />
 
 
 
@@ -107,15 +107,20 @@
 
 
 
-<meta name="description" content="尽管风雨 生活依旧要阳光下去">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Surpass&#39;s blog">
-<meta property="og:url" content="https://surpass-wei.github.io/archives/2017/01/index.html">
+<meta name="description" content="问题最近需要搭建单点登录环境，当在原有已整合了 spring security 的系统上对接 CAS 服务器时，发现实现了 AuthenticationUserDetailsService 接口的 CAS 用户信息加载服务无法生效（断点也无效），也不报错，奇怪的是，当独立搭建一套采用同等配置的 CAS client应用时，却是可以正常生效的。 解决方式经过对系统中可能有影响到用户信息服务的配置进行">
+<meta name="keywords" content="CAS,spring security">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Security整合CAS过程中，AuthenticationUserDetailsService失效的问题">
+<meta property="og:url" content="https://surpass-wei.github.io/2017/08/10/Security整合CAS过程中，AuthenticationUserDetailsService失效的问题/index.html">
 <meta property="og:site_name" content="Surpass&#39;s blog">
-<meta property="og:description" content="尽管风雨 生活依旧要阳光下去">
+<meta property="og:description" content="问题最近需要搭建单点登录环境，当在原有已整合了 spring security 的系统上对接 CAS 服务器时，发现实现了 AuthenticationUserDetailsService 接口的 CAS 用户信息加载服务无法生效（断点也无效），也不报错，奇怪的是，当独立搭建一套采用同等配置的 CAS client应用时，却是可以正常生效的。 解决方式经过对系统中可能有影响到用户信息服务的配置进行">
+<meta property="og:image" content="http://oji4bqzc7.bkt.clouddn.com/blog/20170810/145053900.png">
+<meta property="og:image" content="http://oji4bqzc7.bkt.clouddn.com/blog/20170810/145250934.png">
+<meta property="og:updated_time" content="2017-08-10T09:23:23.883Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Surpass&#39;s blog">
-<meta name="twitter:description" content="尽管风雨 生活依旧要阳光下去">
+<meta name="twitter:title" content="Security整合CAS过程中，AuthenticationUserDetailsService失效的问题">
+<meta name="twitter:description" content="问题最近需要搭建单点登录环境，当在原有已整合了 spring security 的系统上对接 CAS 服务器时，发现实现了 AuthenticationUserDetailsService 接口的 CAS 用户信息加载服务无法生效（断点也无效），也不报错，奇怪的是，当独立搭建一套采用同等配置的 CAS client应用时，却是可以正常生效的。 解决方式经过对系统中可能有影响到用户信息服务的配置进行">
+<meta name="twitter:image" content="http://oji4bqzc7.bkt.clouddn.com/blog/20170810/145053900.png">
 
 
 
@@ -143,13 +148,13 @@
 
 
 
-  <link rel="canonical" href="https://surpass-wei.github.io/archives/2017/01/"/>
+  <link rel="canonical" href="https://surpass-wei.github.io/2017/08/10/Security整合CAS过程中，AuthenticationUserDetailsService失效的问题/"/>
 
 
 
 
 
-  <title> 归档 | Surpass's blog </title>
+  <title> Security整合CAS过程中，AuthenticationUserDetailsService失效的问题 | Surpass's blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -174,7 +179,7 @@
     
   
 
-  <div class="container sidebar-position-left  page-archive  ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -312,214 +317,197 @@
           <div id="content" class="content">
             
 
-  <section id="posts" class="posts-collapse">
-    <span class="archive-move-on"></span>
-
-    <span class="archive-page-counter">
-      
-      
-      
-        
-      
-      嗯..! 目前共计 27 篇日志。 继续努力。
-    </span>
-
+  <div id="posts" class="posts-expand">
     
-
-      
-      
-      
-
-      
-        
-        <div class="collection-title">
-          <h2 class="archive-year motion-element" id="archive-year-2017">2017</h2>
-        </div>
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2017/01/14/windows下图床神器（结合markdown和七牛）/" itemprop="url">
-              
-                <span itemprop="name">windows下图床神器（结合markdown和七牛）</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-01-14T11:17:03+08:00"
-              content="2017-01-14" >
-          01-14
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2017/01/11/@Aspects（AOP）对Spring-MVC中Controller不起作用的原因及解决方案/" itemprop="url">
-              
-                <span itemprop="name">@Aspects（AOP）对Spring MVC中Controller不起作用的原因及解决方案</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-01-11T02:05:14+08:00"
-              content="2017-01-11" >
-          01-11
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2017/01/08/Linux修改主机名/" itemprop="url">
-              
-                <span itemprop="name">Linux修改主机名</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-01-08T05:19:59+08:00"
-              content="2017-01-08" >
-          01-08
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2017/01/07/防止maven更新依赖后Language-level改为1.5/" itemprop="url">
-              
-                <span itemprop="name">防止maven更新依赖后Language level改为1.5</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-01-07T14:17:58+08:00"
-              content="2017-01-07" >
-          01-07
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2017/01/07/UEFI模式下win10装Ubuntu16.04双系统/" itemprop="url">
-              
-                <span itemprop="name">UEFI模式下win10装Ubuntu16.04双系统</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-01-07T12:13:25+08:00"
-              content="2017-01-07" >
-          01-07
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-  </section>
 
   
 
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://surpass-wei.github.io/2017/08/10/Security整合CAS过程中，AuthenticationUserDetailsService失效的问题/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Surpass Wei">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://oji4bqzc7.bkt.clouddn.com/blog/20170705/174921309.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Surpass's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Security整合CAS过程中，AuthenticationUserDetailsService失效的问题
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-10T17:21:52+08:00">
+                2017-08-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/08/10/Security整合CAS过程中，AuthenticationUserDetailsService失效的问题/" class="leancloud_visitors" data-flag-title="Security整合CAS过程中，AuthenticationUserDetailsService失效的问题">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p>最近需要搭建单点登录环境，当在原有已整合了 spring security 的系统上对接 CAS 服务器时，发现实现了 AuthenticationUserDetailsService 接口的 CAS 用户信息加载服务无法生效（断点也无效），也不报错，奇怪的是，当独立搭建一套采用同等配置的 CAS client应用时，却是可以正常生效的。</p>
+<h2 id="解决方式"><a href="#解决方式" class="headerlink" title="解决方式"></a>解决方式</h2><p>经过对系统中可能有影响到用户信息服务的配置进行一一排查，最终发现，导致这个问题的原因竟然是原有的自定义认证授权类，即使在认证配置中并没有将该配置进行注入，但是它还是影响到CAS认证服务的正常运行<br><img src="http://oji4bqzc7.bkt.clouddn.com/blog/20170810/145053900.png" alt="mark"></p>
+<p><strong>因此，目前的有效解决方案为：</strong></p>
+<p>方式一： 删除原有自定义验证类（<code>或取消对该类注册为Spring Bean</code>）<br><img src="http://oji4bqzc7.bkt.clouddn.com/blog/20170810/145250934.png" alt="mark"></p>
+<p>方式二： 在认证配置中，取消调用<code>surper.configure(auth)</code>方法(不推荐)</p>
+<blockquote>
+<p>以上可有效解决提出的问题，但是具体导致原因有待进一步研究。</p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>感谢阅读</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://oji4bqzc7.bkt.clouddn.com/blog/20170706/154336978.jpg" alt="Surpass Wei WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="http://oji4bqzc7.bkt.clouddn.com/blog/20170706/154254186.jpg" alt="Surpass Wei Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/CAS/" rel="tag"># CAS</a>
+          
+            <a href="/tags/spring-security/" rel="tag"># spring security</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/09/CAS-server启动错误：java-lang-ClassNotFoundException-org-jasig-cas-adaptors-jdbc-QueryDatabaseAuthenticationHandler/" rel="next" title="CAS server启动错误：java.lang.ClassNotFoundException: org.jasig.cas.adaptors.jdbc.QueryDatabaseAuthenticationHandler">
+                <i class="fa fa-chevron-left"></i> CAS server启动错误：java.lang.ClassNotFoundException: org.jasig.cas.adaptors.jdbc.QueryDatabaseAuthenticationHandler
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -527,6 +515,12 @@
 
 
           
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTYxMS82MTc5"></div>
+    
+  </div>
+
 
         </div>
         
@@ -546,8 +540,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="http://oji4bqzc7.bkt.clouddn.com/blog/20170705/174921309.jpeg"
@@ -645,6 +648,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#问题"><span class="nav-number">1.</span> <span class="nav-text">问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#解决方式"><span class="nav-number">1.1.</span> <span class="nav-text">解决方式</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -752,11 +771,9 @@
   
 
   
-  
-    <script type="text/javascript" id="motion.page.archive">
-      $('.archive-year').velocity('transition.slideLeftIn');
-    </script>
-  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
 
 
   

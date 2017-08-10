@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://surpass-wei.github.io/"/>
-  <updated>2017-08-09T08:45:57.484Z</updated>
+  <updated>2017-08-10T09:23:23.883Z</updated>
   <id>https://surpass-wei.github.io/</id>
   
   <author>
@@ -14,6 +14,26 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Security整合CAS过程中，AuthenticationUserDetailsService失效的问题</title>
+    <link href="https://surpass-wei.github.io/2017/08/10/Security%E6%95%B4%E5%90%88CAS%E8%BF%87%E7%A8%8B%E4%B8%AD%EF%BC%8CAuthenticationUserDetailsService%E5%A4%B1%E6%95%88%E7%9A%84%E9%97%AE%E9%A2%98/"/>
+    <id>https://surpass-wei.github.io/2017/08/10/Security整合CAS过程中，AuthenticationUserDetailsService失效的问题/</id>
+    <published>2017-08-10T09:21:52.000Z</published>
+    <updated>2017-08-10T09:23:23.883Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;问题&quot;&gt;&lt;a href=&quot;#问题&quot; class=&quot;headerlink&quot; title=&quot;问题&quot;&gt;&lt;/a&gt;问题&lt;/h1&gt;&lt;p&gt;最近需要搭建单点登录环境，当在原有已整合了 spring security 的系统上对接 CAS 服务器时，发现实现了 Authentica
+    
+    </summary>
+    
+    
+      <category term="CAS" scheme="https://surpass-wei.github.io/tags/CAS/"/>
+    
+      <category term="spring security" scheme="https://surpass-wei.github.io/tags/spring-security/"/>
+    
+  </entry>
   
   <entry>
     <title>CAS server启动错误：java.lang.ClassNotFoundException: org.jasig.cas.adaptors.jdbc.QueryDatabaseAuthenticationHandler</title>
@@ -403,33 +423,6 @@
     
     
       <category term="tomcat" scheme="https://surpass-wei.github.io/tags/tomcat/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>spring mvc中的转发与重定向</title>
-    <link href="https://surpass-wei.github.io/2017/02/18/spring-mvc%E4%B8%AD%E7%9A%84%E8%BD%AC%E5%8F%91%E4%B8%8E%E9%87%8D%E5%AE%9A%E5%90%91/"/>
-    <id>https://surpass-wei.github.io/2017/02/18/spring-mvc中的转发与重定向/</id>
-    <published>2017-02-17T19:52:48.000Z</published>
-    <updated>2017-07-06T06:35:51.105Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;区别&quot;&gt;&lt;a href=&quot;#区别&quot; class=&quot;headerlink&quot; title=&quot;区别&quot;&gt;&lt;/a&gt;区别&lt;/h2&gt;&lt;ol&gt;
-&lt;li&gt;&lt;code&gt;转发&lt;/code&gt;比&lt;code&gt;重定向&lt;/code&gt;快&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;重定向&lt;/code&gt;经过客户端&lt;/li&gt;
-&lt;li&gt;若需要转到一个外部网站，只能使用&lt;code&gt;重定向&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;重定向&lt;/code&gt;可以避免用户重新加载页面时再次发起请求&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;转发&lt;/code&gt;只有一次请求，而&lt;code&gt;重定向&lt;/code&gt;实际是两次请求&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h3 id=&quot;总结：&quot;&gt;&lt;a href=&quot;#总结：&quot; class=&quot;headerlink&quot; title=&quot;总结：&quot;&gt;&lt;/a&gt;总结：&lt;/h3&gt;
-    
-    </summary>
-    
-      <category term="开发" scheme="https://surpass-wei.github.io/categories/%E5%BC%80%E5%8F%91/"/>
-    
-    
-      <category term="spring_mvc" scheme="https://surpass-wei.github.io/tags/spring-mvc/"/>
     
   </entry>
   
