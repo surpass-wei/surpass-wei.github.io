@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://surpass-wei.github.io/"/>
-  <updated>2017-08-10T09:26:03.912Z</updated>
+  <updated>2017-08-16T07:37:48.109Z</updated>
   <id>https://surpass-wei.github.io/</id>
   
   <author>
@@ -14,6 +14,24 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>windows 优秀软件收集</title>
+    <link href="https://surpass-wei.github.io/2017/08/16/windows-%E4%BC%98%E7%A7%80%E8%BD%AF%E4%BB%B6%E6%94%B6%E9%9B%86/"/>
+    <id>https://surpass-wei.github.io/2017/08/16/windows-优秀软件收集/</id>
+    <published>2017-08-16T07:35:48.000Z</published>
+    <updated>2017-08-16T07:37:48.109Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;作者是一个二十岁出头的JAVA程序员，且患有轻度电脑环境洁癖，该文章主要记录一些个人认为值得推荐和收藏的 windows 软件（不定期更新）
+    
+    </summary>
+    
+    
+      <category term="windows" scheme="https://surpass-wei.github.io/tags/windows/"/>
+    
+  </entry>
   
   <entry>
     <title>Security整合CAS过程中，AuthenticationUserDetailsService失效的问题</title>
@@ -49,9 +67,9 @@
     </summary>
     
     
-      <category term="SSO" scheme="https://surpass-wei.github.io/tags/SSO/"/>
-    
       <category term="CAS" scheme="https://surpass-wei.github.io/tags/CAS/"/>
+    
+      <category term="SSO" scheme="https://surpass-wei.github.io/tags/SSO/"/>
     
   </entry>
   
@@ -403,26 +421,6 @@
     
       <category term="开发" scheme="https://surpass-wei.github.io/categories/%E5%BC%80%E5%8F%91/"/>
     
-    
-  </entry>
-  
-  <entry>
-    <title>Tomcat下部署应用的三种方式</title>
-    <link href="https://surpass-wei.github.io/2017/02/20/Tomcat%E4%B8%8B%E9%83%A8%E7%BD%B2%E5%BA%94%E7%94%A8%E7%9A%84%E4%B8%89%E7%A7%8D%E6%96%B9%E5%BC%8F/"/>
-    <id>https://surpass-wei.github.io/2017/02/20/Tomcat下部署应用的三种方式/</id>
-    <published>2017-02-20T00:05:02.000Z</published>
-    <updated>2017-07-06T07:13:15.541Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;要将&lt;code&gt;Servlet/JSP应用程序&lt;/code&gt;部署到&lt;code&gt;Tomcat&lt;/code&gt;时，需要显示或者隐式的定义一个&lt;co
-    
-    </summary>
-    
-      <category term="开发" scheme="https://surpass-wei.github.io/categories/%E5%BC%80%E5%8F%91/"/>
-    
-    
-      <category term="tomcat" scheme="https://surpass-wei.github.io/tags/tomcat/"/>
     
   </entry>
   
