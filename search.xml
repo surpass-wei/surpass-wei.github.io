@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[windows 优秀软件收集]]></title>
+    <title></title>
     <url>%2F2017%2F08%2F16%2Fwindows-%E4%BC%98%E7%A7%80%E8%BD%AF%E4%BB%B6%E6%94%B6%E9%9B%86%2F</url>
-    <content type="text"><![CDATA[前言作者是一个二十岁出头的JAVA程序员，且患有轻度电脑环境洁癖，该文章主要记录一些个人认为值得推荐和收藏的 windows 软件（不定期更新）。 软件列表 效率IDEA (JAVA开发IDE)（以及jetbrains旗下其他产品） “哇喔，原来还可以这样”，总之，这款 JAVA IDE 给我惊喜不断，很是享受 typora (markdown编辑器)X64 清爽 独特 免费 清爽简洁的 markdown 编辑器，将「写字」和「预览」这两件事情合并，独树一帜 为知笔记代码高亮 markdown插件支持 支持多层目录 一键发布博客 个人觉得，最适合程序员的笔记软件，所以一口气买了2年会员，希望越做越好，不要让我失望~ VS code (编辑器)插件丰富 漂亮 值得学习使用 免费 轻巧极速 很强大，值得深入学习了解一下 Xmind (思维导图)收费 多画布 好使 虽然收费，但如果确实有这方面的需求，这款思维导图软件还是很值得一提的 美化wallhaven (壁纸网站) 呃，虽然不是windows软件，但是上面真的有很多高质量的壁纸… 优化geekuninstaller (卸载工具)中文 免费 一款深度卸载软件（清理遗留的注册表和文件） Bandizip (解压缩工具)中文 免费 Bandizip 是一款可靠、快速、免费的压缩软件，它支持 WinZip、7-Zip 和 WinRAR 以及其它压缩格式]]></content>
-      <tags>
-        <tag>windows</tag>
-      </tags>
+    <content type="text"><![CDATA[前言作者是一个二十岁出头的JAVA程序员，且患有轻度电脑环境洁癖，该文章主要记录一些个人认为值得推荐和收藏的 windows 软件（不定期更新）。 软件列表 效率IDEA (JAVA开发IDE)（以及jetbrains旗下其他产品） “哇喔，原来还可以这样”，总之，这款 JAVA IDE 给我惊喜不断，很是享受 typora (markdown编辑器)X64 清爽 独特 免费 清爽简洁的 markdown 编辑器，将「写字」和「预览」这两件事情合并，独树一帜 为知笔记代码高亮 markdown插件支持 支持多层目录 一键发布博客 个人觉得，最适合程序员的笔记软件，所以一口气买了2年会员，希望越做越好，不要让我失望~ VS code (编辑器)插件丰富 漂亮 值得学习使用 免费 轻巧极速 很强大，值得深入学习了解一下 Xmind (思维导图)收费 多画布 好使 虽然收费，但如果确实有这方面的需求，这款思维导图软件还是很值得一提的 everything (文件搜索)急速 强大 用来搜索文件快的不可思议，非常实用 坚果云 (同步文件)免费 不限容量 同步速度快 对于需要同步的重要文件，只要丢到坚果云设置的本地文件夹就可以了，简单方便，不仅免费，而且不限容量（不过对免费用户限制了每个月的流量，但是用来同步普通文件肯定是够用了） 美化wallhaven (壁纸网站) 呃，虽然不是windows软件，但是上面真的有很多高质量的壁纸… fliqlo (屏保)文艺 逼格 时间 简洁 看着这么有文艺气息的屏保，可能人也会慢慢的变得文艺起来（骗自己）… 优化geekuninstaller (卸载工具)中文 免费 一款深度卸载软件（清理遗留的注册表和文件） Bandizip (解压缩工具)中文 免费 Bandizip 是一款可靠、快速、免费的压缩软件，它支持 WinZip、7-Zip 和 WinRAR 以及其它压缩格式 ccleaner (垃圾文件、注册表清理)各种清理 放心清理 非常有名的垃圾文件清理工具，应该不用过多介绍，一般一两个月清理一次就可以了]]></content>
   </entry>
   <entry>
     <title><![CDATA[Security整合CAS过程中，AuthenticationUserDetailsService失效的问题]]></title>
