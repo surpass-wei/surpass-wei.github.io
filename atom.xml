@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://surpass-wei.github.io/"/>
-  <updated>2017-08-17T01:01:33.635Z</updated>
+  <updated>2017-08-17T09:58:44.846Z</updated>
   <id>https://surpass-wei.github.io/</id>
   
   <author>
@@ -14,6 +14,22 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>关于MySQL 在windows环境下的启动错误：1053的解决方案</title>
+    <link href="https://surpass-wei.github.io/2017/08/17/%E5%85%B3%E4%BA%8EMySQL-%E5%9C%A8windows%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%9A%84%E5%90%AF%E5%8A%A8%E9%94%99%E8%AF%AF%EF%BC%9A1053%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/"/>
+    <id>https://surpass-wei.github.io/2017/08/17/关于MySQL-在windows环境下的启动错误：1053的解决方案/</id>
+    <published>2017-08-17T09:58:16.000Z</published>
+    <updated>2017-08-17T09:58:44.846Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;在修改配置文件my-ini后出现该问题：&quot;&gt;&lt;a href=&quot;#在修改配置文件my-ini后出现该问题：&quot; class=&quot;headerlink&quot; title=&quot;在修改配置文件my.ini后出现该问题：&quot;&gt;&lt;/a&gt;在修改配置文件my.ini后出现该问题：&lt;/h1&gt;&lt;
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>windows 优秀软件收集</title>
@@ -67,9 +83,9 @@
     </summary>
     
     
-      <category term="CAS" scheme="https://surpass-wei.github.io/tags/CAS/"/>
-    
       <category term="SSO" scheme="https://surpass-wei.github.io/tags/SSO/"/>
+    
+      <category term="CAS" scheme="https://surpass-wei.github.io/tags/CAS/"/>
     
   </entry>
   
@@ -398,24 +414,6 @@
     <summary type="html">
     
       &lt;h2 id=&quot;问题&quot;&gt;&lt;a href=&quot;#问题&quot; class=&quot;headerlink&quot; title=&quot;问题&quot;&gt;&lt;/a&gt;问题&lt;/h2&gt;&lt;p&gt;在&lt;code&gt;spring boot（版本1.5.1.RELEASE）&lt;/code&gt;项目中，当准备映射自定义的配置文件属性到类中的时候，发现
-    
-    </summary>
-    
-      <category term="开发" scheme="https://surpass-wei.github.io/categories/%E5%BC%80%E5%8F%91/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>Spring Boot使用FastJson解析JSON数据</title>
-    <link href="https://surpass-wei.github.io/2017/02/21/Spring-Boot%E4%BD%BF%E7%94%A8FastJson%E8%A7%A3%E6%9E%90JSON%E6%95%B0%E6%8D%AE/"/>
-    <id>https://surpass-wei.github.io/2017/02/21/Spring-Boot使用FastJson解析JSON数据/</id>
-    <published>2017-02-20T20:35:22.000Z</published>
-    <updated>2017-07-06T07:06:45.887Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;1-引入fastjson依赖库：&quot;&gt;&lt;a href=&quot;#1-引入fastjson依赖库：&quot; class=&quot;headerlink&quot; title=&quot;1.引入fastjson依赖库：&quot;&gt;&lt;/a&gt;1.引入fastjson依赖库：&lt;/h2&gt;&lt;figure class=&quot;hi
     
     </summary>
     

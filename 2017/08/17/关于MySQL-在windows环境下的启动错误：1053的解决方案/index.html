@@ -89,7 +89,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="linux,windows," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -107,19 +107,16 @@
 
 
 
-<meta name="description" content="简单粗暴的流程： 下载Ubuntu16.04.iso镜像 使用rufus-2.11.exe制作Ubuntu系统安装启动盘（UEFI模式下应该直接吧镜像解压到U盘中就可以，它会自动找到efi文件，不过没试过） 在win10磁盘管理中压缩一个现有磁盘或直接删除一个磁盘，反正目的就是制造一个可用空间或未分配的空间 关闭win10的快速启动以及关闭secure boot 关机，插上U盘，进入boot，选择">
-<meta name="keywords" content="linux,windows">
+<meta name="description" content="在修改配置文件my.ini后出现该问题： 如果是在修改了配置文件my.ini后出现1503的错误，那么很可能是因为在保存配置文件操作时，配置文件的编码也被改动了所引起的，因此，可以尝试如下操作：   再次打开配置文件，选择另存为，然后以ANSI编码保存，再替换原有配置文件 如果因为之前的启动失败，导致MySQL服务一直处于 启动 状态的话，需要手动去结束 mysqld.exe 进程后，再尝试启动服">
 <meta property="og:type" content="article">
-<meta property="og:title" content="UEFI模式下win10装Ubuntu16.04双系统">
-<meta property="og:url" content="https://surpass-wei.github.io/2017/01/07/UEFI模式下win10装Ubuntu16.04双系统/index.html">
+<meta property="og:title" content="关于MySQL 在windows环境下的启动错误：1053的解决方案">
+<meta property="og:url" content="https://surpass-wei.github.io/2017/08/17/关于MySQL-在windows环境下的启动错误：1053的解决方案/index.html">
 <meta property="og:site_name" content="Surpass&#39;s blog">
-<meta property="og:description" content="简单粗暴的流程： 下载Ubuntu16.04.iso镜像 使用rufus-2.11.exe制作Ubuntu系统安装启动盘（UEFI模式下应该直接吧镜像解压到U盘中就可以，它会自动找到efi文件，不过没试过） 在win10磁盘管理中压缩一个现有磁盘或直接删除一个磁盘，反正目的就是制造一个可用空间或未分配的空间 关闭win10的快速启动以及关闭secure boot 关机，插上U盘，进入boot，选择">
-<meta property="og:image" content="http://oji4bqzc7.bkt.clouddn.com/blog/20170706/151722804.png">
-<meta property="og:updated_time" content="2017-07-06T07:19:49.099Z">
+<meta property="og:description" content="在修改配置文件my.ini后出现该问题： 如果是在修改了配置文件my.ini后出现1503的错误，那么很可能是因为在保存配置文件操作时，配置文件的编码也被改动了所引起的，因此，可以尝试如下操作：   再次打开配置文件，选择另存为，然后以ANSI编码保存，再替换原有配置文件 如果因为之前的启动失败，导致MySQL服务一直处于 启动 状态的话，需要手动去结束 mysqld.exe 进程后，再尝试启动服">
+<meta property="og:updated_time" content="2017-08-17T09:58:44.846Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="UEFI模式下win10装Ubuntu16.04双系统">
-<meta name="twitter:description" content="简单粗暴的流程： 下载Ubuntu16.04.iso镜像 使用rufus-2.11.exe制作Ubuntu系统安装启动盘（UEFI模式下应该直接吧镜像解压到U盘中就可以，它会自动找到efi文件，不过没试过） 在win10磁盘管理中压缩一个现有磁盘或直接删除一个磁盘，反正目的就是制造一个可用空间或未分配的空间 关闭win10的快速启动以及关闭secure boot 关机，插上U盘，进入boot，选择">
-<meta name="twitter:image" content="http://oji4bqzc7.bkt.clouddn.com/blog/20170706/151722804.png">
+<meta name="twitter:title" content="关于MySQL 在windows环境下的启动错误：1053的解决方案">
+<meta name="twitter:description" content="在修改配置文件my.ini后出现该问题： 如果是在修改了配置文件my.ini后出现1503的错误，那么很可能是因为在保存配置文件操作时，配置文件的编码也被改动了所引起的，因此，可以尝试如下操作：   再次打开配置文件，选择另存为，然后以ANSI编码保存，再替换原有配置文件 如果因为之前的启动失败，导致MySQL服务一直处于 启动 状态的话，需要手动去结束 mysqld.exe 进程后，再尝试启动服">
 
 
 
@@ -147,13 +144,13 @@
 
 
 
-  <link rel="canonical" href="https://surpass-wei.github.io/2017/01/07/UEFI模式下win10装Ubuntu16.04双系统/"/>
+  <link rel="canonical" href="https://surpass-wei.github.io/2017/08/17/关于MySQL-在windows环境下的启动错误：1053的解决方案/"/>
 
 
 
 
 
-  <title> UEFI模式下win10装Ubuntu16.04双系统 | Surpass's blog </title>
+  <title> 关于MySQL 在windows环境下的启动错误：1053的解决方案 | Surpass's blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -326,7 +323,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://surpass-wei.github.io/2017/01/07/UEFI模式下win10装Ubuntu16.04双系统/">
+    <link itemprop="mainEntityOfPage" href="https://surpass-wei.github.io/2017/08/17/关于MySQL-在windows环境下的启动错误：1053的解决方案/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Surpass Wei">
@@ -347,7 +344,7 @@
             
             
               
-                UEFI模式下win10装Ubuntu16.04双系统
+                关于MySQL 在windows环境下的启动错误：1053的解决方案
               
             
           </h1>
@@ -362,8 +359,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-07T12:13:25+08:00">
-                2017-01-07
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-17T17:58:16+08:00">
+                2017-08-17
               </time>
             
 
@@ -373,28 +370,6 @@
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/开发/" itemprop="url" rel="index">
-                    <span itemprop="name">开发</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -402,7 +377,7 @@
 
           
           
-             <span id="/2017/01/07/UEFI模式下win10装Ubuntu16.04双系统/" class="leancloud_visitors" data-flag-title="UEFI模式下win10装Ubuntu16.04双系统">
+             <span id="/2017/08/17/关于MySQL-在windows环境下的启动错误：1053的解决方案/" class="leancloud_visitors" data-flag-title="关于MySQL 在windows环境下的启动错误：1053的解决方案">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -431,22 +406,18 @@
       
 
       
-        <h4 id="简单粗暴的流程："><a href="#简单粗暴的流程：" class="headerlink" title="简单粗暴的流程："></a>简单粗暴的流程：</h4><ol>
-<li>下载Ubuntu16.04.iso镜像</li>
-<li>使用<code>rufus-2.11.exe</code>制作Ubuntu系统安装启动盘（UEFI模式下应该直接吧镜像解压到U盘中就可以，它会自动找到efi文件，不过没试过）</li>
-<li>在win10磁盘管理中压缩一个现有磁盘或直接删除一个磁盘，反正目的就是制造一个可用空间或未分配的空间</li>
-<li><code>关闭win10的快速启动</code>以及<code>关闭secure boot</code></li>
-<li>关机，插上U盘，进入boot，选择U盘启动</li>
-<li>选地区时间什么的就不说了，主要是安装类型要选择“其他选项”，因为我们的目的是把系统装到windows盘符以外的盘中。</li>
-<li>最重要的是分区步骤（<code>UEFI模式下会和传统模式有不同的地方（这是个大坑）</code>）<ol>
-<li>找到准备好的设备（磁盘,设备名应该叫空闲（语言选择中文的前提下），否则就是步骤③不到位）</li>
-<li>一下是我的分区情况<br><img src="http://oji4bqzc7.bkt.clouddn.com/blog/20170706/151722804.png" alt="mark"></li>
+        <h1 id="在修改配置文件my-ini后出现该问题："><a href="#在修改配置文件my-ini后出现该问题：" class="headerlink" title="在修改配置文件my.ini后出现该问题："></a>在修改配置文件my.ini后出现该问题：</h1><blockquote>
+<p>如果是在修改了配置文件my.ini后出现1503的错误，那么很可能是因为在保存配置文件操作时，配置文件的编码也被改动了所引起的，因此，可以尝试如下操作：</p>
+</blockquote>
+<ol>
+<li>再次打开配置文件，选择另存为，然后以ANSI编码保存，再替换原有配置文件</li>
+<li>如果因为之前的启动失败，导致MySQL服务一直处于 <code>启动</code> 状态的话，需要手动去结束 <code>mysqld.exe</code> 进程后，再尝试启动服务</li>
 </ol>
-</li>
-<li>重启，一切顺利的话应该可以见到一个紫色的界面用来选择启动哪个系统（默认会是Ubuntu，当然，选择带有windows字样的就是启动win10了）</li>
-<li>当然你也可以自己管理引导，但是在win10下，UEFI管理引导不是用EasyBCD（很多地方提到这个软件，但是，值得注意的是UEFI模式是不支持该软件的！），而是用EasyUEFI(当然，也会有别的软件，但是注意，一定要是支持UEFI的，否则找了也没用)，不管理引导的话，可能导致删除ubuntu系统后，也进去win10了，所以最好还是在win10下装一个比较好。</li>
-</ol>
-<h4 id="总结：单独就装上Ubuntu来说，其实是不麻烦的，主要是要搞清楚你电脑的引导模式，然后“对症下药”，在安装过程中注意好Ubuntu的分区（步骤⑥）基本就没什么大问题。"><a href="#总结：单独就装上Ubuntu来说，其实是不麻烦的，主要是要搞清楚你电脑的引导模式，然后“对症下药”，在安装过程中注意好Ubuntu的分区（步骤⑥）基本就没什么大问题。" class="headerlink" title="总结：单独就装上Ubuntu来说，其实是不麻烦的，主要是要搞清楚你电脑的引导模式，然后“对症下药”，在安装过程中注意好Ubuntu的分区（步骤⑥）基本就没什么大问题。"></a>总结：单独就装上Ubuntu来说，其实是不麻烦的，主要是要搞清楚你电脑的引导模式，然后“对症下药”，在安装过程中注意好Ubuntu的分区（步骤⑥）基本就没什么大问题。</h4>
+<h1 id="未修改任何配置的情况下出现该问题："><a href="#未修改任何配置的情况下出现该问题：" class="headerlink" title="未修改任何配置的情况下出现该问题："></a>未修改任何配置的情况下出现该问题：</h1><blockquote>
+<p>这种情况一般处于 mysql 服务第一次启动的时候</p>
+</blockquote>
+<p>可以尝试以下几种操作：<br>第一种： 在服务的属性菜单中，选中登录选项卡，然后设置为采用 <code>administrator</code> 用户<br>第二种： 重新安装 mysql 服务<br>第三种： 可能是由于在安装服务时，命令<code>mysqld --install servicename --defaults-file=&#39;file_name&#39;</code> 中的 <code>defaults-file</code> 值适用的是单引号，所以会导致1053错误，因此修改为双引号安装服务即可</p>
+
       
     </div>
 
@@ -494,14 +465,6 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/linux/" rel="tag"># linux</a>
-          
-            <a href="/tags/windows/" rel="tag"># windows</a>
-          
-        </div>
-      
 
       
         
@@ -511,15 +474,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2017/08/16/windows-优秀软件收集/" rel="next" title="windows 优秀软件收集">
+                <i class="fa fa-chevron-left"></i> windows 优秀软件收集
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/01/07/防止maven更新依赖后Language-level改为1.5/" rel="prev" title="防止maven更新依赖后Language level改为1.5">
-                防止maven更新依赖后Language level改为1.5 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -686,7 +649,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#简单粗暴的流程："><span class="nav-number">1.</span> <span class="nav-text">简单粗暴的流程：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#总结：单独就装上Ubuntu来说，其实是不麻烦的，主要是要搞清楚你电脑的引导模式，然后“对症下药”，在安装过程中注意好Ubuntu的分区（步骤⑥）基本就没什么大问题。"><span class="nav-number">2.</span> <span class="nav-text">总结：单独就装上Ubuntu来说，其实是不麻烦的，主要是要搞清楚你电脑的引导模式，然后“对症下药”，在安装过程中注意好Ubuntu的分区（步骤⑥）基本就没什么大问题。</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#在修改配置文件my-ini后出现该问题："><span class="nav-number">1.</span> <span class="nav-text">在修改配置文件my.ini后出现该问题：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#未修改任何配置的情况下出现该问题："><span class="nav-number">2.</span> <span class="nav-text">未修改任何配置的情况下出现该问题：</span></a></li></ol></div>
             
 
           </div>
