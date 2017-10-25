@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://surpass-wei.github.io/"/>
-  <updated>2017-09-26T06:49:02.625Z</updated>
+  <updated>2017-10-25T10:04:47.533Z</updated>
   <id>https://surpass-wei.github.io/</id>
   
   <author>
@@ -14,6 +14,26 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>maven未将resource下所有文件打包</title>
+    <link href="https://surpass-wei.github.io/2017/10/25/maven%E6%9C%AA%E5%B0%86resource%E4%B8%8B%E6%89%80%E6%9C%89%E6%96%87%E4%BB%B6%E6%89%93%E5%8C%85/"/>
+    <id>https://surpass-wei.github.io/2017/10/25/maven未将resource下所有文件打包/</id>
+    <published>2017-10-25T10:02:40.000Z</published>
+    <updated>2017-10-25T10:04:47.533Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;问题引出&quot;&gt;&lt;a href=&quot;#问题引出&quot; class=&quot;headerlink&quot; title=&quot;问题引出&quot;&gt;&lt;/a&gt;问题引出&lt;/h2&gt;&lt;p&gt;运行maven打包命令或直接运行程序时报错，提示resource下某个配置文件找不到（甚至可能是某个文件夹下的所有配置），但
+    
+    </summary>
+    
+    
+      <category term="常见问题" scheme="https://surpass-wei.github.io/tags/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/"/>
+    
+      <category term="maven" scheme="https://surpass-wei.github.io/tags/maven/"/>
+    
+  </entry>
   
   <entry>
     <title>命令行开启windows WIFI共享</title>
@@ -407,24 +427,6 @@
     
     
       <category term="CSS" scheme="https://surpass-wei.github.io/tags/CSS/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>spring mvc集成spring security</title>
-    <link href="https://surpass-wei.github.io/2017/03/07/spring-mvc%E9%9B%86%E6%88%90spring-security/"/>
-    <id>https://surpass-wei.github.io/2017/03/07/spring-mvc集成spring-security/</id>
-    <published>2017-03-07T03:42:10.000Z</published>
-    <updated>2017-07-06T07:11:51.022Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;代码结构&quot;&gt;&lt;a href=&quot;#代码结构&quot; class=&quot;headerlink&quot; title=&quot;代码结构&quot;&gt;&lt;/a&gt;代码结构&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;总共涉及到&lt;code&gt;7个类文件&lt;/code&gt;和添加&lt;code&gt;角色配置文件&lt;/code&gt;以及需要在&lt;cod
-    
-    </summary>
-    
-      <category term="开发" scheme="https://surpass-wei.github.io/categories/%E5%BC%80%E5%8F%91/"/>
-    
     
   </entry>
   
