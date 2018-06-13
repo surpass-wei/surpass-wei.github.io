@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[根据端口结束进程的BAT]]></title>
+    <url>%2F2018%2F06%2F13%2F%E6%A0%B9%E6%8D%AE%E7%AB%AF%E5%8F%A3%E7%BB%93%E6%9D%9F%E8%BF%9B%E7%A8%8B%E7%9A%84BAT%2F</url>
+    <content type="text"><![CDATA[只有放在BAT文件中才可以执行 123456789@echo offsetlocal enabledelayedexpansionfor /f "delims= tokens=1" %%i in ('netstat -aon ^| findstr "0.0.0.0:你的端口 "') do (set a=%%igoto js):jstaskkill /f /pid "!a:~71,5!"pause]]></content>
+      <categories>
+        <category>开发</category>
+      </categories>
+      <tags>
+        <tag>windows</tag>
+        <tag>bat</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[maven未将resource下所有文件打包]]></title>
     <url>%2F2017%2F10%2F25%2Fmaven%E6%9C%AA%E5%B0%86resource%E4%B8%8B%E6%89%80%E6%9C%89%E6%96%87%E4%BB%B6%E6%89%93%E5%8C%85%2F</url>
     <content type="text"><![CDATA[问题引出运行maven打包命令或直接运行程序时报错，提示resource下某个配置文件找不到（甚至可能是某个文件夹下的所有配置），但是该文件在项目中是存在的 解决思路 直接运行maven打包命令：1mvn package -DskipTests -DskipTests参数是用于跳过所有测试 检查打包后生成的target目录，将打包后的jar(或者war)解压查看，确定根目录下是否存在引用不到的资源 jar中确实没有资源文件，那么这就是问题所在了，maven未能将resource下所有的资源文件打入包中 对pom文件进行配置 1234567891011&lt;build&gt; &lt;resources&gt; &lt;resource&gt; &lt;directory&gt;src/main/resources&lt;/directory&gt; &lt;includes&gt; &lt;!--包含文件夹以及子文件夹下所有资源--&gt; &lt;include&gt;**/*.*&lt;/include&gt; &lt;/includes&gt; &lt;/resource&gt; &lt;/resources&gt;&lt;/build&gt; 重新打包再检查 12mvn cleanmvn package -DskipTests]]></content>
