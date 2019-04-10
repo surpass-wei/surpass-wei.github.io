@@ -113,12 +113,12 @@
 <meta property="og:url" content="https://surpass-wei.github.io/2017/02/17/spring-security无法获取到用户信息/index.html">
 <meta property="og:site_name" content="Surpass&#39;s blog">
 <meta property="og:description" content="spring securit无法获取到用户信息最近在前后端对接的工程中，对于前端请求，后端Controller总是无法获取到用户信息（可以成功登陆，且成功登陆后台测试页面的测试请求是可以正常接收到用户信息的），折腾了两三天，总算找到了原因：">
-<meta property="og:image" content="http://oji4bqzc7.bkt.clouddn.com/blog/20170217/160428857.png">
-<meta property="og:updated_time" content="2017-07-06T06:35:51.103Z">
+<meta property="og:image" content="https://surpass-blog.oss-cn-shanghai.aliyuncs.com/160428857.png">
+<meta property="og:updated_time" content="2019-04-10T07:54:30.974Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="spring security无法获取到用户信息">
 <meta name="twitter:description" content="spring securit无法获取到用户信息最近在前后端对接的工程中，对于前端请求，后端Controller总是无法获取到用户信息（可以成功登陆，且成功登陆后台测试页面的测试请求是可以正常接收到用户信息的），折腾了两三天，总算找到了原因：">
-<meta name="twitter:image" content="http://oji4bqzc7.bkt.clouddn.com/blog/20170217/160428857.png">
+<meta name="twitter:image" content="https://surpass-blog.oss-cn-shanghai.aliyuncs.com/160428857.png">
 
 
 
@@ -431,7 +431,7 @@
 
       
         <h1 id="spring-securit无法获取到用户信息"><a href="#spring-securit无法获取到用户信息" class="headerlink" title="spring securit无法获取到用户信息"></a>spring securit无法获取到用户信息</h1><p>最近在前后端对接的工程中，对于前端请求，后端<code>Controller</code>总是无法获取到用户信息（可以成功登陆，且成功登陆后台测试页面的测试请求是可以正常接收到用户信息的），折腾了两三天，总算找到了<strong>原因</strong>：</p>
-<p><img src="http://oji4bqzc7.bkt.clouddn.com/blog/20170217/160428857.png" alt="mark"></p>
+<p><img src="https://surpass-blog.oss-cn-shanghai.aliyuncs.com/160428857.png" alt="mark"></p>
 <a id="more"></a>
 <p>cookie（主要是cookie中的<code>JSESESSIONID(也就是session id)</code>值）没有正常被返回，具体导致原因为一下两点： </p>
 <p>1.前端采用fetch异步请求，问题就在这里，fetch方式的请求默认是不带cookie的，因此，需要配置<code>credentials: &#39;include&#39;</code>或其他附带cookie的值。</p>

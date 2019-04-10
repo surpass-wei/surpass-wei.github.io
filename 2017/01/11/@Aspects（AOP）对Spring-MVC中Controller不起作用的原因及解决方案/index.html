@@ -114,13 +114,13 @@
 <meta property="og:url" content="https://surpass-wei.github.io/2017/01/11/@Aspects（AOP）对Spring-MVC中Controller不起作用的原因及解决方案/index.html">
 <meta property="og:site_name" content="Surpass&#39;s blog">
 <meta property="og:description" content="#@Aspects（AOP）对Spring MVC中Controller不起作用的原因及解决方案##原因Spring MVC加载的是WebApplicationContext而不是ApplicationContext，也就是说spring和springMvc使用的是不同的容器，如果只在spring的配置文件中配置了&amp;lt;aop:aspectj-autoproxy/&amp;gt;，那么AOP是不能正常在">
-<meta property="og:image" content="http://oji4bqzc7.bkt.clouddn.com/blog/20170111/091543806.png">
-<meta property="og:image" content="http://oji4bqzc7.bkt.clouddn.com/blog/20170111/095310263.png">
-<meta property="og:updated_time" content="2017-07-06T07:03:18.926Z">
+<meta property="og:image" content="https://surpass-blog.oss-cn-shanghai.aliyuncs.com/091543806.png">
+<meta property="og:image" content="https://surpass-blog.oss-cn-shanghai.aliyuncs.com/095310263.png">
+<meta property="og:updated_time" content="2019-04-10T07:54:30.821Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="@Aspects（AOP）对Spring MVC中Controller不起作用的原因及解决方案">
 <meta name="twitter:description" content="#@Aspects（AOP）对Spring MVC中Controller不起作用的原因及解决方案##原因Spring MVC加载的是WebApplicationContext而不是ApplicationContext，也就是说spring和springMvc使用的是不同的容器，如果只在spring的配置文件中配置了&amp;lt;aop:aspectj-autoproxy/&amp;gt;，那么AOP是不能正常在">
-<meta name="twitter:image" content="http://oji4bqzc7.bkt.clouddn.com/blog/20170111/091543806.png">
+<meta name="twitter:image" content="https://surpass-blog.oss-cn-shanghai.aliyuncs.com/091543806.png">
 
 
 
@@ -433,8 +433,8 @@
 
       
         <h2 id="Aspects（AOP）对Spring-MVC中Controller不起作用的原因及解决方案"><a href="#Aspects（AOP）对Spring-MVC中Controller不起作用的原因及解决方案" class="headerlink" title="#@Aspects（AOP）对Spring MVC中Controller不起作用的原因及解决方案"></a>#@Aspects（AOP）对Spring MVC中Controller不起作用的原因及解决方案</h2><p>##原因<br>Spring MVC加载的是<code>WebApplicationContext</code>而不是<code>ApplicationContext</code>，也就是说spring和springMvc使用的是不同的容器，如果只在spring的配置文件中配置了<code>&lt;aop:aspectj-autoproxy/&gt;</code>，那么AOP是不能正常在controller中起到作用的，因此需要把该配置同样配置到springMvc的配置文件中。</p>
-<p>##解决方案<br>1.在<code>web.xml</code>中找到当前使用的spring MVC的配置文件位置<br><img src="http://oji4bqzc7.bkt.clouddn.com/blog/20170111/091543806.png" alt="mark"></p>
-<p>2.找到springMvc的配置文件，添加配置Aspectj的自动代理（许多造成该错误的原因都是因为只在spring的配置文件中配置了aspectj的支持）<br><img src="http://oji4bqzc7.bkt.clouddn.com/blog/20170111/095310263.png" alt="mark"></p>
+<p>##解决方案<br>1.在<code>web.xml</code>中找到当前使用的spring MVC的配置文件位置<br><img src="https://surpass-blog.oss-cn-shanghai.aliyuncs.com/091543806.png" alt="mark"></p>
+<p>2.找到springMvc的配置文件，添加配置Aspectj的自动代理（许多造成该错误的原因都是因为只在spring的配置文件中配置了aspectj的支持）<br><img src="https://surpass-blog.oss-cn-shanghai.aliyuncs.com/095310263.png" alt="mark"></p>
 
       
     </div>

@@ -113,13 +113,13 @@
 <meta property="og:url" content="https://surpass-wei.github.io/2017/03/07/spring-mvc集成spring-security/index.html">
 <meta property="og:site_name" content="Surpass&#39;s blog">
 <meta property="og:description" content="代码结构总共涉及到7个类文件和添加角色配置文件以及需要在web.xml中添加一个过滤器（如果是spring boot的话则不需要配置web.xml）    涉及文件及其作用简单分析  role-config.properties：用来配置所有角色及所持权限信息 Role.java:将配置文件中的权限信息分装到java类中，方便处理 RoleHandler.java:构建Role对象列表，以便可以通">
-<meta property="og:image" content="http://oji4bqzc7.bkt.clouddn.com/blog/20170307/184149588.png">
-<meta property="og:image" content="http://oji4bqzc7.bkt.clouddn.com/blog/20170307/185209507.png">
-<meta property="og:updated_time" content="2017-07-06T07:11:51.022Z">
+<meta property="og:image" content="https://surpass-blog.oss-cn-shanghai.aliyuncs.com/184149588.png">
+<meta property="og:image" content="https://surpass-blog.oss-cn-shanghai.aliyuncs.com/185209507.png">
+<meta property="og:updated_time" content="2019-04-10T07:54:30.927Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="spring mvc集成spring security">
 <meta name="twitter:description" content="代码结构总共涉及到7个类文件和添加角色配置文件以及需要在web.xml中添加一个过滤器（如果是spring boot的话则不需要配置web.xml）    涉及文件及其作用简单分析  role-config.properties：用来配置所有角色及所持权限信息 Role.java:将配置文件中的权限信息分装到java类中，方便处理 RoleHandler.java:构建Role对象列表，以便可以通">
-<meta name="twitter:image" content="http://oji4bqzc7.bkt.clouddn.com/blog/20170307/184149588.png">
+<meta name="twitter:image" content="https://surpass-blog.oss-cn-shanghai.aliyuncs.com/184149588.png">
 
 
 
@@ -432,7 +432,7 @@
 
       
         <h2 id="代码结构"><a href="#代码结构" class="headerlink" title="代码结构"></a>代码结构</h2><p><strong>总共涉及到<code>7个类文件</code>和添加<code>角色配置文件</code>以及需要在<code>web.xml</code>中添加一个过滤器（如果是spring boot的话则不需要配置web.xml）</strong></p>
-<p><img src="http://oji4bqzc7.bkt.clouddn.com/blog/20170307/184149588.png" alt="mark"></p>
+<p><img src="https://surpass-blog.oss-cn-shanghai.aliyuncs.com/184149588.png" alt="mark"></p>
 <hr>
 <blockquote>
 <p><strong>涉及文件及其作用简单分析</strong></p>
@@ -450,7 +450,7 @@
 </blockquote>
 <hr>
 <h3 id="具体代码案例"><a href="#具体代码案例" class="headerlink" title="具体代码案例"></a>具体代码案例</h3><p>1.在配置文件中配置好各个角色的信息，security会默认解析以<code>ROLE_</code>开头的权限内容作为角色，例如<code>ROLE_ADMIN</code>，则将作为<code>ADMIN</code>角色</p>
-<p><img src="http://oji4bqzc7.bkt.clouddn.com/blog/20170307/185209507.png" alt="mark"></p>
+<p><img src="https://surpass-blog.oss-cn-shanghai.aliyuncs.com/185209507.png" alt="mark"></p>
 <p>2.添加角色Bean对象</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.util.List;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Role</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> String name;    <span class="comment">//  名称</span></div><div class="line">    <span class="keyword">private</span> List&lt;String&gt; privileges;    <span class="comment">//  分配的角色/权限</span></div><div class="line"></div><div class="line">    Role()&#123;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    Role(String name, List&lt;String&gt; privileges)&#123;</div><div class="line">        <span class="keyword">this</span>.name = name;</div><div class="line">        <span class="keyword">this</span>.privileges = privileges;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function">List&lt;String&gt; <span class="title">getPrivileges</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.privileges;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function">String <span class="title">getName</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.name = name;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>3.提供角色权限初始化类</p>

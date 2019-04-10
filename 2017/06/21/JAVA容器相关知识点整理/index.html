@@ -113,15 +113,15 @@
 <meta property="og:url" content="https://surpass-wei.github.io/2017/06/21/JAVA容器相关知识点整理/index.html">
 <meta property="og:site_name" content="Surpass&#39;s blog">
 <meta property="og:description" content="简介 整理容器的基本知识 整理关于不同容器线程安全方面的知识  根据以下资料整理 http://www.jianshu.com/p/047e33fdefd2http://blog.csdn.net/jiyiqinlovexx/article/details/51030720  常用容器关系图 快速了解 Collection（接口） 代表的是单个元素对象的序列，（可以有序/无序，可重复/不可重复 等">
-<meta property="og:image" content="http://oji4bqzc7.bkt.clouddn.com/blog/20170621/160319389.png">
-<meta property="og:image" content="http://oji4bqzc7.bkt.clouddn.com/blog/20170621/164101259.png">
-<meta property="og:image" content="http://oji4bqzc7.bkt.clouddn.com/blog/20170621/164140060.png">
-<meta property="og:image" content="http://oji4bqzc7.bkt.clouddn.com/blog/20170621/164740370.png">
-<meta property="og:updated_time" content="2017-07-06T07:07:27.892Z">
+<meta property="og:image" content="https://surpass-blog.oss-cn-shanghai.aliyuncs.com/160319389.png">
+<meta property="og:image" content="https://surpass-blog.oss-cn-shanghai.aliyuncs.com/164101259.png">
+<meta property="og:image" content="https://surpass-blog.oss-cn-shanghai.aliyuncs.com/164140060.png">
+<meta property="og:image" content="https://surpass-blog.oss-cn-shanghai.aliyuncs.com/164740370.png">
+<meta property="og:updated_time" content="2019-04-10T07:54:30.765Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JAVA容器相关知识点整理">
 <meta name="twitter:description" content="简介 整理容器的基本知识 整理关于不同容器线程安全方面的知识  根据以下资料整理 http://www.jianshu.com/p/047e33fdefd2http://blog.csdn.net/jiyiqinlovexx/article/details/51030720  常用容器关系图 快速了解 Collection（接口） 代表的是单个元素对象的序列，（可以有序/无序，可重复/不可重复 等">
-<meta name="twitter:image" content="http://oji4bqzc7.bkt.clouddn.com/blog/20170621/160319389.png">
+<meta name="twitter:image" content="https://surpass-blog.oss-cn-shanghai.aliyuncs.com/160319389.png">
 
 
 
@@ -440,7 +440,7 @@
 <h3 id="根据以下资料整理"><a href="#根据以下资料整理" class="headerlink" title="根据以下资料整理"></a>根据以下资料整理</h3><blockquote>
 <p><a href="http://www.jianshu.com/p/047e33fdefd2" target="_blank" rel="external">http://www.jianshu.com/p/047e33fdefd2</a><br><a href="http://blog.csdn.net/jiyiqinlovexx/article/details/51030720" target="_blank" rel="external">http://blog.csdn.net/jiyiqinlovexx/article/details/51030720</a></p>
 </blockquote>
-<h3 id="常用容器关系图"><a href="#常用容器关系图" class="headerlink" title="常用容器关系图"></a>常用容器关系图</h3><p><img src="http://oji4bqzc7.bkt.clouddn.com/blog/20170621/160319389.png" alt=""></p>
+<h3 id="常用容器关系图"><a href="#常用容器关系图" class="headerlink" title="常用容器关系图"></a>常用容器关系图</h3><p><img src="https://surpass-blog.oss-cn-shanghai.aliyuncs.com/160319389.png" alt=""></p>
 <h4 id="快速了解"><a href="#快速了解" class="headerlink" title="快速了解"></a>快速了解</h4><hr>
 <h5 id="Collection（接口）"><a href="#Collection（接口）" class="headerlink" title="Collection（接口）"></a>Collection（接口）</h5><ol>
 <li>代表的是单个元素对象的序列，（可以有序/无序，可重复/不可重复 等，具体依据具体的子接口Set，List，Queue等）；</li>
@@ -479,7 +479,7 @@
 </li>
 <li>LinkedList还实现了Deque接口，Deque接口是继承Queue的。所以LinkedList还支持队列的pop，push，peek操作</li>
 </ol>
-<p><img src="http://oji4bqzc7.bkt.clouddn.com/blog/20170621/164101259.png" alt="mark"></p>
+<p><img src="https://surpass-blog.oss-cn-shanghai.aliyuncs.com/164101259.png" alt="mark"></p>
 <h5 id="Set（Collection的子接口）"><a href="#Set（Collection的子接口）" class="headerlink" title="Set（Collection的子接口）"></a>Set（Collection的子接口）</h5><ol>
 <li>存储不重复的元素集合</li>
 </ol>
@@ -497,7 +497,7 @@
 <li>TreeSet内的元素必须实现Comparable接口</li>
 <li>一组有次序的集合，如果没有指定排序规则Comparator，则会按照自然排序。（自然排序即e1.compareTo(e2) == 0作为比较）</li>
 </ol>
-<p><img src="http://oji4bqzc7.bkt.clouddn.com/blog/20170621/164140060.png" alt="mark"></p>
+<p><img src="https://surpass-blog.oss-cn-shanghai.aliyuncs.com/164140060.png" alt="mark"></p>
 <h5 id="Queue（Collection的子接口）"><a href="#Queue（Collection的子接口）" class="headerlink" title="Queue（Collection的子接口）"></a>Queue（Collection的子接口）</h5><h5 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h5><h6 id="HashMap"><a href="#HashMap" class="headerlink" title="HashMap"></a>HashMap</h6><ol>
 <li>最基础最常用的一种Map，它无序，以散列表的方式进行存储</li>
 </ol>
@@ -511,7 +511,7 @@
 <h6 id="WeakHashMap"><a href="#WeakHashMap" class="headerlink" title="WeakHashMap"></a>WeakHashMap</h6><ol>
 <li>特点是，当除了自身有对key的引用外，此key没有其他引用那么此map会自动丢弃此值</li>
 </ol>
-<p><img src="http://oji4bqzc7.bkt.clouddn.com/blog/20170621/164740370.png" alt="mark"></p>
+<p><img src="https://surpass-blog.oss-cn-shanghai.aliyuncs.com/164740370.png" alt="mark"></p>
 <blockquote>
 <p>以上，感谢<a href="http://www.jianshu.com/p/047e33fdefd2" target="_blank" rel="external">http://www.jianshu.com/p/047e33fdefd2</a> ，如有冒犯，请联系我删除</p>
 </blockquote>

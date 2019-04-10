@@ -113,13 +113,13 @@
 <meta property="og:url" content="https://surpass-wei.github.io/2017/02/24/spring-boot1.5以上版本@ConfigurationProperties取消location注解后的替代方案/index.html">
 <meta property="og:site_name" content="Surpass&#39;s blog">
 <meta property="og:description" content="问题在spring boot（版本1.5.1.RELEASE）项目中，当准备映射自定义的配置文件属性到类中的时候，发现原本的@ConfigurationProperties注解已将location属性移除，因此导致无法正常给配置类的属性赋值(spring boot这么做其实也有他的道理，具体可参考https://github.com/spring-projects/spring-boot/issu">
-<meta property="og:image" content="http://oji4bqzc7.bkt.clouddn.com/blog/20170224/174335562.png">
-<meta property="og:image" content="http://oji4bqzc7.bkt.clouddn.com/blog/20170224/175202035.png">
-<meta property="og:updated_time" content="2017-07-06T07:09:19.228Z">
+<meta property="og:image" content="https://surpass-blog.oss-cn-shanghai.aliyuncs.com/174335562.png">
+<meta property="og:image" content="https://surpass-blog.oss-cn-shanghai.aliyuncs.com/175202035.png">
+<meta property="og:updated_time" content="2019-04-10T07:54:30.862Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="spring boot1.5以上版本@ConfigurationProperties取消location注解后的替代方案">
 <meta name="twitter:description" content="问题在spring boot（版本1.5.1.RELEASE）项目中，当准备映射自定义的配置文件属性到类中的时候，发现原本的@ConfigurationProperties注解已将location属性移除，因此导致无法正常给配置类的属性赋值(spring boot这么做其实也有他的道理，具体可参考https://github.com/spring-projects/spring-boot/issu">
-<meta name="twitter:image" content="http://oji4bqzc7.bkt.clouddn.com/blog/20170224/174335562.png">
+<meta name="twitter:image" content="https://surpass-blog.oss-cn-shanghai.aliyuncs.com/174335562.png">
 
 
 
@@ -432,14 +432,14 @@
 
       
         <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>在<code>spring boot（版本1.5.1.RELEASE）</code>项目中，当准备映射自定义的配置文件属性到类中的时候，发现原本的<code>@ConfigurationProperties</code>注解已将<code>location</code>属性移除，因此导致无法正常给配置类的属性赋值(spring boot这么做其实也有他的道理，具体可参考<a href="https://github.com/spring-projects/spring-boot/issues/6726" target="_blank" rel="external">https://github.com/spring-projects/spring-boot/issues/6726</a>)</p>
-<p><img src="http://oji4bqzc7.bkt.clouddn.com/blog/20170224/174335562.png" alt="mark"></p>
+<p><img src="https://surpass-blog.oss-cn-shanghai.aliyuncs.com/174335562.png" alt="mark"></p>
 <h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><blockquote>
 <p>之前一直采用的方式是添加<code>@ConfigurationProperties</code>注解，配置其<code>prefix</code>和<code>location</code>属性，然后在spring boot启动类中用<code>@EnableConfigurationProperties</code>激活配置类</p>
 </blockquote>
 <p><strong>既然不行了，那我们只能换一种方式：</strong></p>
 <ol>
 <li>在<code>@EnableConfigurationProperties</code>取消激活自定义的配置类（<strong>重要</strong>）</li>
-<li>在配置类中采用<code>@Component</code>的方式注册为组件，然后使用<code>@PropertySource</code>来指定自定义的资源目录<br><img src="http://oji4bqzc7.bkt.clouddn.com/blog/20170224/175202035.png" alt="mark"></li>
+<li>在配置类中采用<code>@Component</code>的方式注册为组件，然后使用<code>@PropertySource</code>来指定自定义的资源目录<br><img src="https://surpass-blog.oss-cn-shanghai.aliyuncs.com/175202035.png" alt="mark"></li>
 </ol>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这就是<code>@ConfigurationProperties</code>的<code>location</code>属性被取消后的一种替代方案,当然，如果想改代码，也有其他的解决方案，可以参考<a href="http://stackoverflow.com/questions/42083276/spring-boot-remove-locations-attributes-from-configurationproperties" target="_blank" rel="external">http://stackoverflow.com/questions/42083276/spring-boot-remove-locations-attributes-from-configurationproperties</a></p>
 <p>当然，spring boot认为将一个配置类绑定到一个配置文件是一件不好的事，因此，我们也应当尽可能的去理解他的思想，然后找到一个最有效的方式来解决这个问题。</p>
