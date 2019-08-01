@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://surpass-wei.github.io/"/>
-  <updated>2019-08-01T12:02:32.333Z</updated>
+  <updated>2019-08-01T12:16:08.691Z</updated>
   <id>https://surpass-wei.github.io/</id>
   
   <author>
@@ -16,11 +16,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title></title>
+    <title>myBatis使用redis做二级缓存时需要注意的几个地方</title>
     <link href="https://surpass-wei.github.io/2019/08/01/myBatis%E4%BD%BF%E7%94%A8redis%E5%81%9A%E4%BA%8C%E7%BA%A7%E7%BC%93%E5%AD%98%E6%97%B6%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E7%9A%84%E5%87%A0%E4%B8%AA%E5%9C%B0%E6%96%B9/"/>
     <id>https://surpass-wei.github.io/2019/08/01/myBatis使用redis做二级缓存时需要注意的几个地方/</id>
-    <published>2019-08-01T12:00:09.837Z</published>
-    <updated>2019-08-01T12:02:32.333Z</updated>
+    <published>2019-08-01T12:15:31.000Z</published>
+    <updated>2019-08-01T12:16:08.691Z</updated>
     
     <summary type="html">
     
@@ -28,6 +28,10 @@
     
     </summary>
     
+      <category term="开发" scheme="https://surpass-wei.github.io/categories/%E5%BC%80%E5%8F%91/"/>
+    
+    
+      <category term="mySql" scheme="https://surpass-wei.github.io/tags/mySql/"/>
     
   </entry>
   
