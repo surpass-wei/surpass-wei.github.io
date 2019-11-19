@@ -1,0 +1,5 @@
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
+    <ShortName>surpass's blog</ShortName>
+    <Description>热爱生活</Description>
+    <Url type="text/html" template="https://surpass-wei.github.io/" />
+</OpenSearchDescription>

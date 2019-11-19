@@ -6,15 +6,15 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-Hans">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -32,7 +32,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -84,23 +84,23 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="Nginx," />
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
 
 
-
-
-
-  <link rel="alternate" href="/atom.xml" title="Surpass's blog" type="application/atom+xml" />
+  <meta name="keywords" content="Nginx,">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="http://oji4bqzc7.bkt.clouddn.com/blog/20170705/174921309.jpeg?v=5.1.0" />
+
+  <link rel="alternate" href="/atom.xml" title="Surpass's blog" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="http://oji4bqzc7.bkt.clouddn.com/blog/20170705/174921309.jpeg?v=5.1.0">
 
 
 
@@ -114,6 +114,7 @@
 <meta property="og:url" content="https://surpass-wei.github.io/2017/07/19/Nginx反向代理的一次使用总结/index.html">
 <meta property="og:site_name" content="Surpass&#39;s blog">
 <meta property="og:description" content="简介高性能的HTTP和反向代理服务器 关键词事件驱动 高效的反向代理、负载平衡 稳定 丰富的模块库 配置灵活 低资源占用 常用命令 假设运行环境为windows且nginx所在目录为D:\nginx-1.12.1  123456789101112131415# 启动服务（会有窗口一闪而过，可以正常访问`localhost:3000`则说明启动成功）D:\nginx-1.12.1&amp;gt; start">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2017-07-19T10:08:14.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Nginx反向代理的一次使用总结">
@@ -145,7 +146,7 @@
 
 
 
-  <link rel="canonical" href="https://surpass-wei.github.io/2017/07/19/Nginx反向代理的一次使用总结/"/>
+  <link rel="canonical" href="https://surpass-wei.github.io/2017/07/19/Nginx反向代理的一次使用总结/">
 
 
 
@@ -185,7 +186,7 @@
     
 
     <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
+      <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">Surpass's blog</span>
         <span class="logo-line-after"><i></i></span>
@@ -215,7 +216,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -225,7 +226,7 @@
         <li class="menu-item menu-item-categories">
           <a href="/categories" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
             分类
           </a>
@@ -235,7 +236,7 @@
         <li class="menu-item menu-item-about">
           <a href="/about" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
             
             关于
           </a>
@@ -245,7 +246,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -255,7 +256,7 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
             标签
           </a>
@@ -268,7 +269,7 @@
             <a href="javascript:;" class="popup-trigger">
           
             
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
             
             搜索
           </a>
@@ -289,9 +290,7 @@
       <i class="fa fa-times-circle"></i>
     </span>
     <div class="local-search-input-wrapper">
-      <input autocapitalize="off" autocomplete="off" autocorrect="off"
-             placeholder="搜索..." spellcheck="false"
-             type="text" id="local-search-input">
+      <input autocapitalize="off" autocomplete="off" autocorrect="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
     </div>
   </div>
   <div id="local-search-result"></div>
@@ -328,7 +327,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Surpass Wei">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="http://oji4bqzc7.bkt.clouddn.com/blog/20170705/174921309.jpeg">
     </span>
 
@@ -371,7 +370,7 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
             
               <span class="post-meta-divider">|</span>
             
@@ -434,7 +433,7 @@
 <h1 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h1><blockquote>
 <p>假设运行环境为<code>windows</code>且nginx所在目录为<code>D:\nginx-1.12.1</code></p>
 </blockquote>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> 启动服务（会有窗口一闪而过，可以正常访问`localhost:3000`则说明启动成功）</div><div class="line">D:\nginx-1.12.1&gt; start nginx</div><div class="line"><span class="meta"></span></div><div class="line"># 快速关闭Nginx，可能不保存相关信息，并迅速终止web服务</div><div class="line">D:\nginx-1.12.1&gt; nginx -s stop</div><div class="line"><span class="meta">#</span> 平稳关闭Nginx，保存相关信息，有安排的结束web服务</div><div class="line">D:\nginx-1.12.1&gt; nginx -s quit</div><div class="line"><span class="meta">#</span> 重新加载配置</div><div class="line">D:\nginx-1.12.1&gt; nginx -s reload</div><div class="line"><span class="meta">#</span> 不运行，仅测试有效的配置文件</div><div class="line">D:\nginx-1.12.1&gt; nginx -t</div><div class="line"><span class="meta">#</span> 显示 nginx 的版本</div><div class="line">D:\nginx-1.12.1&gt; nginx -v</div><div class="line"><span class="meta">#</span> 显示 nginx 的版本，编译器版本和配置参数</div><div class="line">D:\nginx-1.12.1&gt; nginx -V</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 启动服务（会有窗口一闪而过，可以正常访问`localhost:3000`则说明启动成功）</span><br><span class="line">D:\nginx-1.12.1&gt; start nginx</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> 快速关闭Nginx，可能不保存相关信息，并迅速终止web服务</span><br><span class="line">D:\nginx-1.12.1&gt; nginx -s stop</span><br><span class="line"><span class="meta">#</span> 平稳关闭Nginx，保存相关信息，有安排的结束web服务</span><br><span class="line">D:\nginx-1.12.1&gt; nginx -s quit</span><br><span class="line"><span class="meta">#</span> 重新加载配置</span><br><span class="line">D:\nginx-1.12.1&gt; nginx -s reload</span><br><span class="line"><span class="meta">#</span> 不运行，仅测试有效的配置文件</span><br><span class="line">D:\nginx-1.12.1&gt; nginx -t</span><br><span class="line"><span class="meta">#</span> 显示 nginx 的版本</span><br><span class="line">D:\nginx-1.12.1&gt; nginx -v</span><br><span class="line"><span class="meta">#</span> 显示 nginx 的版本，编译器版本和配置参数</span><br><span class="line">D:\nginx-1.12.1&gt; nginx -V</span><br></pre></td></tr></table></figure>
 <h1 id="实际使用"><a href="#实际使用" class="headerlink" title="实际使用"></a>实际使用</h1><h2 id="使用反向代理来实现不同的域名访问同一台服务器上不同端口的web应用（隐藏端口号）"><a href="#使用反向代理来实现不同的域名访问同一台服务器上不同端口的web应用（隐藏端口号）" class="headerlink" title="使用反向代理来实现不同的域名访问同一台服务器上不同端口的web应用（隐藏端口号）"></a>使用反向代理来实现不同的域名访问同一台服务器上不同端口的web应用（隐藏端口号）</h2><p>应对当同一服务器上，同时存在多种类型的web服务器时（比如同时存在部署在tomcat上的应用以及nodeJs应用），避免需要采用端口号来区分不同的web应用</p>
 <blockquote>
 <p>核心配置文件为<code>conf/nginx.conf</code>,可以用<code>nginx -c</code>命令重新制定配置文件</p>
@@ -445,7 +444,7 @@
 <li><p>在<code>myConf</code>中新建配置，如<code>test.conf</code>,填入配置信息如下：</p>
 </li>
 </ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line">upstream webServer01 &#123;</div><div class="line">    server 127.0.0.1:3001;</div><div class="line">    keepalive 64;</div><div class="line">&#125;</div><div class="line"></div><div class="line">upstream webServer02 &#123;</div><div class="line">    server 127.0.0.1:3002;</div><div class="line">    keepalive 64;</div><div class="line">&#125;</div><div class="line"></div><div class="line">server &#123;</div><div class="line">    listen 80;</div><div class="line">    server_name www.myApp01.com;</div><div class="line">    #access_log /var/log/nginx/test.log;</div><div class="line">    location / &#123;</div><div class="line">        proxy_set_header X-Real-IP $remote_addr;</div><div class="line">        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</div><div class="line">        proxy_set_header Host  $http_host;</div><div class="line">        proxy_set_header X-Nginx-Proxy true;</div><div class="line">        proxy_set_header Connection &quot;&quot;;</div><div class="line">        proxy_pass       http://webServer01;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">server &#123;</div><div class="line">    listen 80;</div><div class="line">    server_name www.myApp02.com;</div><div class="line">    #access_log /var/log/nginx/test.log;</div><div class="line">    location / &#123;</div><div class="line">        proxy_set_header X-Real-IP $remote_addr;</div><div class="line">        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</div><div class="line">        proxy_set_header Host  $http_host;</div><div class="line">        proxy_set_header X-Nginx-Proxy true;</div><div class="line">        proxy_set_header Connection &quot;&quot;;</div><div class="line">        proxy_pass       http://webServer02;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">upstream webServer01 &#123;</span><br><span class="line">    server 127.0.0.1:3001;</span><br><span class="line">    keepalive 64;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">upstream webServer02 &#123;</span><br><span class="line">    server 127.0.0.1:3002;</span><br><span class="line">    keepalive 64;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line">    listen 80;</span><br><span class="line">    server_name www.myApp01.com;</span><br><span class="line">    #access_log /var/log/nginx/test.log;</span><br><span class="line">    location / &#123;</span><br><span class="line">        proxy_set_header X-Real-IP $remote_addr;</span><br><span class="line">        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">        proxy_set_header Host  $http_host;</span><br><span class="line">        proxy_set_header X-Nginx-Proxy true;</span><br><span class="line">        proxy_set_header Connection &quot;&quot;;</span><br><span class="line">        proxy_pass       http://webServer01;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line">    listen 80;</span><br><span class="line">    server_name www.myApp02.com;</span><br><span class="line">    #access_log /var/log/nginx/test.log;</span><br><span class="line">    location / &#123;</span><br><span class="line">        proxy_set_header X-Real-IP $remote_addr;</span><br><span class="line">        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">        proxy_set_header Host  $http_host;</span><br><span class="line">        proxy_set_header X-Nginx-Proxy true;</span><br><span class="line">        proxy_set_header Connection &quot;&quot;;</span><br><span class="line">        proxy_pass       http://webServer02;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>修改配置文件后重新启动nginx服务，当我们以 <code>www.myApp01.com</code> 访问时，将进入<code>webServer01</code>，当我们以 <code>www.myApp02.com</code> 访问时，将进入<code>webServer02</code>,<br>当然，<code>前提</code>是<code>www.myApp01.com</code>和<code>www.myApp02.com</code>都是指向你本机IP地址的有效域名</p>
 
       
@@ -469,13 +468,13 @@
     <div id="QR" style="display: none;">
       
         <div id="wechat" style="display: inline-block">
-          <img id="wechat_qr" src="http://oji4bqzc7.bkt.clouddn.com/blog/20170706/154336978.jpg" alt="Surpass Wei WeChat Pay"/>
+          <img id="wechat_qr" src="http://oji4bqzc7.bkt.clouddn.com/blog/20170706/154336978.jpg" alt="Surpass Wei WeChat Pay">
           <p>微信打赏</p>
         </div>
       
       
         <div id="alipay" style="display: inline-block">
-          <img id="alipay_qr" src="http://oji4bqzc7.bkt.clouddn.com/blog/20170706/154254186.jpg" alt="Surpass Wei Alipay"/>
+          <img id="alipay_qr" src="http://oji4bqzc7.bkt.clouddn.com/blog/20170706/154254186.jpg" alt="Surpass Wei Alipay">
           <p>支付宝打赏</p>
         </div>
       
@@ -572,7 +571,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             文章目录
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -583,9 +582,7 @@
 
       <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="http://oji4bqzc7.bkt.clouddn.com/blog/20170705/174921309.jpeg"
-               alt="Surpass Wei" />
+          <img class="site-author-image" itemprop="image" src="http://oji4bqzc7.bkt.clouddn.com/blog/20170705/174921309.jpeg" alt="Surpass Wei">
           <p class="site-author-name" itemprop="name">Surpass Wei</p>
            
               <p class="site-description motion-element" itemprop="description">尽管风雨 生活依旧要阳光下去</p>
@@ -596,7 +593,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-count">35</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -709,7 +706,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy;  2017 - 
   <span itemprop="copyrightYear">2019</span>
