@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://surpass-wei.github.io/"/>
-  <updated>2019-11-21T11:49:33.537Z</updated>
+  <updated>2020-03-26T11:21:39.281Z</updated>
   <id>https://surpass-wei.github.io/</id>
   
   <author>
@@ -14,6 +14,22 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title></title>
+    <link href="https://surpass-wei.github.io/2020/03/26/MySQLOracle%E4%BC%98%E5%8C%96%E6%8A%80%E5%B7%A7/"/>
+    <id>https://surpass-wei.github.io/2020/03/26/MySQLOracle优化技巧/</id>
+    <published>2020-03-26T11:20:35.960Z</published>
+    <updated>2020-03-26T11:21:39.281Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;选取最适用的字段属性&quot;&gt;&lt;a href=&quot;#选取最适用的字段属性&quot; class=&quot;headerlink&quot; title=&quot;选取最适用的字段属性&quot;&gt;&lt;/a&gt;选取最适用的字段属性&lt;/h1&gt;&lt;p&gt;MySQL可以很好的支持大数据量的存取，但是一般说来，数据库中的表越小，在它
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>Docx4j导出latex公式到word（公式可编辑）</title>
@@ -394,31 +410,6 @@
       <category term="原创" scheme="https://surpass-wei.github.io/tags/%E5%8E%9F%E5%88%9B/"/>
     
       <category term="学习笔记" scheme="https://surpass-wei.github.io/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>JAVA的类型转换</title>
-    <link href="https://surpass-wei.github.io/2017/06/13/JAVA%E7%9A%84%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/"/>
-    <id>https://surpass-wei.github.io/2017/06/13/JAVA的类型转换/</id>
-    <published>2017-06-12T22:30:00.000Z</published>
-    <updated>2017-07-06T07:08:05.000Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;基本数据类型之间的转换（值转换）&quot;&gt;&lt;a href=&quot;#基本数据类型之间的转换（值转换）&quot; class=&quot;headerlink&quot; title=&quot;基本数据类型之间的转换（值转换）&quot;&gt;&lt;/a&gt;基本数据类型之间的转换（值转换）&lt;/h2&gt;&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;boole
-    
-    </summary>
-    
-      <category term="开发" scheme="https://surpass-wei.github.io/categories/%E5%BC%80%E5%8F%91/"/>
-    
-    
-      <category term="常见问题" scheme="https://surpass-wei.github.io/tags/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/"/>
-    
-      <category term="java" scheme="https://surpass-wei.github.io/tags/java/"/>
-    
-      <category term="原创" scheme="https://surpass-wei.github.io/tags/%E5%8E%9F%E5%88%9B/"/>
     
   </entry>
   
