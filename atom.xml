@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://surpass-wei.github.io/"/>
-  <updated>2020-03-26T11:27:50.474Z</updated>
+  <updated>2020-09-22T01:10:40.406Z</updated>
   <id>https://surpass-wei.github.io/</id>
   
   <author>
@@ -14,6 +14,24 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>pagehelper在全文检索sql下排序报错的问题</title>
+    <link href="https://surpass-wei.github.io/2020/09/22/pagehelper%E5%9C%A8%E5%85%A8%E6%96%87%E6%A3%80%E7%B4%A2sql%E4%B8%8B%E6%8E%92%E5%BA%8F%E6%8A%A5%E9%94%99%E7%9A%84%E9%97%AE%E9%A2%98/"/>
+    <id>https://surpass-wei.github.io/2020/09/22/pagehelper在全文检索sql下排序报错的问题/</id>
+    <published>2020-09-22T01:09:44.000Z</published>
+    <updated>2020-09-22T01:10:40.406Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;当sql中用到了全文索引做检索时且用pagehelp添加了排序时，发现后端会报一堆&lt;code&gt;JSQLParserException&lt;/code&gt;，虽然能正常获取到查询结果，但是后端一堆的error日志看着也是非常难受，所以试着查找下问题的解决方案，具体的错误信息如下：&lt;b
+    
+    </summary>
+    
+    
+      <category term="问题解决" scheme="https://surpass-wei.github.io/tags/%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/"/>
+    
+  </entry>
   
   <entry>
     <title>mysql与oracle的一些优化技巧</title>
@@ -387,31 +405,6 @@
     
       <category term="开发" scheme="https://surpass-wei.github.io/categories/%E5%BC%80%E5%8F%91/"/>
     
-    
-  </entry>
-  
-  <entry>
-    <title>String、StringBuffer以及StringBuilder</title>
-    <link href="https://surpass-wei.github.io/2017/06/17/String%E3%80%81StringBuffer%E4%BB%A5%E5%8F%8AStringBuilder/"/>
-    <id>https://surpass-wei.github.io/2017/06/17/String、StringBuffer以及StringBuilder/</id>
-    <published>2017-06-17T01:22:17.000Z</published>
-    <updated>2017-07-06T07:12:33.000Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;String&quot;&gt;&lt;a href=&quot;#String&quot; class=&quot;headerlink&quot; title=&quot;String&quot;&gt;&lt;/a&gt;String&lt;/h3&gt;&lt;blockquote&gt;
-&lt;p&gt;① 字符串是常量；它们的值在创建之后不能更改。&lt;br&gt;② Java 语言提供对字符
-    
-    </summary>
-    
-      <category term="开发" scheme="https://surpass-wei.github.io/categories/%E5%BC%80%E5%8F%91/"/>
-    
-    
-      <category term="java" scheme="https://surpass-wei.github.io/tags/java/"/>
-    
-      <category term="原创" scheme="https://surpass-wei.github.io/tags/%E5%8E%9F%E5%88%9B/"/>
-    
-      <category term="学习笔记" scheme="https://surpass-wei.github.io/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
