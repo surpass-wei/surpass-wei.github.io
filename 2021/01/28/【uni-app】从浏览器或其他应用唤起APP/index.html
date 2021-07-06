@@ -1,0 +1,512 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="千叶鸟">
+  <meta name="keywords" content="">
+  
+  <title>【uni-app】从H5唤起APP - 阿超&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":100,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  <script data-ad-client="ca-pub-6628525096937786" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>阿超's blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="【uni-app】从H5唤起APP">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-01-28 17:07" pubdate>
+        2021年1月28日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.4k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      17
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">【uni-app】从H5唤起APP</h1>
+            
+            <div class="markdown-body">
+              <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在H5页面有个按钮，点击能够在手机浏览器/微信中直接跳转到对应的APP的具体页面，如果未安装对应的APP，则进行提示下载或在应用商店打开该应用下载页。也就是我们常见的“在APP中打开”功能。</p>
+<p>这个功能在实现上主要分为两种场景，<code>从普通浏览器唤醒</code>以及<code>从微信唤醒</code>。这两个场景又分为了IOS端和安卓端，因此，实现的方式也分为很多种，譬如，schemes/Universal Link（通用链接）/应用宝等。</p>
+<p>首先说下普通浏览器，不考虑个别浏览器屏蔽Schemes等情况，采用Schemes是最直接有效的方式，但是这种方式也存在一种问题，就是无法准确判断用户是否已经安装了想要打开的APP。对于这个问题，普遍的解决方式是当用户点了“在APP中打开”按钮后，如果数秒内当前页面的显示状态没有发生变化，则提示用户进行下载或前往应用商店。</p>
+<p>然后是微信。微信就比较妖了，它禁了Schemes，想从微信唤起APP，目前有这么几种方案：</p>
+<ol>
+<li>IOS下通过Universal Link（通用链接），网上很多说也被微信禁了，但是我亲测是可以的，版本：<code>IOS 14.2</code> <code> 微信 7.0.20</code></li>
+<li>接入应用宝（安卓依靠应用宝唤起，IOS只能跳转到app store）</li>
+<li>提示用户在浏览器中打开（间接）</li>
+<li>做腾讯的干儿子（即被微信列入不屏蔽schemes的对象中，可能不？）</li>
+<li>采用微信开放标签</li>
+</ol>
+<p>很显然，方案5是最合适的，后文也是介绍的这种方式</p>
+<blockquote>
+<p>一些资料</p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/0ead88409212">iOS H5打开App(通用链接)</a></p>
+<p><a target="_blank" rel="noopener" href="https://developers.weixin.qq.com/doc/offiaccount/OA_Web_Apps/Wechat_Open_Tag.html">微信开放标签文档</a></p>
+</blockquote>
+<h2 id="普通浏览器（采用Schemes方式）"><a href="#普通浏览器（采用Schemes方式）" class="headerlink" title="普通浏览器（采用Schemes方式）"></a>普通浏览器（采用Schemes方式）</h2><h3 id="注册Schemes"><a href="#注册Schemes" class="headerlink" title="注册Schemes"></a>注册Schemes</h3><p>Manifest.json视图 》App常用其他设置 》分别配置Android设置和IOS设置下的UrlSchemes参数 </p>
+<p>坑：在配置视图中，配置IOS的UrlSchemes存在问题，需要按照 <a target="_blank" rel="noopener" href="https://ask.dcloud.net.cn/article/64">文档</a> 在源码视图中配置（uniapp无形的坑真是的有点多，各方面都不够严谨）</p>
+<p>代码示例：</p>
+<h4 id="安卓"><a href="#安卓" class="headerlink" title="安卓"></a>安卓</h4><p>在manifest.json的”app-plus”-&gt;”distribute”-&gt;”android”节点下添加schemes数据:</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-string">&quot;schemes&quot;</span> : <span class="hljs-string">&quot;your_url_schemes&quot;</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="IOS"><a href="#IOS" class="headerlink" title="IOS"></a>IOS</h4><p>在manifest.json的”app-plus”-&gt;”distribute”-&gt;”ios”节点下添加urltypes数据:</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-string">&quot;urltypes&quot;</span>: [&#123;<br>                <span class="hljs-attr">&quot;urlidentifier&quot;</span>: <span class="hljs-string">&quot;xxx.xxx&quot;</span>,	<span class="hljs-comment">//	一般为域名倒写，例如 baidu.com</span><br>                <span class="hljs-attr">&quot;urlschemes&quot;</span>: [<span class="hljs-string">&quot;your_url_schemes&quot;</span>]<br>						&#125;]<br></code></pre></td></tr></table></figure>
+
+<h3 id="检验"><a href="#检验" class="headerlink" title="检验"></a>检验</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;your_url_schemes://params&quot;</span>&gt;</span>打开APP<span class="hljs-tag">&lt;<span class="hljs-name">a</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">br</span>/&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>或安卓下触发</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">let</span> ifr = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">&quot;iframe&quot;</span>);<br>ifr.src = <span class="hljs-string">&quot;your_url_schemes://params&quot;</span>;<br>ifr.style.display = <span class="hljs-string">&quot;none&quot;</span>;<br><span class="hljs-built_in">document</span>.body.appendChild(ifr);<br></code></pre></td></tr></table></figure>
+
+<p>或IOS下触发</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-built_in">window</span>.location = <span class="hljs-string">&quot;your_url_schemes://params&quot;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h3><p>监听页面显示状态变化，用以处理定时器</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-built_in">document</span>.addEventListener(<span class="hljs-string">&quot;visibilitychange&quot;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>&#123;<br>  <span class="hljs-keyword">if</span> (that.timer) &#123;<br>    that.opening = <span class="hljs-literal">false</span><br>    <span class="hljs-built_in">clearTimeout</span>(that.timer)<br>  &#125;<br>&#125;, <span class="hljs-literal">false</span>);<br></code></pre></td></tr></table></figure>
+
+<p>唤起APP点击方法</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-function"><span class="hljs-title">browserOpenApp</span>(<span class="hljs-params"></span>)</span> &#123;<br>  <span class="hljs-keyword">let</span> that = <span class="hljs-built_in">this</span><br>  that.opening = <span class="hljs-literal">true</span><br>  <span class="hljs-keyword">if</span> (that.isAndroid()) &#123; <span class="hljs-comment">//  安卓处理</span><br>    <span class="hljs-keyword">let</span> ifr = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">&#x27;iframe&#x27;</span>);<br>    ifr.src = <span class="hljs-string">&quot;your_url_schemes://params&quot;</span>;<br>    ifr.style.display = <span class="hljs-string">&#x27;none&#x27;</span>;<br>    <span class="hljs-built_in">document</span>.body.appendChild(ifr);<br>    that.timer = <span class="hljs-built_in">window</span>.setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>&#123;  <span class="hljs-comment">//  未安装的情况</span><br>      that.opening = <span class="hljs-literal">false</span><br>      <span class="hljs-built_in">document</span>.body.removeChild(ifr);<br>      <span class="hljs-comment">//  提示下载</span><br>      <span class="hljs-keyword">let</span> r = confirm(<span class="hljs-string">&quot;未安装APP? 是否下载&quot;</span>)<br>      <span class="hljs-keyword">if</span> (r) &#123;<br>        <span class="hljs-built_in">window</span>.location = that.androidDownloadUrl<br>      &#125;<br>    &#125;, <span class="hljs-number">5000</span>)<br>  &#125; <span class="hljs-keyword">else</span> &#123;  <span class="hljs-comment">//  IOS处理</span><br>    <span class="hljs-built_in">window</span>.location = <span class="hljs-string">&quot;your_url_schemes://params&quot;</span><br>    that.timer = <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>&#123; <span class="hljs-comment">//  未安装的情况</span><br>      that.opening = <span class="hljs-literal">false</span><br>      <span class="hljs-comment">//  跳转app store</span><br>      <span class="hljs-keyword">let</span> r = confirm(<span class="hljs-string">&quot;未安装APP? 是否去App store查看&quot;</span>)<br>      <span class="hljs-keyword">if</span> (r) &#123;<br>        <span class="hljs-built_in">window</span>.location = <span class="hljs-string">&#x27;https://apps.apple.com/cn/app/idxxxxxxxxxx&#x27;</span><br>      &#125;<br>    &#125;, <span class="hljs-number">5000</span>);<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<blockquote>
+<p>参考文档：</p>
+<p><a target="_blank" rel="noopener" href="https://ask.dcloud.net.cn/question/114765">【报Bug】HBuilderX配置IOS UrlSchemes的提示存在问题，易误导</a></p>
+<p><a target="_blank" rel="noopener" href="https://ask.dcloud.net.cn/article/409">Android平台设置UrlSchemes，实现被第三方应用调用</a></p>
+<p><a target="_blank" rel="noopener" href="https://ask.dcloud.net.cn/article/64">iOS平台设置UrlSchemes，实现被第三方应用调用</a></p>
+</blockquote>
+<h2 id="微信（开放标签方式）"><a href="#微信（开放标签方式）" class="headerlink" title="微信（开放标签方式）"></a>微信（开放标签方式）</h2><p>按<a target="_blank" rel="noopener" href="https://developers.weixin.qq.com/doc/offiaccount/OA_Web_Apps/Wechat_Open_Tag.html">微信开放标签文档</a>操作就可以了，值得注意的点有以下：</p>
+<ol>
+<li>h5网页必须以配置的<code>JS接口安全域名</code>访问，否则无法正常显示开放标签按钮</li>
+<li>微信的JS-SDK只有在H5环境下才能正常加载，在小程序、APP环境下会报错</li>
+<li><code>&lt;wx-open-launch-app</code>标签内的<code>&lt;template&gt;</code>标签要用<code>&lt;script type=&quot;text/wxtag-template&quot;&gt;</code>代替</li>
+</ol>
+<h2 id="参数处理"><a href="#参数处理" class="headerlink" title="参数处理"></a>参数处理</h2><h3 id="参数的传递"><a href="#参数的传递" class="headerlink" title="参数的传递"></a>参数的传递</h3><p>普通浏览器schemes url中 <code>//</code>后的即为参数内容，例如<code>your_url_schemes://params</code>的参数内容为<code>params</code></p>
+<p>微信开放标签中，<code>wx-open-launch-app</code>标签的extinfo属性即为参数内容</p>
+<h3 id="参数的获取"><a href="#参数的获取" class="headerlink" title="参数的获取"></a>参数的获取</h3><p><code>plus.runtime.arguments</code>即为当前的参数内容，但是有以下几个点需要处理：</p>
+<ol>
+<li>在获取<code>plus.runtime.arguments</code>后，需要将<code>plus.runtime.arguments</code>置为空，否则一直能获取到</li>
+<li>不同浏览器或系统获取到的参数可能会包含前缀<code>your_url_schemes://</code>，需要处理</li>
+<li>IOS下会对参数进行编码，因此，在获取后，需要用<code>decodeURIComponent</code>方法进行解码</li>
+<li>IOS下可能有获取参数异常的问题（获取的为上一个变化的值），需要用setTimeout(function,0)的方式来解决</li>
+</ol>
+<h4 id="代码示例"><a href="#代码示例" class="headerlink" title="代码示例"></a>代码示例</h4><p>在<code>App.vue</code> <code> onshow</code>钩子函数中添加：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// 跳转页面(需要在setTimeout中,否则IOS会出现获取的plus.runtime.arguments是上一个赋值给plus.runtime.arguments的值,而不是当前传入的plus.runtime.arguments)</span><br><span class="hljs-built_in">setTimeout</span>(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>&#123;<br>  <span class="hljs-keyword">let</span> appOpenParam = plus.runtime.arguments<br>  plus.runtime.arguments = <span class="hljs-literal">null</span>;<br>  plus.runtime.arguments = <span class="hljs-string">&quot;&quot;</span>;<br>  appOpenParam = appOpenParam.replace(<span class="hljs-string">&quot;your_url_schemes://&quot;</span>,<span class="hljs-string">&#x27;&#x27;</span>)<br>  appOpenParam = <span class="hljs-built_in">decodeURIComponent</span>(appOpenParam)<br>  <span class="hljs-keyword">if</span> (appOpenParam &amp;&amp; appOpenParam.trim().length&gt;<span class="hljs-number">0</span>) &#123;<br>    <span class="hljs-keyword">let</span> appOpenParamObj = <span class="hljs-built_in">JSON</span>.parse(appOpenParam)<br>    <span class="hljs-keyword">if</span> (appOpenParamObj.openPath) &#123;<br>      uni.navigateTo(&#123;<br>        <span class="hljs-attr">url</span>: appOpenParamObj.openPath<br>      &#125;);<br>    &#125;<br>  &#125;<br>&#125;, <span class="hljs-number">0</span>);<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/uni-app/">uni-app</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/04/13/%E8%AE%A9%E8%87%AA%E5%AE%9A%E4%B9%89%E6%B3%A8%E8%A7%A3%E6%94%AF%E6%8C%81EL%E8%A1%A8%E8%BE%BE%E5%BC%8F%E8%A7%A3%E6%9E%90%E6%96%B9%E6%B3%95%E5%8F%82%E6%95%B0/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">让自定义注解支持EL表达式解析方法参数</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/09/22/pagehelper%E5%9C%A8%E5%85%A8%E6%96%87%E6%A3%80%E7%B4%A2sql%E4%B8%8B%E6%8E%92%E5%BA%8F%E6%8A%A5%E9%94%99%E7%9A%84%E9%97%AE%E9%A2%98/">
+                        <span class="hidden-mobile">pagehelper在全文检索sql下排序报错的问题</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+  <!-- 备案信息 -->
+  <div class="beian">
+    <span>
+      <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+        湘ICP备2021009708号
+      </a>
+    </span>
+    
+  </div>
+
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

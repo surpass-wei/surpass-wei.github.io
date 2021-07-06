@@ -1,0 +1,563 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="千叶鸟">
+  <meta name="keywords" content="">
+  
+  <title>mysql与oracle的一些优化技巧 - 阿超&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":100,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  <script data-ad-client="ca-pub-6628525096937786" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>阿超's blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="mysql与oracle的一些优化技巧">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-03-26 19:27" pubdate>
+        2020年3月26日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      10k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      111
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">mysql与oracle的一些优化技巧</h1>
+            
+            <div class="markdown-body">
+              <h1 id="选取最适用的字段属性"><a href="#选取最适用的字段属性" class="headerlink" title="选取最适用的字段属性"></a>选取最适用的字段属性</h1><p>MySQL可以很好的支持大数据量的存取，但是一般说来，数据库中的表越小，在它上面执行的查询也就会越快。因此，在创建表的时候，为了获得更好的性能，我们可以将表中字段的宽度设得尽可能小。<br>例如，在定义邮政编码这个字段时，如果将其设置为CHAR(255),显然给数据库增加了不必要的空间，甚至使用VARCHAR这种类型也是多余的，因为CHAR(6)就可以很好的完成任务了。同样的，如果可以的话，我们应该使用MEDIUMINT而不是BIGIN来定义整型字段。<br>另外一个提高效率的方法是在可能的情况下，应该尽量把字段设置为NOTNULL，这样在将来执行查询的时候，数据库不用去比较NULL值。<br>对于某些文本字段，例如“省份”或者“性别”，我们可以将它们定义为ENUM类型。因为在MySQL中，ENUM类型被当作数值型数据来处理，而数值型数据被处理起来的速度要比文本类型快得多。这样，我们又可以提高数据库的性能。</p>
+<h1 id="使用连接（JOIN）来代替子查询-Sub-Queries"><a href="#使用连接（JOIN）来代替子查询-Sub-Queries" class="headerlink" title="使用连接（JOIN）来代替子查询(Sub-Queries)"></a>使用连接（JOIN）来代替子查询(Sub-Queries)</h1><p>MySQL从4.1开始支持SQL的子查询。这个技术可以使用SELECT语句来创建一个单列的查询结果，然后把这个结果作为过滤条件用在另一个查询中。例如，我们要将客户基本信息表中没有任何订单的客户删除掉，就可以利用子查询先从销售信息表中将所有发出订单的客户ID取出来，然后将结果传递给主查询，如下所示：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">FROM</span> customerinfo <span class="hljs-keyword">WHERE</span> CustomerID <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">in</span>(<span class="hljs-keyword">SELECT</span> CustomerID <span class="hljs-keyword">FROM</span> salesinfo)<br></code></pre></td></tr></table></figure>
+<p>使用子查询可以一次性的完成很多逻辑上需要多个步骤才能完成的SQL操作，同时也可以避免事务或者表锁死，并且写起来也很容易。但是，有些情况下，子查询可以被更有效率的连接（JOIN）..替代。例如，假设我们要将所有没有订单记录的用户取出来，可以用下面这个查询完成：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> customerinfo <span class="hljs-keyword">WHERE</span> Customer ID <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">in</span> (<span class="hljs-keyword">SELECT</span> CustomerID <span class="hljs-keyword">FROM</span> salesinfo)<br></code></pre></td></tr></table></figure>
+<p>如果使用连接（JOIN）..来完成这个查询工作，速度将会快很多。尤其是当salesinfo表中对CustomerID建有索引的话，性能将会更好，查询如下：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> customerinfo <span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> salesinfo <span class="hljs-keyword">ON</span> customerinfo.CustomerID <span class="hljs-operator">=</span> salesinfo.CustomerID <span class="hljs-keyword">WHERE</span> salesinfo.CustomerID <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span><br></code></pre></td></tr></table></figure>
+<p>连接（JOIN）..之所以更有效率一些，是因为MySQL不需要在内存中创建临时表来完成这个逻辑上的需要两个步骤的查询工作。</p>
+<h1 id="使用联合-UNION-来代替手动创建的临时表"><a href="#使用联合-UNION-来代替手动创建的临时表" class="headerlink" title="使用联合(UNION)来代替手动创建的临时表"></a>使用联合(UNION)来代替手动创建的临时表</h1><p>MySQL从4.0的版本开始支持union查询，它可以把需要使用临时表的两条或更多的select查询合并的一个查询中。在客户端的查询会话结束的时候，临时表会被自动删除，从而保证数据库整齐、高效。使用union来创建查询的时候，我们只需要用UNION作为关键字把多个select语句连接起来就可以了，要注意的是所有select语句中的字段数目要想同。下面的例子就演示了一个使用UNION的查询。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">SELECT</span> Name,Phone <span class="hljs-keyword">FROM</span> client<br><span class="hljs-keyword">UNION</span><br><span class="hljs-keyword">SELECT</span> Name,BirthDate <span class="hljs-keyword">FROM</span> author<br><span class="hljs-keyword">UNION</span><br><span class="hljs-keyword">SELECT</span> Name,Supplier <span class="hljs-keyword">FROM</span> product<br></code></pre></td></tr></table></figure>
+<h1 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h1><p>尽管我们可以使用子查询（Sub-Queries）、连接（JOIN）和联合（UNION）来创建各种各样的查询，但不是所有的数据库操作都可以只用一条或少数几条SQL语句就可以完成的。更多的时候是需要用到一系列的语句来完成某种工作。但是在这种情况下，当这个语句块中的某一条语句运行出错的时候，整个语句块的操作就会变得不确定起来。设想一下，要把某个数据同时插入两个相关联的表中，可能会出现这样的情况：第一个表中成功更新后，数据库突然出现意外状况，造成第二个表中的操作没有完成，这样，就会造成数据的不完整，甚至会破坏数据库中的数据。要避免这种情况，就应该使用事务，它的作用是：要么语句块中每条语句都操作成功，要么都失败。换句话说，就是可以保持数据库中数据的一致性和完整性。事物以BEGIN关键字开始，COMMIT关键字结束。在这之间的一条SQL操作失败，那么，ROLLBACK命令就可以把数据库恢复到BEGIN开始之前的状态。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">BEGIN</span>;<br><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> salesinfo <span class="hljs-keyword">SET</span> CustomerID<span class="hljs-operator">=</span><span class="hljs-number">14</span>;<br>UPDATE inventory <span class="hljs-keyword">SET</span> Quantity<span class="hljs-operator">=</span><span class="hljs-number">11</span> <span class="hljs-keyword">WHERE</span> item<span class="hljs-operator">=</span><span class="hljs-string">&#x27;book&#x27;</span>;<br><span class="hljs-keyword">COMMIT</span>;<br></code></pre></td></tr></table></figure>
+<p>事务的另一个重要作用是当多个用户同时使用相同的数据源时，它可以利用锁定数据库的方法来为用户提供一种安全的访问方式，这样可以保证用户的操作不被其它的用户所干扰。</p>
+<h1 id="锁定表"><a href="#锁定表" class="headerlink" title="锁定表"></a>锁定表</h1><p>尽管事务是维护数据库完整性的一个非常好的方法，但却因为它的独占性，有时会影响数据库的性能，尤其是在很大的应用系统中。由于在事务执行的过程中，数据库将会被锁定，因此其它的用户请求只能暂时等待直到该事务结束。如果一个数据库系统只有少数几个用户来使用，事务造成的影响不会成为一个太大的问题；但假设有成千上万的用户同时访问一个数据库系统，例如访问一个电子商务网站，就会产生比较严重的响应延迟。<br>其实，有些情况下我们可以通过锁定表的方法来获得更好的性能。下面的例子就用锁定表的方法来完成前面一个例子中事务的功能。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs sql">LOCK <span class="hljs-keyword">TABLE</span> inventory WRITE<br><span class="hljs-keyword">SELECT</span> Quantity <span class="hljs-keyword">FROM</span> inventory <span class="hljs-keyword">WHERE</span> Item<span class="hljs-operator">=</span><span class="hljs-string">&#x27;book&#x27;</span>;<br>...<br>UPDATE inventory <span class="hljs-keyword">SET</span> Quantity<span class="hljs-operator">=</span><span class="hljs-number">11</span> <span class="hljs-keyword">WHERE</span> Item<span class="hljs-operator">=</span><span class="hljs-string">&#x27;book&#x27;</span>;<br>UNLOCK TABLES<br></code></pre></td></tr></table></figure>
+<p>这里，我们用一个<code>SELECT</code>语句取出初始数据，通过一些计算，用<code>UPDATE</code>语句将新值更新到表中。包含有<code>WRITE</code>关键字的<code>LOCKTABLE</code>语句可以保证在<code>UNLOCKTABLES</code>命令被执行之前，不会有其它的访问来对inventory进行插入、更新或者删除的操作。</p>
+<h1 id="使用外键"><a href="#使用外键" class="headerlink" title="使用外键"></a>使用外键</h1><p>锁定表的方法可以维护数据的完整性，但是它却不能保证数据的关联性。这个时候我们就可以使用外键。<br>例如，外键可以保证每一条销售记录都指向某一个存在的客户。在这里，外键可以把customerinfo表中的CustomerID映射到salesinfo表中CustomerID，任何一条没有合法CustomerID的记录都不会被更新或插入到salesinfo中。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> customerinfo( CustomerID <span class="hljs-type">INT</span> <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">NULL</span>,PRIMARYKEY(CustomerID)) TYPE <span class="hljs-operator">=</span> INNODB;<br><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> salesinfo( SalesID <span class="hljs-type">INT</span> <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">NULL</span>,CustomerID <span class="hljs-type">INT</span> <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">NULL</span>,<br>PRIMARYKEY(CustomerID,SalesID),<br>FOREIGNKEY(CustomerID) <span class="hljs-keyword">REFERENCES</span> customerinfo(CustomerID) <span class="hljs-keyword">ON</span> <span class="hljs-keyword">DELETE</span> CASCADE)TYPE <span class="hljs-operator">=</span> INNODB;<br></code></pre></td></tr></table></figure>
+<p>注意例子中的参数<code>ON DELETE CASCADE</code>。该参数保证当customerinfo表中的一条客户记录被删除的时候，salesinfo表中所有与该客户相关的记录也会被自动删除。如果要在MySQL中使用外键，一定要记住在创建表的时候将表的类型定义为事务安全表<code>InnoDB</code>类型。该类型不是MySQL表的默认类型。定义的方法是在<code>CREATE TABLE</code>语句中加上<code>TYPE=INNODB</code>。如例中所示。</p>
+<h1 id="使用索引"><a href="#使用索引" class="headerlink" title="使用索引"></a>使用索引</h1><p>索引是提高数据库性能的常用方法，它可以令数据库服务器以比没有索引快得多的速度检索特定的行，尤其是在查询语句当中包含有<code>MAX()</code>,<code>MIN()</code>和<code>ORDER BY</code>这些命令的时候，性能提高更为明显。<br>那该对哪些字段建立索引呢？<br>一般说来，索引应建立在那些将用于<code>JOIN</code>,<code>WHERE</code>判断和<code>ORDER BY</code>排序的字段上。<em>尽量不要对数据库中某个含有大量重复的值的字段建立索引</em>。对于一个ENUM类型的字段来说，出现大量重复值是很有可能的情况<br>例如customerinfo中的“province”..字段，在这样的字段上建立索引将不会有什么帮助；相反，还有可能降低数据库的性能。我们在创建表的时候可以同时创建合适的索引，也可以使用<code>ALTER TABLE</code>或<code>CREATE INDEX</code>在以后创建索引。此外，MySQL从版本3.23.23开始支持全文索引和搜索。全文索引在MySQL中是一个<code>FULL TEXT</code>类型索引，但仅能用于<code>MyISAM</code>类型的表。对于一个大的数据库，将数据装载到一个没有<code>FULL TEXT</code>索引的表中，然后再使用<code>ALTER TABLE</code>或<code>CREATE INDEX</code>创建索引，将是非常快的。但如果将数据装载到一个已经有FULLTEXT索引的表中，执行过程将会非常慢。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs sql"># 查看索引<br><span class="hljs-keyword">SHOW</span> INDEX <span class="hljs-keyword">FROM</span> t_user;<br># 新建普通索引<br><span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> table_name <span class="hljs-keyword">ADD</span> INDEX index_name(<span class="hljs-keyword">column</span>);<br># 新建组合索引<br><span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> table_name <span class="hljs-keyword">ADD</span> INDEX index_name(column1,column2, column3);<br># 新建全文索引<br><span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> table_name <span class="hljs-keyword">ADD</span> FULLTEXT(<span class="hljs-keyword">column</span>);<br></code></pre></td></tr></table></figure>
+<h1 id="优化的查询语句"><a href="#优化的查询语句" class="headerlink" title="优化的查询语句"></a>优化的查询语句</h1><p>绝大多数情况下，使用索引可以提高查询的速度，但如果SQL语句使用不恰当的话，索引将无法发挥它应有的作用。<br>下面是应该注意的几个方面。<br>首先，最好是在相同类型的字段间进行比较的操作。<br>在MySQL3.23版之前，这甚至是一个必须的条件。例如不能将一个建有索引的<code>INT</code>字段和<code>BIGINT</code>字段进行比较；但是作为特殊的情况，在<code>CHAR</code>类型的字段和<code>VARCHAR</code>类型字段的字段大小相同的时候，可以将它们进行比较。<br>其次，<em>在建有索引的字段上尽量不要使用函数进行操作</em>。<br>例如，在一个<code>DATE</code>类型的字段上使用<code>YEAE()</code>函数时，将会使索引不能发挥应有的作用。所以，下面的两个查询虽然返回的结果一样，但后者要比前者快得多。<br>第三，在搜索字符型字段时，我们有时会使用<code>LIKE</code>关键字和<code>通配符</code>，这种做法虽然简单，但却也是以牺牲系统性能为代价的。<br>例如下面的查询将会比较表中的每一条记录。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> books <span class="hljs-keyword">WHERE</span> name <span class="hljs-keyword">like</span> &quot;MySQL%&quot;<br></code></pre></td></tr></table></figure>
+<p>但是如果换用下面的查询，返回的结果一样，但速度就要快上很多：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> books <span class="hljs-keyword">WHERE</span> name ＞<span class="hljs-operator">=</span> &quot;MySQL&quot; <span class="hljs-keyword">and</span> name ＜ &quot;MySQM&quot;<br></code></pre></td></tr></table></figure>
+<p>最后，应该注意避免在查询中让MySQL进行自动类型转换，因为转换过程也会使索引变得不起作用。</p>
+<h1 id="复合索引"><a href="#复合索引" class="headerlink" title="复合索引"></a>复合索引</h1><p>比如有一条语句是这样的：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> users <span class="hljs-keyword">where</span> area<span class="hljs-operator">=</span><span class="hljs-string">&#x27;beijing&#x27;</span> <span class="hljs-keyword">and</span> age<span class="hljs-operator">=</span><span class="hljs-number">22</span>;<br></code></pre></td></tr></table></figure>
+<p>如果我们是在area和age上分别创建单个索引的话，由于mysql查询每次只能使用一个索引，所以虽然这样已经相对不做索引时全表扫描提高了很多效率，但是如果在area、age两列上创建复合索引的话将带来更高的效率。如果我们创建了(area, age, salary)的复合索引，那么其实相当于创建了(area,age,salary)、(area,age)、(area)三个索引，这被称为最佳左前缀特性。因此我们在创建复合索引时应该将最常用作限制条件的列放在最左边，依次递减。另外，是建立（a,b）还是（b,a）呢？原则上，区分度高的在前面。</p>
+<h1 id="索引不会包含有NULL值的列"><a href="#索引不会包含有NULL值的列" class="headerlink" title="索引不会包含有NULL值的列"></a>索引不会包含有NULL值的列</h1><p>只要列中包含有NULL值都将不会被包含在索引中，复合索引中只要有一列含有NULL值，那么这一列对于此复合索引就是无效的。所以我们在数据库设计时不要让字段的默认值为NULL。</p>
+<h1 id="使用短索引"><a href="#使用短索引" class="headerlink" title="使用短索引"></a>使用短索引</h1><p>对串列进行索引，如果可能应该指定一个前缀长度。例如，如果有一个CHAR(255)的 列，如果在前10个或20个字符内，多数值是惟一的，那么就不要对整个列进行索引。短索引不仅可以提高查询速度而且可以节省磁盘空间和I/O操作。</p>
+<h1 id="排序的索引问题"><a href="#排序的索引问题" class="headerlink" title="排序的索引问题"></a>排序的索引问题</h1><p><em>mysql查询只使用一个索引</em>，因此如果<code>WHERE</code>子句中已经使用了索引的话，那么<code>ORDER BY</code>中的列是不会使用索引的。因此数据库默认排序可以符合要求的情况下不要使用排序操作；尽量不要包含多个列的排序，如果需要最好给这些列创建复合索引。</p>
+<h1 id="like语句操作"><a href="#like语句操作" class="headerlink" title="like语句操作"></a>like语句操作</h1><p>一般情况下不鼓励使用<code>like</code>操作，如果非使用不可，如何使用也是一个问题。like “%aaa%” 不会使用索引而like “aaa%”可以使用索引。</p>
+<h1 id="不要在列上进行运算"><a href="#不要在列上进行运算" class="headerlink" title="不要在列上进行运算"></a>不要在列上进行运算</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> users <span class="hljs-keyword">where</span> <span class="hljs-keyword">YEAR</span>(adddate)<span class="hljs-operator">&lt;</span><span class="hljs-number">2007</span>;<br></code></pre></td></tr></table></figure>
+<p>将在每个行上进行运算，这将导致索引失效而进行全表扫描，因此我们可以改成</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> users <span class="hljs-keyword">where</span> adddate<span class="hljs-operator">&lt;</span>‘<span class="hljs-number">2007</span><span class="hljs-number">-01</span><span class="hljs-number">-01</span><span class="hljs-string">&#x27;;</span><br></code></pre></td></tr></table></figure>
+<h1 id="不使用NOT-IN和-lt-gt-操作"><a href="#不使用NOT-IN和-lt-gt-操作" class="headerlink" title="不使用NOT IN和&lt;&gt;操作"></a>不使用NOT IN和&lt;&gt;操作</h1><p><code>NOT IN</code>和<code>&lt;&gt;</code>操作都不会使用索引将进行全表扫描。<code>NOT IN</code>可以<code>NOT EXISTS</code>代替，<code>id&lt;&gt;3</code>则可使用<code>id&gt;3 or id&lt; 3</code>来代替。</p>
+<h1 id="查询优化"><a href="#查询优化" class="headerlink" title="查询优化"></a>查询优化</h1><p>对查询进行优化，要尽量避免全表扫描，首先应考虑在 where 及 order by 涉及的列上建立索引。</p>
+<h1 id="避免在-where-子句中对字段进行-null-值判断"><a href="#避免在-where-子句中对字段进行-null-值判断" class="headerlink" title="避免在 where 子句中对字段进行 null 值判断"></a>避免在 where 子句中对字段进行 null 值判断</h1><p>应尽量避免在 where 子句中对字段进行 null 值判断，否则将导致引擎放弃使用索引而进行全表扫描，如：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> id <span class="hljs-keyword">from</span> t <span class="hljs-keyword">where</span> num <span class="hljs-keyword">is</span> <span class="hljs-keyword">null</span><br></code></pre></td></tr></table></figure>
+<p>最好不要给数据库留NULL，尽可能的使用 NOT NULL填充数据库.<br>备注、描述、评论之类的可以设置为 NULL，其他的，最好不要使用NULL。<br>不要以为 NULL 不需要空间，比如：char(100) 型，在字段建立时，空间就固定了， 不管是否插入值（NULL也包含在内），都是占用 100个字符的空间的，如果是varchar这样的变长字段， null 不占用空间。<br>可以在num上设置默认值0，确保表中num列没有null值，然后这样查询：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> id <span class="hljs-keyword">from</span> t <span class="hljs-keyword">where</span> num <span class="hljs-operator">=</span> <span class="hljs-number">0</span><br></code></pre></td></tr></table></figure>
+<h1 id="避免在-where-子句中使用-或-lt-gt-操作符"><a href="#避免在-where-子句中使用-或-lt-gt-操作符" class="headerlink" title="避免在 where 子句中使用 != 或 &lt;&gt; 操作符"></a>避免在 where 子句中使用 != 或 &lt;&gt; 操作符</h1><p>应尽量避免在 where 子句中使用 != 或 &lt;&gt; 操作符，否则将引擎放弃使用索引而进行全表扫描。</p>
+<h1 id="尽量避免在-where-子句中使用-or-来连接条件"><a href="#尽量避免在-where-子句中使用-or-来连接条件" class="headerlink" title="尽量避免在 where 子句中使用 or 来连接条件"></a>尽量避免在 where 子句中使用 or 来连接条件</h1><p>应尽量避免在 where 子句中使用 or 来连接条件，如果一个字段有索引，一个字段没有索引，将导致引擎放弃使用索引而进行全表扫描，如：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> id <span class="hljs-keyword">from</span> t <span class="hljs-keyword">where</span> num<span class="hljs-operator">=</span><span class="hljs-number">10</span> <span class="hljs-keyword">or</span> Name <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;admin&#x27;</span><br></code></pre></td></tr></table></figure>
+<p>可以这样查询：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> id <span class="hljs-keyword">from</span> t <span class="hljs-keyword">where</span> num <span class="hljs-operator">=</span> <span class="hljs-number">10</span><br><span class="hljs-keyword">union</span> <span class="hljs-keyword">all</span><br><span class="hljs-keyword">select</span> id <span class="hljs-keyword">from</span> t <span class="hljs-keyword">where</span> Name <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;admin&#x27;</span><br></code></pre></td></tr></table></figure>
+<h1 id="in-和-not-in-也要慎用"><a href="#in-和-not-in-也要慎用" class="headerlink" title="in 和 not in 也要慎用"></a>in 和 not in 也要慎用</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> id <span class="hljs-keyword">from</span> t <span class="hljs-keyword">where</span> num <span class="hljs-keyword">in</span>(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>)<br></code></pre></td></tr></table></figure>
+<p>对于连续的数值，能用 between 就不要用 in 了：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> id <span class="hljs-keyword">from</span> t <span class="hljs-keyword">where</span> num <span class="hljs-keyword">between</span> <span class="hljs-number">1</span> <span class="hljs-keyword">and</span> <span class="hljs-number">3</span><br></code></pre></td></tr></table></figure>
+<p>很多时候用 exists 代替 in 是一个好的选择：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> num <span class="hljs-keyword">from</span> a <span class="hljs-keyword">where</span> num <span class="hljs-keyword">in</span>(<span class="hljs-keyword">select</span> num <span class="hljs-keyword">from</span> b)<br></code></pre></td></tr></table></figure>
+<p>用下面的语句替换：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> num <span class="hljs-keyword">from</span> a <span class="hljs-keyword">where</span> <span class="hljs-keyword">exists</span>(<span class="hljs-keyword">select</span> <span class="hljs-number">1</span> <span class="hljs-keyword">from</span> b <span class="hljs-keyword">where</span> num<span class="hljs-operator">=</span>a.num)<br></code></pre></td></tr></table></figure>
+<h1 id="强制查询使用索引"><a href="#强制查询使用索引" class="headerlink" title="强制查询使用索引"></a>强制查询使用索引</h1><p>如果在 where 子句中使用参数，也会导致全表扫描。因为SQL只有在运行时才会解析局部变量，但优化程序不能将访问计划的选择推迟到运行时；它必须在编译时进行选择。然 而，如果在编译时建立访问计划，变量的值还是未知的，因而无法作为索引选择的输入项。如下面语句将进行全表扫描：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> id <span class="hljs-keyword">from</span> t <span class="hljs-keyword">where</span> num <span class="hljs-operator">=</span> <span class="hljs-variable">@num</span><br></code></pre></td></tr></table></figure>
+<p>可以改为强制查询使用索引：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> id <span class="hljs-keyword">from</span> t <span class="hljs-keyword">with</span>(index(索引名)) <span class="hljs-keyword">where</span> num <span class="hljs-operator">=</span> <span class="hljs-variable">@num</span><br></code></pre></td></tr></table></figure>
+<h1 id="尽量避免在-where-子句中对字段进行表达式操作"><a href="#尽量避免在-where-子句中对字段进行表达式操作" class="headerlink" title="尽量避免在 where 子句中对字段进行表达式操作"></a>尽量避免在 where 子句中对字段进行表达式操作</h1><p>应尽量避免在 where 子句中对字段进行表达式操作，这将导致引擎放弃使用索引而进行全表扫描。如：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> id <span class="hljs-keyword">from</span> t <span class="hljs-keyword">where</span> num<span class="hljs-operator">/</span><span class="hljs-number">2</span> <span class="hljs-operator">=</span> <span class="hljs-number">100</span><br></code></pre></td></tr></table></figure>
+<p>应改为:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> id <span class="hljs-keyword">from</span> t <span class="hljs-keyword">where</span> num <span class="hljs-operator">=</span> <span class="hljs-number">100</span><span class="hljs-operator">*</span><span class="hljs-number">2</span><br></code></pre></td></tr></table></figure>
+<h1 id="尽量避免在where子句中对字段进行函数操作"><a href="#尽量避免在where子句中对字段进行函数操作" class="headerlink" title="尽量避免在where子句中对字段进行函数操作"></a>尽量避免在where子句中对字段进行函数操作</h1><p>应尽量避免在where子句中对字段进行函数操作，这将导致引擎放弃使用索引而进行全表扫描。如：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> id <span class="hljs-keyword">from</span> t <span class="hljs-keyword">where</span> <span class="hljs-built_in">substring</span>(name,<span class="hljs-number">1</span>,<span class="hljs-number">3</span>) <span class="hljs-operator">=</span> ’abc’       <span class="hljs-operator">-</span>–name以abc开头的id<br><span class="hljs-keyword">select</span> id <span class="hljs-keyword">from</span> t <span class="hljs-keyword">where</span> datediff(<span class="hljs-keyword">day</span>,createdate,’<span class="hljs-number">2005</span><span class="hljs-number">-11</span><span class="hljs-number">-30</span>′) <span class="hljs-operator">=</span> <span class="hljs-number">0</span>    <span class="hljs-operator">-</span>–‘<span class="hljs-number">2005</span><span class="hljs-number">-11</span><span class="hljs-number">-30</span>’    <span class="hljs-comment">--生成的id</span><br></code></pre></td></tr></table></figure>
+<p>应改为:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> id <span class="hljs-keyword">from</span> t <span class="hljs-keyword">where</span> name <span class="hljs-keyword">like</span> <span class="hljs-string">&#x27;abc%&#x27;</span><br><span class="hljs-keyword">select</span> id <span class="hljs-keyword">from</span> t <span class="hljs-keyword">where</span> createdate <span class="hljs-operator">&gt;=</span> <span class="hljs-string">&#x27;2005-11-30&#x27;</span> <span class="hljs-keyword">and</span> createdate <span class="hljs-operator">&lt;</span> <span class="hljs-string">&#x27;2005-12-1&#x27;</span><br></code></pre></td></tr></table></figure>
+<h1 id="不要在-where-子句中的“-”左边进行函数、算术运算或其他表达式运算"><a href="#不要在-where-子句中的“-”左边进行函数、算术运算或其他表达式运算" class="headerlink" title="不要在 where 子句中的“=”左边进行函数、算术运算或其他表达式运算"></a>不要在 where 子句中的“=”左边进行函数、算术运算或其他表达式运算</h1><p>不要在 where 子句中的“=”左边进行函数、算术运算或其他表达式运算，否则系统将可能无法正确使用索引。</p>
+<h1 id="在使用索引字段作为条件时，如果该索引是复合索引，那么必须使用到该索引中的第一个字段作为条件时才能保证系统使用该索引，否则该索引将不会被使用，并且应尽可能的让字段顺序与索引顺序相一致。"><a href="#在使用索引字段作为条件时，如果该索引是复合索引，那么必须使用到该索引中的第一个字段作为条件时才能保证系统使用该索引，否则该索引将不会被使用，并且应尽可能的让字段顺序与索引顺序相一致。" class="headerlink" title="在使用索引字段作为条件时，如果该索引是复合索引，那么必须使用到该索引中的第一个字段作为条件时才能保证系统使用该索引，否则该索引将不会被使用，并且应尽可能的让字段顺序与索引顺序相一致。"></a>在使用索引字段作为条件时，如果该索引是复合索引，那么必须使用到该索引中的第一个字段作为条件时才能保证系统使用该索引，否则该索引将不会被使用，并且应尽可能的让字段顺序与索引顺序相一致。</h1><h1 id="不要Update全部字段"><a href="#不要Update全部字段" class="headerlink" title="不要Update全部字段"></a>不要Update全部字段</h1><p>Update 语句，如果只更改1、2个字段，不要Update全部字段，否则频繁调用会引起明显的性能消耗，同时带来大量日志。</p>
+<h1 id="先分页再JOIN"><a href="#先分页再JOIN" class="headerlink" title="先分页再JOIN"></a>先分页再JOIN</h1><p>对于多张大数据量（这里几百条就算大了）的表JOIN，要先分页再JOIN，否则逻辑读会很高，性能很差。</p>
+<h1 id="杜绝不带任何条件的count"><a href="#杜绝不带任何条件的count" class="headerlink" title="杜绝不带任何条件的count"></a>杜绝不带任何条件的count</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> <span class="hljs-built_in">count</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">from</span> <span class="hljs-keyword">table</span>；<br></code></pre></td></tr></table></figure>
+<p>这样不带任何条件的count会引起全表扫描，并且没有任何业务意义，是一定要杜绝的。</p>
+<h1 id="索引并不是越多越好"><a href="#索引并不是越多越好" class="headerlink" title="索引并不是越多越好"></a>索引并不是越多越好</h1><p>索引并不是越多越好，索引固然可以提高相应的 select 的效率，但同时也降低了 insert 及 update 的效率，因为 insert 或 update 时有可能会重建索引，所以怎样建索引需要慎重考虑，视具体情况而定。一个表的索引数最好不要超过6个，若太多则应考虑一些不常使用到的列上建的索引是否有必要</p>
+<h1 id="避免更新-clustered-索引数据列"><a href="#避免更新-clustered-索引数据列" class="headerlink" title="避免更新 clustered 索引数据列"></a>避免更新 clustered 索引数据列</h1><p>应尽可能的避免更新 clustered 索引数据列，因为 clustered 索引数据列的顺序就是表记录的物理存储顺序，一旦该列值改变将导致整个表记录的顺序的调整，会耗费相当大的资源。若应用系统需要频繁更新 clustered 索引数据列，那么需要考虑是否应将该索引建为 clustered 索引。</p>
+<h1 id="尽量使用数字型字段"><a href="#尽量使用数字型字段" class="headerlink" title="尽量使用数字型字段"></a>尽量使用数字型字段</h1><p>尽量使用数字型字段，若只含数值信息的字段尽量不要设计为字符型，这会降低查询和连接的性能，并会增加存储开销。这是因为引擎在处理查询和连 接时会逐个比较字符串中每一个字符，而对于数字型而言只需要比较一次就够了</p>
+<h1 id="尽可能的使用-varchar-nvarchar-代替-char-nchar"><a href="#尽可能的使用-varchar-nvarchar-代替-char-nchar" class="headerlink" title="尽可能的使用 varchar/nvarchar 代替 char/nchar"></a>尽可能的使用 varchar/nvarchar 代替 char/nchar</h1><p>尽可能的使用 varchar/nvarchar 代替 char/nchar ，因为首先变长字段存储空间小，可以节省存储空间，其次对于查询来说，在一个相对较小的字段内搜索效率显然要高些。</p>
+<h1 id="避免频繁创建和删除临时表"><a href="#避免频繁创建和删除临时表" class="headerlink" title="避免频繁创建和删除临时表"></a>避免频繁创建和删除临时表</h1><p>避免频繁创建和删除临时表，以减少系统表资源的消耗。临时表并不是不可使用，适当地使用它们可以使某些例程更有效，例如，当需要重复引用大型表或常用表中的某个数据集时。但是，对于一次性事件， 最好使用导出表。</p>
+<h1 id="可以使用-select-into-代替-create-table"><a href="#可以使用-select-into-代替-create-table" class="headerlink" title="可以使用 select into 代替 create table"></a>可以使用 select into 代替 create table</h1><p>在新建临时表时，如果一次性插入数据量很大，那么可以使用 select into 代替 create table，避免造成大量 log ，以提高速度；如果数据量不大，为了缓和系统表的资源，应先create table，然后insert。</p>
+<h1 id="将所有的临时表显式删除"><a href="#将所有的临时表显式删除" class="headerlink" title="将所有的临时表显式删除"></a>将所有的临时表显式删除</h1><p>如果使用到了临时表，在存储过程的最后务必将所有的临时表显式删除，先 truncate table ，然后 drop table ，这样可以避免系统表的较长时间锁定。</p>
+<h1 id="尽量避免使用游标"><a href="#尽量避免使用游标" class="headerlink" title="尽量避免使用游标"></a>尽量避免使用游标</h1><p>尽量避免使用游标，因为游标的效率较差，如果游标操作的数据超过1万行，那么就应该考虑改写</p>
+<h1 id="尽量避免返回大数据量"><a href="#尽量避免返回大数据量" class="headerlink" title="尽量避免返回大数据量"></a>尽量避免返回大数据量</h1><p>尽量避免向客户端返回大数据量，若数据量过大，应该考虑相应需求是否合理。</p>
+<h1 id="拆分大的-DELETE-或INSERT-语句，批量提交SQL语句"><a href="#拆分大的-DELETE-或INSERT-语句，批量提交SQL语句" class="headerlink" title="拆分大的 DELETE 或INSERT 语句，批量提交SQL语句"></a>拆分大的 DELETE 或INSERT 语句，批量提交SQL语句</h1><p>如果你需要在一个在线的网站上去执行一个大的 DELETE 或 INSERT 查询，你需要非常小心，要避免你的操作让你的整个网站停止相应。因为这两个操作是会锁表的，表一锁住了，别的操作都进不来了。<br>　　Apache 会有很多的子进程或线程。所以，其工作起来相当有效率，而我们的服务器也不希望有太多的子进程，线程和数据库链接，这是极大的占服务器资源的事情，尤其是内存。<br>　　如果你把你的表锁上一段时间，比如30秒钟，那么对于一个有很高访问量的站点来说，这30秒所积累的访问进程/线程，数据库链接，打开的文件数，可能不仅仅会让你的WEB服务崩溃，还可能会让你的整台服务器马上挂了。<br>　　所以，如果你有一个大的处理，你一定把其拆分，使用 LIMIT oracle(rownum),sqlserver(top)条件是一个好的方法。下面是一个mysql示例：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs sql">while(<span class="hljs-number">1</span>)&#123;<br> 　　<span class="hljs-operator">/</span><span class="hljs-operator">/</span>每次只做<span class="hljs-number">1000</span>条<br>　　 mysql_query(“<span class="hljs-keyword">delete</span> <span class="hljs-keyword">from</span> logs <span class="hljs-keyword">where</span> log_date <span class="hljs-operator">&lt;=</span> ’<span class="hljs-number">2012</span><span class="hljs-number">-11</span><span class="hljs-number">-01</span>’ limit <span class="hljs-number">1000</span>”);<br> 　　if(mysql_affected_rows() <span class="hljs-operator">=</span><span class="hljs-operator">=</span> <span class="hljs-number">0</span>)&#123;<br>　　 　　<span class="hljs-operator">/</span><span class="hljs-operator">/</span>删除完成，退出！<br>　　 　　break；<br>　　&#125;<br><span class="hljs-operator">/</span><span class="hljs-operator">/</span>每次暂停一段时间，释放表让其他进程<span class="hljs-operator">/</span>线程访问。<br>usleep(<span class="hljs-number">50000</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
+<h1 id="运维角度浅谈MySQL数据库优化"><a href="#运维角度浅谈MySQL数据库优化" class="headerlink" title="运维角度浅谈MySQL数据库优化"></a>运维角度浅谈MySQL数据库优化</h1><p>一个成熟的数据库架构并不是一开始设计就具备高可用、高伸缩等特性的，它是随着用户量的增加，基础架构才逐渐完善。这篇博文主要谈MySQL数据库发展周期中所面临的问题及优化方案，暂且抛开前端应用不说，大致分为以下五个阶段：</p>
+<h2 id="1-数据库表设计"><a href="#1-数据库表设计" class="headerlink" title="1. 数据库表设计"></a>1. 数据库表设计</h2><p>项目立项后，开发部根据产品部需求开发项目，开发工程师工作其中一部分就是对表结构设计。对于数据库来说，这点很重要，如果设计不当，会直接影响访问速度和用户体验。影响的因素很多，比如慢查询、低效的查询语句、没有适当建立索引、数据库堵塞（死锁）等。当然，有测试工程师的团队，会做压力测试，找bug。对于没有测试工程师的团队来说，大多数开发工程师初期不会太多考虑数据库设计是否合理，而是尽快完成功能实现和交付，等项目有一定访问量后，隐藏的问题就会暴露，这时再去修改就不是这么容易的事了。</p>
+<h2 id="2-数据库部署"><a href="#2-数据库部署" class="headerlink" title="2. 数据库部署"></a>2. 数据库部署</h2><p>该运维工程师出场了，项目初期访问量不会很大，所以单台部署足以应对在1500左右的QPS（每秒查询率）。考虑到高可用性，可采用MySQL主从复制+Keepalived做双击热备，常见集群软件有Keepalived、Heartbeat。<br>双机热备博文：<a target="_blank" rel="noopener" href="http://lizhenliang.blog.51cto.com/7876557/1362313">http://lizhenliang.blog.51cto.com/7876557/1362313</a></p>
+<h2 id="3-数据库性能优化"><a href="#3-数据库性能优化" class="headerlink" title="3. 数据库性能优化"></a>3. 数据库性能优化</h2><p>如果将MySQL部署到普通的X86服务器上，在不经过任何优化情况下，MySQL理论值正常可以处理2000左右QPS，经过优化后，有可能会提升到2500左右QPS，否则，访问量当达到1500左右并发连接时，数据库处理性能就会变慢，而且硬件资源还很富裕，这时就该考虑软件问题了。那么怎样让数据库最大化发挥性能呢？一方面可以单台运行多个MySQL实例让服务器性能发挥到最大化，另一方面是对数据库进行优化，往往操作系统和数据库默认配置都比较保守，会对数据库发挥有一定限制，可对这些配置进行适当的调整，尽可能的处理更多连接数。</p>
+<h3 id="3-1-数据库配置优化"><a href="#3-1-数据库配置优化" class="headerlink" title="3.1 数据库配置优化"></a>3.1 数据库配置优化</h3><p>MySQL常用有两种存储引擎，一个是MyISAM，不支持事务处理，读性能处理快，表级别锁。另一个是InnoDB，支持事务处理（ACID），设计目标是为处理大容量数据发挥最大化性能，行级别锁。<br>表锁：开销小，锁定粒度大，发生死锁概率高，相对并发也低。<br>行锁：开销大，锁定粒度小，发生死锁概率低，相对并发也高。<br>为什么会出现表锁和行锁呢？主要是为了保证数据的完整性，举个例子，一个用户在操作一张表，其他用户也想操作这张表，那么就要等第一个用户操作完，其他用户才能操作，表锁和行锁就是这个作用。否则多个用户同时操作一张表，肯定会数据产生冲突或者异常。<br>根据以上看来，使用InnoDB存储引擎是最好的选择，也是MySQL5.5以后版本中默认存储引擎。每个存储引擎相关联参数比较多，以下列出主要影响数据库性能的参数。<br>公共参数默认值：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">max_connections</span> = <span class="hljs-number">151</span><br><span class="hljs-comment">#同时处理最大连接数，推荐设置最大连接数是上限连接数的80%左右   </span><br><span class="hljs-attr">sort_buffer_size</span> = <span class="hljs-number">2</span>M<br><span class="hljs-comment">#查询排序时缓冲区大小，只对order by和group by起作用，可增大此值为16M</span><br><span class="hljs-attr">open_files_limit</span> = <span class="hljs-number">1024</span> <br><span class="hljs-comment">#打开文件数限制，如果show global status like &#x27;open_files&#x27;查看的值等于或者大于open_files_limit值时，程序会无法连接数据库或卡死</span><br></code></pre></td></tr></table></figure>
+<p>MyISAM参数默认值：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">key_buffer_size</span> = <span class="hljs-number">16</span>M<br><span class="hljs-comment">#索引缓存区大小，一般设置物理内存的30-40%</span><br><span class="hljs-attr">read_buffer_size</span> = <span class="hljs-number">128</span>K  <br><span class="hljs-comment">#读操作缓冲区大小，推荐设置16M或32M</span><br><span class="hljs-attr">query_cache_type</span> = <span class="hljs-literal">ON</span><br><span class="hljs-comment">#打开查询缓存功能</span><br><span class="hljs-attr">query_cache_limit</span> = <span class="hljs-number">1</span>M  <br><span class="hljs-comment">#查询缓存限制，只有1M以下查询结果才会被缓存，以免结果数据较大把缓存池覆盖</span><br><span class="hljs-attr">query_cache_size</span> = <span class="hljs-number">16</span>M  <br><span class="hljs-comment">#查看缓冲区大小，用于缓存SELECT查询结果，下一次有同样SELECT查询将直接从缓存池返回结果，可适当成倍增加此值</span><br></code></pre></td></tr></table></figure>
+<p>InnoDB参数默认值：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs bash">innodb_buffer_pool_size = 128M<br><span class="hljs-comment">#索引和数据缓冲区大小，一般设置物理内存的60%-70%</span><br>innodb_buffer_pool_instances = 1    <br><span class="hljs-comment">#缓冲池实例个数，推荐设置4个或8个</span><br>innodb_flush_log_at_trx_commit = 1  <br><span class="hljs-comment">#关键参数，0代表大约每秒写入到日志并同步到磁盘，数据库故障会丢失1秒左右事务数据。1为每执行一条SQL后写入到日志并同步到磁盘，I/O开销大，执行完SQL要等待日志读写，效率低。2代表只把日志写入到系统缓存区，再每秒同步到磁盘，效率很高，如果服务器故障，才会丢失事务数据。对数据安全性要求不是很高的推荐设置2，性能高，修改后效果明显。</span><br>innodb_file_per_table = OFF  <br><span class="hljs-comment">#默认是共享表空间，共享表空间idbdata文件不断增大，影响一定的I/O性能。推荐开启独立表空间模式，每个表的索引和数据都存在自己独立的表空间中，可以实现单表在不同数据库中移动。</span><br>innodb_log_buffer_size = 8M  <br><span class="hljs-comment">#日志缓冲区大小，由于日志最长每秒钟刷新一次，所以一般不用超过16M</span><br></code></pre></td></tr></table></figure>
+<h3 id="3-2-系统内核优化"><a href="#3-2-系统内核优化" class="headerlink" title="3.2 系统内核优化"></a>3.2 系统内核优化</h3><p>大多数MySQL都部署在linux系统上，所以操作系统的一些参数也会影响到MySQL性能，以下对linux内核进行适当优化。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs bash">net.ipv4.tcp_fin_timeout = 30<br><span class="hljs-comment">#TIME_WAIT超时时间，默认是60s</span><br>net.ipv4.tcp_tw_reuse = 1    <br><span class="hljs-comment">#1表示开启复用，允许TIME_WAIT socket重新用于新的TCP连接，0表示关闭</span><br>net.ipv4.tcp_tw_recycle = 1  <br><span class="hljs-comment">#1表示开启TIME_WAIT socket快速回收，0表示关闭</span><br>net.ipv4.tcp_max_tw_buckets = 4096   <br><span class="hljs-comment">#系统保持TIME_WAIT socket最大数量，如果超出这个数，系统将随机清除一些TIME_WAIT并打印警告信息</span><br>net.ipv4.tcp_max_syn_backlog = 4096<br><span class="hljs-comment">#进入SYN队列最大长度，加大队列长度可容纳更多的等待连接</span><br></code></pre></td></tr></table></figure>
+<p>在linux系统中，如果进程打开的文件句柄数量超过系统默认值1024，就会提示“too many files open”信息，所以要调整打开文件句柄限制。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># vi /etc/security/limits.conf  #加入以下配置，*代表所有用户，也可以指定用户，重启系统生效</span><br>* soft nofile 65535<br>* hard nofile 65535<br><span class="hljs-comment"># ulimit -SHn 65535   #立刻生效</span><br></code></pre></td></tr></table></figure>
+<h3 id="3-3-硬件配置"><a href="#3-3-硬件配置" class="headerlink" title="3.3 硬件配置"></a>3.3 硬件配置</h3><p>加大物理内存，提高文件系统性能。linux内核会从内存中分配出缓存区（系统缓存和数据缓存）来存放热数据，通过文件系统延迟写入机制，等满足条件时（如缓存区大小到达一定百分比或者执行sync命令）才会同步到磁盘。也就是说物理内存越大，分配缓存区越大，缓存数据越多。当然，服务器故障会丢失一定的缓存数据。<br>SSD硬盘代替SAS硬盘，将RAID级别调整为RAID1+0，相对于RAID1和RAID5有更好的读写性能（IOPS），毕竟数据库的压力主要来自磁盘I/O方面。</p>
+<h2 id="4-数据库架构扩展"><a href="#4-数据库架构扩展" class="headerlink" title="4 数据库架构扩展"></a>4 数据库架构扩展</h2><p>随着业务量越来越大，单台数据库服务器性能已无法满足业务需求，该考虑加机器了，该做集群了。主要思想是分解单台数据库负载，突破磁盘I/O性能，热数据存放缓存中，降低磁盘I/O访问频率。</p>
+<h3 id="4-1-主从复制与读写分离"><a href="#4-1-主从复制与读写分离" class="headerlink" title="4.1 主从复制与读写分离"></a>4.1 主从复制与读写分离</h3><p>因为生产环境中，数据库大多都是读操作，所以部署一主多从架构，主数据库负责写操作，并做双击热备，多台从数据库做负载均衡，负责读操作，主流的负载均衡器有LVS、HAProxy、Nginx。<br>怎么来实现读写分离呢？大多数企业是在代码层面实现读写分离，效率比较高。另一个种方式通过代理程序实现读写分离，企业中应用较少，常见代理程序有MySQL Proxy、Amoeba。在这样数据库集群架构中，大大增加数据库高并发能力，解决单台性能瓶颈问题。如果从数据库一台从库能处理2000 QPS，那么5台就能处理1w QPS，数据库横向扩展性也很容易。<br>有时，面对大量写操作的应用时，单台写性能达不到业务需求。如果做双主，就会遇到数据库数据不一致现象，产生这个原因是在应用程序不同的用户会有可能操作两台数据库，同时的更新操作造成两台数据库数据库数据发生冲突或者不一致。在单库时MySQL利用存储引擎机制表锁和行锁来保证数据完整性，怎样在多台主库时解决这个问题呢？有一套基于perl语言开发的主从复制管理工具，叫MySQL-MMM（Master-Master replication managerfor Mysql，Mysql主主复制管理器），这个工具最大的优点是在同一时间只提供一台数据库写操作，有效保证数据一致性。<br>主从复制博文：<a target="_blank" rel="noopener" href="http://lizhenliang.blog.51cto.com/7876557/1290431">http://lizhenliang.blog.51cto.com/7876557/1290431</a><br>读写分离博文：<a target="_blank" rel="noopener" href="http://lizhenliang.blog.51cto.com/7876557/1305083">http://lizhenliang.blog.51cto.com/7876557/1305083</a><br>MySQL-MMM博文：<a target="_blank" rel="noopener" href="http://lizhenliang.blog.51cto.com/7876557/1354576">http://lizhenliang.blog.51cto.com/7876557/1354576</a></p>
+<h3 id="4-2-增加缓存"><a href="#4-2-增加缓存" class="headerlink" title="4.2 增加缓存"></a>4.2 增加缓存</h3><p>给数据库增加缓存系统，把热数据缓存到内存中，如果缓存中有要请求的数据就不再去数据库中返回结果，提高读性能。缓存实现有本地缓存和分布式缓存，本地缓存是将数据缓存到本地服务器内存中或者文件中。分布式缓存可以缓存海量数据，扩展性好，主流的分布式缓存系统有memcached、redis，memcached性能稳定，数据缓存在内存中，速度很快，QPS可达8w左右。如果想数据持久化就选择用redis，性能不低于memcached。</p>
+<h3 id="4-3-分库"><a href="#4-3-分库" class="headerlink" title="4.3 分库"></a>4.3 分库</h3><p>分库是根据业务不同把相关的表切分到不同的数据库中，比如web、bbs、blog等库。如果业务量很大，还可将切分后的库做主从架构，进一步避免单个库压力过大</p>
+<h3 id="4-4-分表"><a href="#4-4-分表" class="headerlink" title="4.4 分表"></a>4.4 分表</h3><p>数据量的日剧增加，数据库中某个表有几百万条数据，导致查询和插入耗时太长，怎么能解决单表压力呢？你就该考虑是否把这个表拆分成多个小表，来减轻单个表的压力，提高处理效率，此方式称为分表。<br>分表技术比较麻烦，要修改程序代码里的SQL语句，还要手动去创建其他表，也可以用merge存储引擎实现分表，相对简单许多。分表后，程序是对一个总表进行操作，这个总表不存放数据，只有一些分表的关系，以及更新数据的方式，总表会根据不同的查询，将压力分到不同的小表上，因此提高并发能力和磁盘I/O性能。<br>分表分为垂直拆分和水平拆分：<br>垂直拆分：把原来的一个很多字段的表拆分多个表，解决表的宽度问题。你可以把不常用的字段单独放到一个表中，也可以把大字段独立放一个表中，或者把关联密切的字段放一个表中。<br>水平拆分：把原来一个表拆分成多个表，每个表的结构都一样，解决单表数据量大的问题。</p>
+<h3 id="4-5-分区"><a href="#4-5-分区" class="headerlink" title="4.5 分区"></a>4.5 分区</h3><p>分区就是把一张表的数据根据表结构中的字段（如range、list、hash等）分成多个区块，这些区块可以在一个磁盘上，也可以在不同的磁盘上，分区后，表面上还是一张表，但数据散列在多个位置，这样一来，多块硬盘同时处理不同的请求，从而提高磁盘I/O读写性能，实现比较简单。<br>注：增加缓存、分库、分表和分区主要由程序猿来实现。</p>
+<h2 id="5-数据库维护"><a href="#5-数据库维护" class="headerlink" title="5 数据库维护"></a>5 数据库维护</h2><p>数据库维护是运维工程师或者DBA主要工作，包括性能监控、性能分析、性能调优、数据库备份和恢复等。</p>
+<h3 id="5-1-性能状态关键指标"><a href="#5-1-性能状态关键指标" class="headerlink" title="5.1 性能状态关键指标"></a>5.1 性能状态关键指标</h3><p>QPS，Queries Per Second：每秒查询数，一台数据库每秒能够处理的查询次数<br>TPS，Transactions Per Second：每秒处理事务数<br>通过show status查看运行状态，会有300多条状态信息记录，其中有几个值帮可以我们计算出QPS和TPS，如下：<br>Uptime：服务器已经运行的实际，单位秒<br>Questions：已经发送给数据库查询数<br>Com_select：查询次数，实际操作数据库的<br>Com_insert：插入次数<br>Com_delete：删除次数<br>Com_update：更新次数<br>Com_commit：事务次数<br>Com_rollback：回滚次数<br>那么，计算方法来了，基于Questions计算出QPS：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">mysql&gt;</span><span class="bash"> show global status like <span class="hljs-string">&#x27;Questions&#x27;</span>;</span><br><span class="hljs-meta">mysql&gt;</span><span class="bash"> show global status like <span class="hljs-string">&#x27;Uptime&#x27;</span>;</span><br></code></pre></td></tr></table></figure>
+<p>QPS = Questions / Uptime<br>基于Com_commit和Com_rollback计算出TPS：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">mysql&gt;</span><span class="bash"> show global status like <span class="hljs-string">&#x27;Com_commit&#x27;</span>;</span><br><span class="hljs-meta">mysql&gt;</span><span class="bash"> show global status like <span class="hljs-string">&#x27;Com_rollback&#x27;</span>;</span><br><span class="hljs-meta">mysql&gt;</span><span class="bash"> show global status like <span class="hljs-string">&#x27;Uptime&#x27;</span>;</span><br></code></pre></td></tr></table></figure>
+<p>TPS = (Com_commit + Com_rollback) / Uptime<br>另一计算方式：基于Com_select、Com_insert、Com_delete、Com_update计算出QPS</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">mysql&gt;</span><span class="bash"> show global status <span class="hljs-built_in">where</span> Variable_name <span class="hljs-keyword">in</span>(<span class="hljs-string">&#x27;com_select&#x27;</span>,<span class="hljs-string">&#x27;com_insert&#x27;</span>,<span class="hljs-string">&#x27;com_delete&#x27;</span>,<span class="hljs-string">&#x27;com_update&#x27;</span>);</span><br></code></pre></td></tr></table></figure>
+<p>等待1秒再执行，获取间隔差值，第二次每个变量值减去第一次对应的变量值，就是QPS<br>TPS计算方法：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">mysql&gt;</span><span class="bash"> show global status <span class="hljs-built_in">where</span> Variable_name <span class="hljs-keyword">in</span>(<span class="hljs-string">&#x27;com_insert&#x27;</span>,<span class="hljs-string">&#x27;com_delete&#x27;</span>,<span class="hljs-string">&#x27;com_update&#x27;</span>);</span><br></code></pre></td></tr></table></figure>
+<p>计算TPS，就不算查询操作了，计算出插入、删除、更新四个值即可。<br>经网友对这两个计算方式的测试得出，当数据库中myisam表比较多时，使用Questions计算比较准确。当数据库中innodb表比较多时，则以Com_*计算比较准确。</p>
+<h3 id="5-2-开启慢查询日志"><a href="#5-2-开启慢查询日志" class="headerlink" title="5.2 开启慢查询日志"></a>5.2 开启慢查询日志</h3><p>MySQL开启慢查询日志，分析出哪条SQL语句比较慢，使用set设置变量，重启服务失效，可以在my.cnf添加参数永久生效。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">mysql&gt;</span><span class="bash"> <span class="hljs-built_in">set</span> global slow-query-log=on  <span class="hljs-comment">#开启慢查询功能</span></span><br><span class="hljs-meta">mysql&gt;</span><span class="bash"> <span class="hljs-built_in">set</span> global slow_query_log_file=<span class="hljs-string">&#x27;/var/log/mysql/mysql-slow.log&#x27;</span>;  <span class="hljs-comment">#指定慢查询日志文件位置</span></span><br><span class="hljs-meta">mysql&gt;</span><span class="bash"> <span class="hljs-built_in">set</span> global log_queries_not_using_indexes=on;   <span class="hljs-comment">#记录没有使用索引的查询</span></span><br><span class="hljs-meta">mysql&gt;</span><span class="bash"> <span class="hljs-built_in">set</span> global long_query_time=1;   <span class="hljs-comment">#只记录处理时间1s以上的慢查询</span></span><br></code></pre></td></tr></table></figure>
+<p>分析慢查询日志，可以使用MySQL自带的mysqldumpslow工具，分析的日志较为简单。<br><code># mysqldumpslow -t 3 /var/log/mysql/mysql-slow.log</code>    #查看最慢的前三个查询<br>也可以使用percona公司的pt-query-digest工具，日志分析功能全面，可分析slow log、binlog、general log。<br>分析慢查询日志：pt-query-digest /var/log/mysql/mysql-slow.log<br>分析binlog日志：mysqlbinlog mysql-bin.000001 &gt;mysql-bin.000001.sql<br>pt-query-digest –type=binlog mysql-bin.000001.sql<br>分析普通日志：pt-query-digest –type=genlog localhost.log</p>
+<h3 id="5-3-数据库备份"><a href="#5-3-数据库备份" class="headerlink" title="5.3 数据库备份"></a>5.3 数据库备份</h3><p>备份数据库是最基本的工作，也是最重要的，否则后果很严重，你懂得！但由于数据库比较大，上百G，往往备份都很耗费时间，所以就该选择一个效率高的备份策略，对于数据量大的数据库，一般都采用增量备份。常用的备份工具有mysqldump、mysqlhotcopy、xtrabackup等，mysqldump比较适用于小的数据库，因为是逻辑备份，所以备份和恢复耗时都比较长。mysqlhotcopy和xtrabackup是物理备份，备份和恢复速度快，不影响数据库服务情况下进行热拷贝，建议使用xtrabackup，支持增量备份。<br>Xtrabackup备份工具使用博文：<a target="_blank" rel="noopener" href="http://lizhenliang.blog.51cto.com/7876557/1612800">http://lizhenliang.blog.51cto.com/7876557/1612800</a></p>
+<h3 id="5-4-数据库修复"><a href="#5-4-数据库修复" class="headerlink" title="5.4 数据库修复"></a>5.4 数据库修复</h3><p>有时候MySQL服务器突然断电、异常关闭，会导致表损坏，无法读取表数据。这时就可以用到MySQL自带的两个工具进行修复，myisamchk和mysqlcheck。<br>myisamchk：只能修复myisam表，需要停止数据库<br>常用参数：<br>-f –force    强制修复，覆盖老的临时文件，一般不使用<br>-r –recover  恢复模式<br>-q –quik     快速恢复<br>-a –analyze  分析表<br>-o –safe-recover 老的恢复模式，如果-r无法修复，可以使用此参数试试<br>-F –fast     只检查没有正常关闭的表<br>快速修复weibo数据库:<br><code># cd /var/lib/mysql/weibo</code><br><code># myisamchk -r -q *.MYI</code><br>mysqlcheck：myisam和innodb表都可以用，不需要停止数据库，如修复单个表，可在数据库后面添加表名，以空格分割<br>常用参数：<br>-a  –all-databases  检查所有的库<br>-r  –repair   修复表<br>-c  –check    检查表，默认选项<br>-a  –analyze  分析表<br>-o  –optimize 优化表<br>-q  –quik   最快检查或修复表<br>-F  –fast   只检查没有正常关闭的表<br>快速修复weibo数据库:<br><code># mysqlcheck -r -q -uroot -p123 weibo</code></p>
+<blockquote>
+<p>以上内容整理于网络（侵删）</p>
+</blockquote>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%BC%80%E5%8F%91/">开发</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/09/22/pagehelper%E5%9C%A8%E5%85%A8%E6%96%87%E6%A3%80%E7%B4%A2sql%E4%B8%8B%E6%8E%92%E5%BA%8F%E6%8A%A5%E9%94%99%E7%9A%84%E9%97%AE%E9%A2%98/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">pagehelper在全文检索sql下排序报错的问题</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2019/11/19/Docx4j%E5%AF%BC%E5%87%BAlatex%E5%85%AC%E5%BC%8F%E5%88%B0word%EF%BC%88%E5%85%AC%E5%BC%8F%E5%8F%AF%E7%BC%96%E8%BE%91%EF%BC%89/">
+                        <span class="hidden-mobile">Docx4j导出latex公式到word（公式可编辑）</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+  <!-- 备案信息 -->
+  <div class="beian">
+    <span>
+      <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+        湘ICP备2021009708号
+      </a>
+    </span>
+    
+  </div>
+
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

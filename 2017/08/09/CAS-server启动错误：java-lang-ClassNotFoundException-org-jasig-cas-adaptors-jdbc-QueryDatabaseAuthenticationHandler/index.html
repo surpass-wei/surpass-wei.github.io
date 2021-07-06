@@ -1,0 +1,465 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="千叶鸟">
+  <meta name="keywords" content="">
+  
+  <title>CAS server启动错误：java.lang.ClassNotFoundException: org.jasig.cas.adaptors.jdbc.QueryDatabaseAuthenticationHandler - 阿超&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":100,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  <script data-ad-client="ca-pub-6628525096937786" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>阿超's blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="CAS server启动错误：java.lang.ClassNotFoundException: org.jasig.cas.adaptors.jdbc.QueryDatabaseAuthenticationHandler">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2017-08-09 16:44" pubdate>
+        2017年8月9日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      837 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      15
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">CAS server启动错误：java.lang.ClassNotFoundException: org.jasig.cas.adaptors.jdbc.QueryDatabaseAuthenticationHandler</h1>
+            
+            <div class="markdown-body">
+              <h1 id="错误内容"><a href="#错误内容" class="headerlink" title="错误内容"></a>错误内容</h1><p>在配置 CAS 4.2.1 进行自定义的数据源（Mysql）验证配置时，出现如下错误：</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">org.springframework.beans.factory.BeanCreationException: Error creating bean <span class="hljs-keyword">with</span> name &#x27;centralAuthenticationService&#x27; defined <span class="hljs-keyword">in</span> ServletContext resource <span class="hljs-literal">[<span class="hljs-operator">/</span>WEB-INF<span class="hljs-operator">/</span><span class="hljs-identifier">spring</span>-<span class="hljs-identifier">configuration</span><span class="hljs-operator">/</span><span class="hljs-identifier">applicationContext</span>.<span class="hljs-identifier">xml</span>]</span>: Cannot resolve reference <span class="hljs-keyword">to</span> bean &#x27;authenticationManager&#x27; <span class="hljs-keyword">while</span> setting constructor argument; nested <span class="hljs-keyword">exception</span> is org.springframework.beans.factory.BeanCreationException: Error creating bean <span class="hljs-keyword">with</span> name &#x27;authenticationManager&#x27; defined <span class="hljs-keyword">in</span> ServletContext resource <span class="hljs-literal">[<span class="hljs-operator">/</span>WEB-INF<span class="hljs-operator">/</span><span class="hljs-identifier">deployerConfigContext</span>.<span class="hljs-identifier">xml</span>]</span>: Cannot resolve reference <span class="hljs-keyword">to</span> bean &#x27;dbAuthHandler&#x27; <span class="hljs-keyword">while</span> setting constructor argument; nested <span class="hljs-keyword">exception</span> is org.springframework.beans.factory.CannotLoadBeanClassException: Cannot find <span class="hljs-keyword">class</span> <span class="hljs-literal">[<span class="hljs-identifier">org</span>.<span class="hljs-identifier">jasig</span>.<span class="hljs-identifier">cas</span>.<span class="hljs-identifier">adaptors</span>.<span class="hljs-identifier">jdbc</span>.Q<span class="hljs-identifier">ueryDatabaseAuthenticationHandler</span>]</span> <span class="hljs-keyword">for</span> bean <span class="hljs-keyword">with</span> name &#x27;dbAuthHandler&#x27; defined <span class="hljs-keyword">in</span> ServletContext resource <span class="hljs-literal">[<span class="hljs-operator">/</span>WEB-INF<span class="hljs-operator">/</span><span class="hljs-identifier">deployerConfigContext</span>.<span class="hljs-identifier">xml</span>]</span>; nested <span class="hljs-keyword">exception</span> is java.lang.ClassNotFoundException: org.jasig.cas.adaptors.jdbc.QueryDatabaseAuthenticationHandler<br>    at org.springframework.beans.factory.support.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">BeanDefinitionValueResolver</span>.</span></span>resolve<span class="hljs-constructor">Reference(BeanDefinitionValueResolver.<span class="hljs-params">java</span>:326)</span><br>    at org.springframework.beans.factory.support.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">BeanDefinitionValueResolver</span>.</span></span>resolve<span class="hljs-constructor">ValueIfNecessary(BeanDefinitionValueResolver.<span class="hljs-params">java</span>:107)</span><br>    at org.springframework.beans.factory.support.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ConstructorResolver</span>.</span></span>resolve<span class="hljs-constructor">ConstructorArguments(ConstructorResolver.<span class="hljs-params">java</span>:623)</span><br>    at org.springframework.beans.factory.support.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ConstructorResolver</span>.</span></span>autowire<span class="hljs-constructor">Constructor(ConstructorResolver.<span class="hljs-params">java</span>:148)</span><br>    at org.springframework.beans.factory.support.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">AbstractAutowireCapableBeanFactory</span>.</span></span>autowire<span class="hljs-constructor">Constructor(AbstractAutowireCapableBeanFactory.<span class="hljs-params">java</span>:1075)</span><br>    at org.springframework.beans.factory.support.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">AbstractAutowireCapableBeanFactory</span>.</span></span>create<span class="hljs-constructor">BeanInstance(AbstractAutowireCapableBeanFactory.<span class="hljs-params">java</span>:979)</span><br>    at org.springframework.beans.factory.support.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">AbstractAutowireCapableBeanFactory</span>.</span></span><span class="hljs-keyword">do</span><span class="hljs-constructor">CreateBean(AbstractAutowireCapableBeanFactory.<span class="hljs-params">java</span>:487)</span><br>    at org.springframework.beans.factory.support.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">AbstractAutowireCapableBeanFactory</span>.</span></span>create<span class="hljs-constructor">Bean(AbstractAutowireCapableBeanFactory.<span class="hljs-params">java</span>:458)</span><br>    at org.springframework.beans.factory.support.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">AbstractBeanFactory$1</span>.</span></span>get<span class="hljs-constructor">Object(AbstractBeanFactory.<span class="hljs-params">java</span>:296)</span><br>    at org.springframework.beans.factory.support.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">DefaultSingletonBeanRegistry</span>.</span></span>get<span class="hljs-constructor">Singleton(DefaultSingletonBeanRegistry.<span class="hljs-params">java</span>:223)</span><br>    at org.springframework.beans.factory.support.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">AbstractBeanFactory</span>.</span></span><span class="hljs-keyword">do</span><span class="hljs-constructor">GetBean(AbstractBeanFactory.<span class="hljs-params">java</span>:293)</span><br>    at org.springframework.beans.factory.support.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">AbstractBeanFactory</span>.</span></span>get<span class="hljs-constructor">Bean(AbstractBeanFactory.<span class="hljs-params">java</span>:194)</span><br>    at org.springframework.beans.factory.support.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">DefaultListableBeanFactory</span>.</span></span>pre<span class="hljs-constructor">InstantiateSingletons(DefaultListableBeanFactory.<span class="hljs-params">java</span>:628)</span><br>    at org.springframework.context.support.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">AbstractApplicationContext</span>.</span></span>finish<span class="hljs-constructor">BeanFactoryInitialization(AbstractApplicationContext.<span class="hljs-params">java</span>:932)</span><br>    at org.springframework.context.support.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">AbstractApplicationContext</span>.</span></span>refresh(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">AbstractApplicationContext</span>.</span></span>java:<span class="hljs-number">479</span>)<br>    at org.springframework.web.context.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ContextLoader</span>.</span></span>configure<span class="hljs-constructor">AndRefreshWebApplicationContext(ContextLoader.<span class="hljs-params">java</span>:389)</span><br>    at org.springframework.web.context.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ContextLoader</span>.</span></span>init<span class="hljs-constructor">WebApplicationContext(ContextLoader.<span class="hljs-params">java</span>:294)</span><br>    at org.springframework.web.context.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ContextLoaderListener</span>.</span></span>context<span class="hljs-constructor">Initialized(ContextLoaderListener.<span class="hljs-params">java</span>:112)</span><br>    at org.jasig.cas.web.init.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">SafeContextLoaderListener</span>.</span></span>context<span class="hljs-constructor">Initialized(SafeContextLoaderListener.<span class="hljs-params">java</span>:75)</span><br>    at org.apache.catalina.core.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">StandardContext</span>.</span></span>listener<span class="hljs-constructor">Start(StandardContext.<span class="hljs-params">java</span>:5003)</span><br>    at org.apache.catalina.core.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">StandardContext</span>.</span></span>start<span class="hljs-constructor">Internal(StandardContext.<span class="hljs-params">java</span>:5517)</span><br>    at org.apache.catalina.util.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">LifecycleBase</span>.</span></span>start(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">LifecycleBase</span>.</span></span>java:<span class="hljs-number">150</span>)<br>    at org.apache.catalina.core.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ContainerBase</span>.</span></span>add<span class="hljs-constructor">ChildInternal(ContainerBase.<span class="hljs-params">java</span>:901)</span><br>    at org.apache.catalina.core.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ContainerBase</span>.</span></span>add<span class="hljs-constructor">Child(ContainerBase.<span class="hljs-params">java</span>:877)</span><br>    at org.apache.catalina.core.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">StandardHost</span>.</span></span>add<span class="hljs-constructor">Child(StandardHost.<span class="hljs-params">java</span>:652)</span><br>    at org.apache.catalina.startup.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">HostConfig</span>.</span></span>deploy<span class="hljs-constructor">WAR(HostConfig.<span class="hljs-params">java</span>:1095)</span><br>    at org.apache.catalina.startup.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">HostConfig$DeployWar</span>.</span></span>run(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">HostConfig</span>.</span></span>java:<span class="hljs-number">1960</span>)<br>    at java.util.concurrent.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Executors$RunnableAdapter</span>.</span></span>call(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Executors</span>.</span></span>java:<span class="hljs-number">511</span>)<br>    at java.util.concurrent.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">FutureTask</span>.</span></span>run(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">FutureTask</span>.</span></span>java:<span class="hljs-number">266</span>)<br>    at java.util.concurrent.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ThreadPoolExecutor</span>.</span></span>run<span class="hljs-constructor">Worker(ThreadPoolExecutor.<span class="hljs-params">java</span>:1142)</span><br>    at java.util.concurrent.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ThreadPoolExecutor$Worker</span>.</span></span>run(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ThreadPoolExecutor</span>.</span></span>java:<span class="hljs-number">617</span>)<br>    at java.lang.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Thread</span>.</span></span>run(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Thread</span>.</span></span>java:<span class="hljs-number">745</span>)<br>Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean <span class="hljs-keyword">with</span> name &#x27;authenticationManager&#x27; defined <span class="hljs-keyword">in</span> ServletContext resource <span class="hljs-literal">[<span class="hljs-operator">/</span>WEB-INF<span class="hljs-operator">/</span><span class="hljs-identifier">deployerConfigContext</span>.<span class="hljs-identifier">xml</span>]</span>: Cannot resolve reference <span class="hljs-keyword">to</span> bean &#x27;dbAuthHandler&#x27; <span class="hljs-keyword">while</span> setting constructor argument; nested <span class="hljs-keyword">exception</span> is org.springframework.beans.factory.CannotLoadBeanClassException: Cannot find <span class="hljs-keyword">class</span> <span class="hljs-literal">[<span class="hljs-identifier">org</span>.<span class="hljs-identifier">jasig</span>.<span class="hljs-identifier">cas</span>.<span class="hljs-identifier">adaptors</span>.<span class="hljs-identifier">jdbc</span>.Q<span class="hljs-identifier">ueryDatabaseAuthenticationHandler</span>]</span> <span class="hljs-keyword">for</span> bean <span class="hljs-keyword">with</span> name &#x27;dbAuthHandler&#x27; defined <span class="hljs-keyword">in</span> ServletContext resource <span class="hljs-literal">[<span class="hljs-operator">/</span>WEB-INF<span class="hljs-operator">/</span><span class="hljs-identifier">deployerConfigContext</span>.<span class="hljs-identifier">xml</span>]</span>; nested <span class="hljs-keyword">exception</span> is java.lang.ClassNotFoundException: org.jasig.cas.adaptors.jdbc.QueryDatabaseAuthenticationHandler<br>    at org.springframework.beans.factory.support.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">BeanDefinitionValueResolver</span>.</span></span>resolve<span class="hljs-constructor">Reference(BeanDefinitionValueResolver.<span class="hljs-params">java</span>:326)</span><br>    at org.springframework.beans.factory.support.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">BeanDefinitionValueResolver</span>.</span></span>resolve<span class="hljs-constructor">ValueIfNecessary(BeanDefinitionValueResolver.<span class="hljs-params">java</span>:107)</span><br>    at org.springframework.beans.factory.support.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">BeanDefinitionValueResolver</span>.</span></span>resolve<span class="hljs-constructor">ManagedMap(BeanDefinitionValueResolver.<span class="hljs-params">java</span>:375)</span><br>    at org.springframework.beans.factory.support.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">BeanDefinitionValueResolver</span>.</span></span>resolve<span class="hljs-constructor">ValueIfNecessary(BeanDefinitionValueResolver.<span class="hljs-params">java</span>:162)</span><br>    at org.springframework.beans.factory.support.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ConstructorResolver</span>.</span></span>resolve<span class="hljs-constructor">ConstructorArguments(ConstructorResolver.<span class="hljs-params">java</span>:637)</span><br>    at org.springframework.beans.factory.support.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ConstructorResolver</span>.</span></span>autowire<span class="hljs-constructor">Constructor(ConstructorResolver.<span class="hljs-params">java</span>:148)</span><br>    at org.springframework.beans.factory.support.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">AbstractAutowireCapableBeanFactory</span>.</span></span>autowire<span class="hljs-constructor">Constructor(AbstractAutowireCapableBeanFactory.<span class="hljs-params">java</span>:1075)</span><br>    at org.springframework.beans.factory.support.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">AbstractAutowireCapableBeanFactory</span>.</span></span>create<span class="hljs-constructor">BeanInstance(AbstractAutowireCapableBeanFactory.<span class="hljs-params">java</span>:979)</span><br>    at org.springframework.beans.factory.support.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">AbstractAutowireCapableBeanFactory</span>.</span></span><span class="hljs-keyword">do</span><span class="hljs-constructor">CreateBean(AbstractAutowireCapableBeanFactory.<span class="hljs-params">java</span>:487)</span><br>    at org.springframework.beans.factory.support.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">AbstractAutowireCapableBeanFactory</span>.</span></span>create<span class="hljs-constructor">Bean(AbstractAutowireCapableBeanFactory.<span class="hljs-params">java</span>:458)</span><br>    at org.springframework.beans.factory.support.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">AbstractBeanFactory$1</span>.</span></span>get<span class="hljs-constructor">Object(AbstractBeanFactory.<span class="hljs-params">java</span>:296)</span><br>    at org.springframework.beans.factory.support.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">DefaultSingletonBeanRegistry</span>.</span></span>get<span class="hljs-constructor">Singleton(DefaultSingletonBeanRegistry.<span class="hljs-params">java</span>:223)</span><br>    at org.springframework.beans.factory.support.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">AbstractBeanFactory</span>.</span></span><span class="hljs-keyword">do</span><span class="hljs-constructor">GetBean(AbstractBeanFactory.<span class="hljs-params">java</span>:293)</span><br>    at org.springframework.beans.factory.support.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">AbstractBeanFactory</span>.</span></span>get<span class="hljs-constructor">Bean(AbstractBeanFactory.<span class="hljs-params">java</span>:194)</span><br>    at org.springframework.beans.factory.support.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">BeanDefinitionValueResolver</span>.</span></span>resolve<span class="hljs-constructor">Reference(BeanDefinitionValueResolver.<span class="hljs-params">java</span>:320)</span><span class="hljs-operator"></span><br><span class="hljs-operator">    ... </span><span class="hljs-number">31</span> more<br></code></pre></td></tr></table></figure>
+
+<h1 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h1><p>这是因为缺少数据连接包所导致的, 需要添加相关jar包（可以到<a target="_blank" rel="noopener" href="https://mvnrepository.com/" title="Maven仓库">Maven中央仓库</a>寻找对应的jar）到 <code>tomcat目录\webapps\cas应用\WEB-INF\lib</code> 下：</p>
+<ol>
+<li><p>cas-server-support-jdbc-4.2.1.jar</p>
+<blockquote>
+<p>编译项目后，可以在 cas-4.2.1\cas-server-support-jdbc\build\libs\cas-server-support-jdbc-4.2.1.jar 找到</p>
+</blockquote>
+</li>
+<li><p>mysql-connector-java-5.1.21.jar</p>
+<blockquote>
+<p>mysql驱动</p>
+</blockquote>
+</li>
+<li><p>c3p0-0.9.1.2</p>
+<blockquote>
+<p>非必要，一般已存在</p>
+</blockquote>
+</li>
+</ol>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/SSO/">SSO</a>
+                    
+                      <a class="hover-with-bg" href="/tags/CAS/">CAS</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2017/08/10/Security%E6%95%B4%E5%90%88CAS%E8%BF%87%E7%A8%8B%E4%B8%AD%EF%BC%8CAuthenticationUserDetailsService%E5%A4%B1%E6%95%88%E7%9A%84%E9%97%AE%E9%A2%98/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Security整合CAS过程中，AuthenticationUserDetailsService失效的问题</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2017/08/07/%E5%85%B3%E4%BA%8ESpring-boot%E9%83%A8%E7%BD%B2%E5%88%B0%E7%8B%AC%E7%AB%8BTomcat%E6%97%B6%EF%BC%8CServlet%E6%9C%AA%E8%83%BD%E6%B3%A8%E5%85%A5%E7%9A%84%E9%97%AE%E9%A2%98/">
+                        <span class="hidden-mobile">关于Spring boot部署到独立Tomcat时，Servlet未能注入的问题</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+  <!-- 备案信息 -->
+  <div class="beian">
+    <span>
+      <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+        湘ICP备2021009708号
+      </a>
+    </span>
+    
+  </div>
+
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

@@ -1,0 +1,554 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="千叶鸟">
+  <meta name="keywords" content="">
+  
+  <title>JAVA容器相关知识点整理 - 阿超&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":100,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  <script data-ad-client="ca-pub-6628525096937786" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>阿超's blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="JAVA容器相关知识点整理">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2017-06-21 09:55" pubdate>
+        2017年6月21日 上午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.1k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      23
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">JAVA容器相关知识点整理</h1>
+            
+            <div class="markdown-body">
+              <h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><ol>
+<li>整理容器的基本知识</li>
+<li>整理关于不同容器线程安全方面的知识</li>
+</ol>
+<h3 id="根据以下资料整理"><a href="#根据以下资料整理" class="headerlink" title="根据以下资料整理"></a>根据以下资料整理</h3><blockquote>
+<p><a target="_blank" rel="noopener" href="http://www.jianshu.com/p/047e33fdefd2">http://www.jianshu.com/p/047e33fdefd2</a><br><a target="_blank" rel="noopener" href="http://blog.csdn.net/jiyiqinlovexx/article/details/51030720">http://blog.csdn.net/jiyiqinlovexx/article/details/51030720</a></p>
+</blockquote>
+<h3 id="常用容器关系图"><a href="#常用容器关系图" class="headerlink" title="常用容器关系图"></a>常用容器关系图</h3><p><img src="https://surpass-blog.oss-cn-shanghai.aliyuncs.com/160319389.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="快速了解"><a href="#快速了解" class="headerlink" title="快速了解"></a>快速了解</h4><hr>
+<h5 id="Collection（接口）"><a href="#Collection（接口）" class="headerlink" title="Collection（接口）"></a>Collection（接口）</h5><ol>
+<li>代表的是单个元素对象的序列，（可以有序/无序，可重复/不可重复 等，具体依据具体的子接口Set，List，Queue等）；</li>
+<li>调用<code>toArray(T[] a)</code>可以转为数组</li>
+<li>区别于<code>java.util.Collections</code>:<code>Collections</code>是一个正对于Conllection的工具类，提供了许多实用的静态方法</li>
+</ol>
+<h5 id="Map（接口）"><a href="#Map（接口）" class="headerlink" title="Map（接口）"></a>Map（接口）</h5><ol>
+<li>代表的是“键值对”对象的集合（同样可以有序/无序 等依据具体实现）</li>
+<li>提供了三种遍历方式：</li>
+<li><code>Set&lt;K&gt; keySet()</code>: 返回所有key的Set集合</li>
+<li><code>Collection&lt;V&gt; values()</code>: 返回所有values的集合</li>
+<li><code>Set&lt; Map.Entry&lt; K, V&gt;&gt; entrySet()</code>： 是将整个Entry对象（也就是返回<code>键-值</code>形式的集合）作为元素返回所有的数据，这种方式比先通过<code>keySet()</code>获取所有key再根据key获取值效率要高</li>
+</ol>
+<hr>
+<h5 id="List（Collection的子接口）"><a href="#List（Collection的子接口）" class="headerlink" title="List（Collection的子接口）"></a>List（Collection的子接口）</h5><ol>
+<li>一个有序的Collection（或者叫做序列）。使用这个接口可以精确掌控元素的插入，还可以根据index获取相应位置的元素。</li>
+<li>可重复</li>
+<li>有顺序</li>
+<li>提供了特殊的iterator遍历器，叫做<code>ListIterator</code>。这种遍历器允许遍历时插入，替换，删除，双向访问。 并且还有一个重载方法允许从一个指定位置开始遍历。</li>
+</ol>
+<h6 id="ArrayList（List接口的实现）"><a href="#ArrayList（List接口的实现）" class="headerlink" title="ArrayList（List接口的实现）"></a>ArrayList（List接口的实现）</h6><ol>
+<li>ArrayList是一个实现了List接口的可变数组</li>
+<li>可以插入null</li>
+<li>它的size, isEmpty, get, set, iterator,add这些方法的时间复杂度是O(1),如果add n个数据则时间复杂度是O(n).</li>
+<li>ArrayList不是synchronized的。</li>
+</ol>
+<h6 id="LinkedList（List接口的实现）"><a href="#LinkedList（List接口的实现）" class="headerlink" title="LinkedList（List接口的实现）"></a>LinkedList（List接口的实现）</h6><ol>
+<li>LinkedList是一个链表维护的序列容器。和ArrayList都是序列容器，一个使用数组存储，一个使用链表存储。</li>
+<li>数组和链表2种数据结构的对比：</li>
+<li>查找方面。数组的效率更高，可以直接索引出查找，而链表必须从头查找。</li>
+<li>插入删除方面。特别是在中间进行插入删除，这时候链表体现出了极大的便利性，只需要在插入或者删除的地方断掉链然后插入或者移除元素，然后再将前后链重新组装，但是数组必须重新复制一份将所有数据后移或者前移。</li>
+<li>在内存申请方面，当数组达到初始的申请长度后，需要重新申请一个更大的数组然后把数据迁移过去才行（<code>所以当创建ArrayList，最好能给一个合理的初始大小</code>）。而链表只需要动态创建即可。</li>
+<li>LinkedList还实现了Deque接口，Deque接口是继承Queue的。所以LinkedList还支持队列的pop，push，peek操作</li>
+</ol>
+<p><img src="https://surpass-blog.oss-cn-shanghai.aliyuncs.com/164101259.png" srcset="/img/loading.gif" lazyload alt="mark"></p>
+<h5 id="Set（Collection的子接口）"><a href="#Set（Collection的子接口）" class="headerlink" title="Set（Collection的子接口）"></a>Set（Collection的子接口）</h5><ol>
+<li>存储不重复的元素集合</li>
+</ol>
+<h6 id="HashSet（Set接口的实现）"><a href="#HashSet（Set接口的实现）" class="headerlink" title="HashSet（Set接口的实现）"></a>HashSet（Set接口的实现）</h6><ol>
+<li>基于HashMap进行存储（所以所有的add，remove等操作其实都是HashMap的add、remove操作。遍历操作其实就是HashMap的keySet的遍历）</li>
+<li>不保证顺序，且不保证下次遍历的顺序和之前一样</li>
+<li>允许null元素</li>
+</ol>
+<h6 id="LinkedHashSet（Set接口的实现）"><a href="#LinkedHashSet（Set接口的实现）" class="headerlink" title="LinkedHashSet（Set接口的实现）"></a>LinkedHashSet（Set接口的实现）</h6><ol>
+<li>基于LinkedHashMap</li>
+<li>相对于HashSet来说就是一个可以保持顺序的Set集合</li>
+</ol>
+<h6 id="TreeSet（Set接口的实现）"><a href="#TreeSet（Set接口的实现）" class="headerlink" title="TreeSet（Set接口的实现）"></a>TreeSet（Set接口的实现）</h6><ol>
+<li>基于TreeMap</li>
+<li>TreeSet内的元素必须实现Comparable接口</li>
+<li>一组有次序的集合，如果没有指定排序规则Comparator，则会按照自然排序。（自然排序即e1.compareTo(e2) == 0作为比较）</li>
+</ol>
+<p><img src="https://surpass-blog.oss-cn-shanghai.aliyuncs.com/164140060.png" srcset="/img/loading.gif" lazyload alt="mark"></p>
+<h5 id="Queue（Collection的子接口）"><a href="#Queue（Collection的子接口）" class="headerlink" title="Queue（Collection的子接口）"></a>Queue（Collection的子接口）</h5><h5 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h5><h6 id="HashMap"><a href="#HashMap" class="headerlink" title="HashMap"></a>HashMap</h6><ol>
+<li>最基础最常用的一种Map，它无序，以散列表的方式进行存储</li>
+</ol>
+<h6 id="LinkedHashMap"><a href="#LinkedHashMap" class="headerlink" title="LinkedHashMap"></a>LinkedHashMap</h6><ol>
+<li>相对于HashMap来说区别是，LinkedHashMap遍历的时候具有顺序，可以保存插入的顺序，（还可以设置最近访问的元素也放在前面，即LRU）</li>
+<li>其实LinkedHashMap的存储还是跟HashMap一样，采用哈希表方法存储，只不过LinkedHashMap多维护了一份head，tail链表。</li>
+</ol>
+<h6 id="TreeMap"><a href="#TreeMap" class="headerlink" title="TreeMap"></a>TreeMap</h6><ol>
+<li>TreeMap平时用的不多，TreeMap会实现SortMap接口，定义一个排序规则，这样当遍历TreeMap的时候，会根据规定的排序规则返回元素。</li>
+</ol>
+<h6 id="WeakHashMap"><a href="#WeakHashMap" class="headerlink" title="WeakHashMap"></a>WeakHashMap</h6><ol>
+<li>特点是，当除了自身有对key的引用外，此key没有其他引用那么此map会自动丢弃此值</li>
+</ol>
+<p><img src="https://surpass-blog.oss-cn-shanghai.aliyuncs.com/164740370.png" srcset="/img/loading.gif" lazyload alt="mark"></p>
+<blockquote>
+<p>以上，感谢<a target="_blank" rel="noopener" href="http://www.jianshu.com/p/047e33fdefd2">http://www.jianshu.com/p/047e33fdefd2</a> ，如有冒犯，请联系我删除</p>
+</blockquote>
+<hr>
+<h4 id="关于容器的线程安全"><a href="#关于容器的线程安全" class="headerlink" title="关于容器的线程安全"></a>关于容器的线程安全</h4><h5 id="同步容器类"><a href="#同步容器类" class="headerlink" title="同步容器类"></a>同步容器类</h5><p>JDK1.0开始有两个很老的同步容器类：Vector和HashTable<br>JDK1.2之后Collections工具类中添加了一些工厂方法返回类似的同步封装器类：<br><code>Collections.synchronizedXXX(XXX xxx)</code></p>
+<h6 id="实现方式："><a href="#实现方式：" class="headerlink" title="实现方式："></a>实现方式：</h6><blockquote>
+<p>将它们的状态封装起来，并对每一个公有方法进行同步。<br>其中Vector就是Object[]+synchronized方法，Hashtable是HashtableEntry[]+synchronized方法。而synchronizedXXX()方法返回的同步封装器类更是简单地将传进来的Collection的所有方法封装为synchronized方法而已。</p>
+</blockquote>
+<h6 id="缺点："><a href="#缺点：" class="headerlink" title="缺点："></a>缺点：</h6><blockquote>
+<ol>
+<li>通过同步方法将访问操作串行化，导致并发环境下效率低下</li>
+<li>复合操作（迭代、条件运算如没有则添加等）非线程安全，需要客户端代码来实现加锁。</li>
+</ol>
+</blockquote>
+<h5 id="并发容器类"><a href="#并发容器类" class="headerlink" title="并发容器类"></a>并发容器类</h5><p>并发容器出现的最大的需求就是提升同步容器类的性能！<br>可以对比（非并发容器类）看看，将单线程版本和并发版本做一个比较。</p>
+<h6 id="HashMap和HashSet的并发版本"><a href="#HashMap和HashSet的并发版本" class="headerlink" title="HashMap和HashSet的并发版本"></a>HashMap和HashSet的并发版本</h6><ol>
+<li><p><code>ConcurrentHashMap&lt;K, V&gt;</code>（HashMap的并发版本）<br>版本：JDK5<br>目标：代替Hashtable、synchronizedMap，支持复合操作<br>原理：采用一种更加细粒度的加锁机制“分段锁”，任意数量读取线程可以并发读取，任意数量的读取线程和一个写线程可以并发访问，一定数量的写入线程可以并发访问。并发环境下ConcurrentHashMap带来了更高的吞吐量，而在单线程环境下只损失了很小的性能。</p>
+</li>
+<li><p><code>CopyOnWriteArraySet&lt;E&gt;</code>（HashSet的并发版本）<br>版本：JDK5<br>目标：代替synchronizedSet<br>原理：CopyOnWriteArraySet基于CopyOnWriteArrayList实现，其唯一的不同是在add时调用的是CopyOnWriteArrayList的addIfAbsent方法，其遍历当前Object数组，如Object数组中已有了当前元素，则直接返回，如果没有则放入Object数组的尾部，并返回。</p>
+</li>
+</ol>
+<h6 id="TreeMap和TreeSet的并发版本"><a href="#TreeMap和TreeSet的并发版本" class="headerlink" title="TreeMap和TreeSet的并发版本"></a>TreeMap和TreeSet的并发版本</h6><ol>
+<li><p><code>ConcurrentSkipListMap&lt;K, V&gt;</code>（TreeMap的并发版本）<br>版本：JDK6<br>目标：代替synchronizedSortedMap(TreeMap)<br>原理：Skip list（跳表）是一种可以代替平衡树的数据结构，默认是按照Key值升序的。Skip list让已排序的数据分布在多层链表中，以0-1随机数决定一个数据的向上攀升与否，通过”空间来换取时间”的一个算法。ConcurrentSkipListMap提供了一种线程安全的并发访问的排序映射表。内部是SkipList（跳表）结构实现，在理论上能够在O（log（n））时间内完成查找、插入、删除操作。</p>
+</li>
+<li><p><code>ConcurrentSkipListSet&lt;E&gt;</code>（TreeSet的并发版本）<br>版本：JDK6<br>目标：代替synchronizedSortedSet<br>原理：内部基于ConcurrentSkipListMap实现！</p>
+</li>
+</ol>
+<h6 id="ArrayList和LinkedList的并发版本"><a href="#ArrayList和LinkedList的并发版本" class="headerlink" title="ArrayList和LinkedList的并发版本"></a>ArrayList和LinkedList的并发版本</h6><ol>
+<li><p><code>CopyOnWriteArrayList&lt;E&gt;</code>（ArrayList的并发版本）<br>目标：代替Vector、synchronizedList<br>原理：CopyOnWriteArrayList的核心思想是利用高并发往往是读多写少的特性，对读操作不加锁，对写操作，先复制一份新的集合，在新的集合上面修改，然后将新集合赋值给旧的引用，并通过volatile 保证其可见性，当然写操作的锁是必不可少的了。</p>
+</li>
+<li><p><code>ConcurrentLinkedQueue&lt;E&gt;</code>（LinkedList的并发版本）<br>目标：代替Vector、synchronizedList<br>特点：基于链表实现的FIFO队列，特别注意单线程环境中LinkedList除了可以用作链表，也可用作队列，并发版本也一样</p>
+</li>
+</ol>
+<h6 id="阻塞队列：BlockingQueue"><a href="#阻塞队列：BlockingQueue" class="headerlink" title="阻塞队列：BlockingQueue"></a>阻塞队列：BlockingQueue</h6><p>版本：JDK1.5<br>特点：拓展了Queue，增加了可阻塞的插入和获取等操作<br>实现类<br><code>LinkedBlockingQueue</code>：基于链表实现的可阻塞的FIFO队列<br><code>ArrayBlockingQueue</code>：基于数组实现的可阻塞的FIFO队列<br><code>PriorityBlockingQueue</code>：按优先级排序的队列<br>原理：通过ReentrantLock实现线程安全，通过Condition实现阻塞和唤醒。</p>
+<blockquote>
+<p>以上，感谢<a target="_blank" rel="noopener" href="http://blog.csdn.net/jiyiqinlovexx/article/details/51030720">http://blog.csdn.net/jiyiqinlovexx/article/details/51030720</a> ，如有冒犯，请联系我删除</p>
+</blockquote>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E5%BC%80%E5%8F%91/">开发</a>
+                    
+                  </div>
+                
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2017/07/03/spring-boot%E4%B8%AD@WebListener%E3%80%81@WebFilter%EF%BC%88%E4%B9%9F%E5%B0%B1%E6%98%AF%E8%87%AA%E5%AE%9A%E4%B9%89servlet%EF%BC%89%E4%B8%8D%E8%B5%B7%E4%BD%9C%E7%94%A8%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">spring boot中@WebListener、@WebFilter（也就是自定义servlet）不起作用的解决方案</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2017/06/19/mysql%E5%88%A9%E7%94%A8CONCAT%E5%87%BD%E6%95%B0%E6%89%B9%E9%87%8F%E6%B8%85%E7%A9%BA%E8%A1%A8%E6%95%B0%E6%8D%AE/">
+                        <span class="hidden-mobile">mysql利用CONCAT函数批量清空表数据</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+  <!-- 备案信息 -->
+  <div class="beian">
+    <span>
+      <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+        湘ICP备2021009708号
+      </a>
+    </span>
+    
+  </div>
+
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

@@ -1,0 +1,884 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="千叶鸟">
+  <meta name="keywords" content="">
+  
+  <title>阿超&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":100,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  <script data-ad-client="ca-pub-6628525096937786" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 100vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>阿超's blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('https://surpass-blog.oss-cn-shanghai.aliyuncs.com/20210618164858.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="又是对抗怪兽👾的一天">
+              
+            </span>
+
+            
+          </div>
+
+          
+            <div class="scroll-down-bar">
+              <i class="iconfont icon-arrowdown"></i>
+            </div>
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div class="py-5" id="board"
+          style=margin-top:0>
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2017/06/19/mysql%E5%88%A9%E7%94%A8CONCAT%E5%87%BD%E6%95%B0%E6%89%B9%E9%87%8F%E6%B8%85%E7%A9%BA%E8%A1%A8%E6%95%B0%E6%8D%AE/" target="_self">
+          mysql利用CONCAT函数批量清空表数据
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2017/06/19/mysql%E5%88%A9%E7%94%A8CONCAT%E5%87%BD%E6%95%B0%E6%89%B9%E9%87%8F%E6%B8%85%E7%A9%BA%E8%A1%A8%E6%95%B0%E6%8D%AE/" target="_self">
+          
+          
+            
+          
+          实现方式利用concat()拼接从information_schema读取出来的表信息，构建清除字符串SQL语句
+基本CONCAT(str1,str2,…)：mysql函数，用于拼接字符串information_schema：读取表信息
+示例12345678910SELECT    CONCAT(        &#x27;delete from &#x27;,        table_name
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2017-06-19 03:10" pubdate>
+              2017-06-19
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%BC%80%E5%8F%91/">开发</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/mySql/">mySql</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2017/06/19/Jrebel%E5%85%8D%E8%B4%B9%E8%8E%B7%E5%8F%96%E4%B8%AA%E4%BA%BA%E6%BF%80%E6%B4%BB%E7%A0%81/" target="_self">
+          Jrebel免费获取个人激活码
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2017/06/19/Jrebel%E5%85%8D%E8%B4%B9%E8%8E%B7%E5%8F%96%E4%B8%AA%E4%BA%BA%E6%BF%80%E6%B4%BB%E7%A0%81/" target="_self">
+          
+          
+            
+          
+          获取地址官网网站 
+也可以直接搜索关键字MyJrebel
+
+ 使用facebook或Twitter登陆
+ 完善个人信息
+ 在 Install and Acticvate里面查看个人激活码
+
+
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2017-06-19 01:15" pubdate>
+              2017-06-19
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%BC%80%E5%8F%91/">开发</a>
+            
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2017/06/17/String%E3%80%81StringBuffer%E4%BB%A5%E5%8F%8AStringBuilder/" target="_self">
+          String、StringBuffer以及StringBuilder
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2017/06/17/String%E3%80%81StringBuffer%E4%BB%A5%E5%8F%8AStringBuilder/" target="_self">
+          
+          
+            
+          
+          String
+① 字符串是常量；它们的值在创建之后不能更改。② Java 语言提供对字符串串联符号（”+”）以及将其他对象转换为字符串的特殊支持。字符串串联是通过 StringBuilder（或 StringBuffer）类及其 append 方法实现的。字符串转换是通过 toString 方法实现的。
+
+StringBuffer
+① 线程安全的可变字符序列。类似于 String 的字符串缓冲区，
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2017-06-17 09:22" pubdate>
+              2017-06-17
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%BC%80%E5%8F%91/">开发</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/java/">java</a>
+            
+              <a href="/tags/%E5%8E%9F%E5%88%9B/">原创</a>
+            
+              <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2017/06/13/JAVA%E7%9A%84%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/" target="_self">
+          JAVA的类型转换
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2017/06/13/JAVA%E7%9A%84%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/" target="_self">
+          
+          
+            
+          
+          基本数据类型之间的转换（值转换）
+boolean类型不可以和其他基本数据类型进行转换
+
+整型，字符型，浮点型之间的转换遵行一下原则：
+
+
+容量小的类型会自动转换成容量大的类型，类型由小到大：byte,short,char&lt;int&lt;long&lt;float&lt;doublebyte,shor,char之间不会转换，他们三者在计算时会转换为int型
+
+
+
+
+PS：int型可以 直接（不
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2017-06-13 06:30" pubdate>
+              2017-06-13
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%BC%80%E5%8F%91/">开发</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/">常见问题</a>
+            
+              <a href="/tags/java/">java</a>
+            
+              <a href="/tags/%E5%8E%9F%E5%88%9B/">原创</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2017/06/08/Spring-MVC%E6%97%A5%E6%9C%9F%E6%97%B6%E9%97%B4%E5%8F%82%E6%95%B0%E7%9A%84%E5%A4%84%E7%90%86/" target="_self">
+          Spring MVC日期时间参数的处理
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2017/06/08/Spring-MVC%E6%97%A5%E6%9C%9F%E6%97%B6%E9%97%B4%E5%8F%82%E6%95%B0%E7%9A%84%E5%A4%84%E7%90%86/" target="_self">
+          
+          
+            
+          
+          当Controller需要接收日期时间参数时，可以使用@DateTimeFormat注解，示例：
+错误示例：
+1@RequestParam Date deadline
+如果直接使用Date接收，会报无法将String类型转化为Date类型的错误
+正确做法：
+1@RequestParam @DateTimeFormat(pattern = &quot;yyyy-MM-dd HH:mm&quot;) 
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2017-06-08 07:33" pubdate>
+              2017-06-08
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%BC%80%E5%8F%91/">开发</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/spring-mvc/">spring_mvc</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2017/04/26/jQuery%E6%A0%91%E7%BB%84%E4%BB%B6-jstree%E4%BD%BF%E7%94%A8/" target="_self">
+          jQuery树组件-jstree使用
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2017/04/26/jQuery%E6%A0%91%E7%BB%84%E4%BB%B6-jstree%E4%BD%BF%E7%94%A8/" target="_self">
+          
+          
+            
+          
+          前言jstree是一个比较好用的，可定制化支持较好的一个jQuery树组件，最近项目里用到了它，但是发现网上的文档以及使用方式并不适合当前项目的实际开发，又或者是英文看起来比较复杂，因此对这次使用做出相关记录，以备不时之需。
+
+相关文档官网地址github 地址
+
+实例代码123456789101112131415161718192021222324252627282930313233343536
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2017-04-26 09:39" pubdate>
+              2017-04-26
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%BC%80%E5%8F%91/">开发</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E5%8E%9F%E5%88%9B/">原创</a>
+            
+              <a href="/tags/jQuery%E6%8F%92%E4%BB%B6/">jQuery插件</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2017/04/26/bootstrap-table-%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" target="_self">
+          bootstrap table 基本使用
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2017/04/26/bootstrap-table-%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" target="_self">
+          
+          
+            
+          
+          前言bootstrap tabel是基于 Bootstrap 的 jQuery 表格插件，通过简单的设置，就可以拥有强大的单选、多选、排序、分页，以及编辑、导出、过滤（扩展）等等的功能。
+主要功能
+支持 Bootstrap 3 和 Bootstrap 2
+自适应界面
+固定表头
+非常丰富的配置参数
+直接通过标签使用
+显示/隐藏列
+显示/隐藏表头
+通过 AJAX 获取 JSON 格式的数据
+支持排序
+
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2017-04-26 09:37" pubdate>
+              2017-04-26
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%BC%80%E5%8F%91/">开发</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E5%8E%9F%E5%88%9B/">原创</a>
+            
+              <a href="/tags/jQuery%E6%8F%92%E4%BB%B6/">jQuery插件</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2017/04/14/bootstrap-multiselect%E7%9A%84refresh%E6%96%B9%E6%B3%95%E4%B8%8D%E8%B5%B7%E4%BD%9C%E7%94%A8%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" target="_self">
+          bootstrap multiselect的refresh方法不起作用的解决方案
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2017/04/14/bootstrap-multiselect%E7%9A%84refresh%E6%96%B9%E6%B3%95%E4%B8%8D%E8%B5%B7%E4%BD%9C%E7%94%A8%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" target="_self">
+          
+          
+            
+          
+          最近做一个多级联动，使用的是bootstrap-multiselect.js，然而发现$(&#39;#select1&#39;).multiselect(&#39;refresh&#39;)并没有刷新选项，目前使用的方式是先使用destroy方法摧毁指定select元素再调用refresh方法来刷新，示例：
+1$(&#x27;#select1&#x27;).multiselect(&#x27;de
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2017-04-14 08:10" pubdate>
+              2017-04-14
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%BC%80%E5%8F%91/">开发</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/bootstrap/">bootstrap</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2017/04/10/div%E4%B8%AD%E8%BF%9E%E7%BB%AD%E8%8B%B1%E6%96%87%E5%92%8C%E6%95%B0%E5%AD%97%EF%BC%8C%E8%87%AA%E5%8A%A8%E6%8D%A2%E8%A1%8C%E7%9A%84%E5%A4%84%E7%90%86%E6%96%B9%E5%BC%8F/" target="_self">
+          div中连续英文和数字，自动换行的处理方式
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2017/04/10/div%E4%B8%AD%E8%BF%9E%E7%BB%AD%E8%8B%B1%E6%96%87%E5%92%8C%E6%95%B0%E5%AD%97%EF%BC%8C%E8%87%AA%E5%8A%A8%E6%8D%A2%E8%A1%8C%E7%9A%84%E5%A4%84%E7%90%86%E6%96%B9%E5%BC%8F/" target="_self">
+          
+          
+            
+          
+          连续的数字和英文字符不换行(对于div,p等块级元素)正常文字(亚洲文字和非亚洲文字)元素拥有默认的white-space:normal,当文本内容超出定义的宽度之后会自动换行
+连续的英文字符和阿拉伯数字Chrome等常见 ,可以使用word-wrap : break-word 或者 word-break:break-all 实现强制断行:
+1#wrap&#123;word-break:break
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2017-04-10 01:44" pubdate>
+              2017-04-10
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%BC%80%E5%8F%91/">开发</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/CSS/">CSS</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2017/03/07/spring-mvc%E9%9B%86%E6%88%90spring-security/" target="_self">
+          spring mvc集成spring security
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2017/03/07/spring-mvc%E9%9B%86%E6%88%90spring-security/" target="_self">
+          
+          
+            
+          
+          代码结构总共涉及到7个类文件和添加角色配置文件以及需要在web.xml中添加一个过滤器（如果是spring boot的话则不需要配置web.xml）
+
+
+
+涉及文件及其作用简单分析
+
+role-config.properties：用来配置所有角色及所持权限信息
+Role.java:将配置文件中的权限信息分装到java类中，方便处理
+RoleHandler.java:构建Role对象列表，以便可以通
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2017-03-07 11:42" pubdate>
+              2017-03-07
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%BC%80%E5%8F%91/">开发</a>
+            
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+
+
+  <nav aria-label="navigation">
+    <span class="pagination" id="pagination">
+      <a class="extend prev" rel="prev" href="/page/2/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/#board">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/#board">4</a><a class="extend next" rel="next" href="/page/4/#board"><i class="iconfont icon-arrowright"></i></a>
+    </span>
+  </nav>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+  <!-- 备案信息 -->
+  <div class="beian">
+    <span>
+      <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+        湘ICP备2021009708号
+      </a>
+    </span>
+    
+  </div>
+
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
