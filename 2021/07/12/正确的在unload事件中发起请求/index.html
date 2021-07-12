@@ -186,7 +186,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      217 字
+      251 字
     </span>
   
 
@@ -196,7 +196,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      2
+      3
        分钟
     </span>
   
@@ -243,8 +243,15 @@
 <h3 id="FormData示例"><a href="#FormData示例" class="headerlink" title="FormData示例"></a>FormData示例</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">let</span> data = <span class="hljs-keyword">new</span> FormData();<br>data.append(<span class="hljs-string">&#x27;username&#x27;</span>, <span class="hljs-string">&#x27;surwei&#x27;</span>);<br>data.append(<span class="hljs-string">&#x27;age&#x27;</span>, <span class="hljs-string">&#x27;26&#x27;</span>);<br><br>navigator.sendBeacon(requestUrl, data);<br></code></pre></td></tr></table></figure>
 
 <h2 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h2><h3 id="如何设置header？"><a href="#如何设置header？" class="headerlink" title="如何设置header？"></a>如何设置header？</h3><p>暂未找到设置header的方法，目前的处理是，将token作为参数传递到后台，由后台单独处理</p>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/Navigator/sendBeacon">Navigator.sendBeacon()</a></p>
-<p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/40523469/navigator-sendbeacon-to-pass-header-information">Navigator.sendBeacon() to pass header information</a></p>
+<h3 id="参数大小限制"><a href="#参数大小限制" class="headerlink" title="参数大小限制"></a>参数大小限制</h3><p>大约为65536(2^16)，不同浏览器不同版本可能不一样</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
+<li><p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/Navigator/sendBeacon">Navigator.sendBeacon()</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/40523469/navigator-sendbeacon-to-pass-header-information">Navigator.sendBeacon() to pass header information</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.thinbug.com/q/28989640">Navigator.sendBeacon()数据大小限制</a></p>
+</li>
+</ol>
 
             </div>
             <hr>
