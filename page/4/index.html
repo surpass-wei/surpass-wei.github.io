@@ -183,6 +183,57 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2017/03/07/spring-mvc%E9%9B%86%E6%88%90spring-security/" target="_self">
+          spring mvc集成spring security
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2017/03/07/spring-mvc%E9%9B%86%E6%88%90spring-security/" target="_self">
+          
+          
+            
+          
+          代码结构总共涉及到7个类文件和添加角色配置文件以及需要在web.xml中添加一个过滤器（如果是spring boot的话则不需要配置web.xml）
+
+
+
+涉及文件及其作用简单分析
+
+role-config.properties：用来配置所有角色及所持权限信息
+Role.java:将配置文件中的权限信息分装到java类中，方便处理
+RoleHandler.java:构建Role对象列表，以便可以通
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2017-03-07 11:42" pubdate>
+              2017-03-07
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%BC%80%E5%8F%91/">开发</a>
+            
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2017/02/24/spring-boot1.5%E4%BB%A5%E4%B8%8A%E7%89%88%E6%9C%AC@ConfigurationProperties%E5%8F%96%E6%B6%88location%E6%B3%A8%E8%A7%A3%E5%90%8E%E7%9A%84%E6%9B%BF%E4%BB%A3%E6%96%B9%E6%A1%88/" target="_self">
           spring boot1.5以上版本@ConfigurationProperties取消location注解后的替代方案
         </a>
@@ -634,68 +685,11 @@ windows环境下实现截图、复制、拖动图片后自动上传目标图片�
     </article>
   </div>
 
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2017/01/07/UEFI%E6%A8%A1%E5%BC%8F%E4%B8%8Bwin10%E8%A3%85Ubuntu16.04%E5%8F%8C%E7%B3%BB%E7%BB%9F/" target="_self">
-          UEFI模式下win10装Ubuntu16.04双系统
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2017/01/07/UEFI%E6%A8%A1%E5%BC%8F%E4%B8%8Bwin10%E8%A3%85Ubuntu16.04%E5%8F%8C%E7%B3%BB%E7%BB%9F/" target="_self">
-          
-          
-            
-          
-          简单粗暴的流程：
-下载Ubuntu16.04.iso镜像
-使用rufus-2.11.exe制作Ubuntu系统安装启动盘（UEFI模式下应该直接吧镜像解压到U盘中就可以，它会自动找到efi文件，不过没试过）
-在win10磁盘管理中压缩一个现有磁盘或直接删除一个磁盘，反正目的就是制造一个可用空间或未分配的空间
-关闭win10的快速启动以及关闭secure boot
-关机，插上U盘，进入boot，选择
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2017-01-07 12:13" pubdate>
-              2017-01-07
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E5%BC%80%E5%8F%91/">开发</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/linux/">linux</a>
-            
-              <a href="/tags/windows/">windows</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
 
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <a class="extend prev" rel="prev" href="/page/3/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/#board">2</a><a class="page-number" href="/page/3/#board">3</a><span class="page-number current">4</span>
+      <a class="extend prev" rel="prev" href="/page/3/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/#board">2</a><a class="page-number" href="/page/3/#board">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/#board">5</a><a class="extend next" rel="next" href="/page/5/#board"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
 

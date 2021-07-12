@@ -18,7 +18,7 @@
   <meta name="author" content="千叶鸟">
   <meta name="keywords" content="">
   
-  <title>归档 - 阿超&#39;s blog</title>
+  <title>阿超&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
 
@@ -49,7 +49,7 @@
 
 
 <body>
-  <header style="height: 60vh;">
+  <header style="height: 100vh;">
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand"
@@ -143,18 +143,22 @@
 </nav>
 
     <div class="banner" id="banner" parallax=true
-         style="background: url('/img/default.png') no-repeat center center;
+         style="background: url('https://surpass-blog.oss-cn-shanghai.aliyuncs.com/20210618164858.jpg') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="归档">
+            <span class="h2" id="subtitle" title="又是对抗怪兽👾的一天">
               
             </span>
 
             
           </div>
 
+          
+            <div class="scroll-down-bar">
+              <i class="iconfont icon-arrowdown"></i>
+            </div>
           
         </div>
       </div>
@@ -165,48 +169,78 @@
     
       <div class="container nopadding-x-md">
         <div class="py-5" id="board"
-          >
+          style=margin-top:0>
           
           <div class="container">
             <div class="row">
               <div class="col-12 col-md-10 m-auto">
                 
 
-<div class="list-group">
-  <p class="h4">共计 41 篇文章</p>
-  <hr>
-  
-  
+
+  <div class="row mx-auto index-card">
     
-      
-      <p class="h5">2019</p>
     
-    <a href="/2019/11/19/Docx4j%E5%AF%BC%E5%87%BAlatex%E5%85%AC%E5%BC%8F%E5%88%B0word%EF%BC%88%E5%85%AC%E5%BC%8F%E5%8F%AF%E7%BC%96%E8%BE%91%EF%BC%89/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Docx4j导出latex公式到word（公式可编辑）</span>
-      <time style="float: right;">11-19</time>
-    </a>
-  
-    
-    <a href="/2019/11/19/%E4%B8%80%E6%AC%A1Tomcat-CPU%E5%8D%A0%E7%94%A8%E5%BF%BD%E9%AB%98%E5%BF%BD%E4%BD%8E%E7%9A%84%E6%8E%92%E6%9F%A5%E8%AE%B0%E5%BD%95/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">一次Tomcat CPU占用忽高忽低的排查记录</span>
-      <time style="float: right;">11-19</time>
-    </a>
-  
-    
-    <a href="/2019/08/01/myBatis%E4%BD%BF%E7%94%A8redis%E5%81%9A%E4%BA%8C%E7%BA%A7%E7%BC%93%E5%AD%98%E6%97%B6%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E7%9A%84%E5%87%A0%E4%B8%AA%E5%9C%B0%E6%96%B9/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">myBatis使用redis做二级缓存时需要注意的几个地方</span>
-      <time style="float: right;">08-01</time>
-    </a>
-  
-    
-    <a href="/2019/01/11/mvn-deploy%E5%91%BD%E4%BB%A4%E5%8F%91%E5%B8%83jar%E5%8C%85%E6%8A%A5%E9%94%99/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">mvn deploy命令发布jar包报错</span>
-      <time style="float: right;">01-11</time>
-    </a>
-  
-</div>
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2017/01/07/UEFI%E6%A8%A1%E5%BC%8F%E4%B8%8Bwin10%E8%A3%85Ubuntu16.04%E5%8F%8C%E7%B3%BB%E7%BB%9F/" target="_self">
+          UEFI模式下win10装Ubuntu16.04双系统
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2017/01/07/UEFI%E6%A8%A1%E5%BC%8F%E4%B8%8Bwin10%E8%A3%85Ubuntu16.04%E5%8F%8C%E7%B3%BB%E7%BB%9F/" target="_self">
+          
+          
+            
+          
+          简单粗暴的流程：
+下载Ubuntu16.04.iso镜像
+使用rufus-2.11.exe制作Ubuntu系统安装启动盘（UEFI模式下应该直接吧镜像解压到U盘中就可以，它会自动找到efi文件，不过没试过）
+在win10磁盘管理中压缩一个现有磁盘或直接删除一个磁盘，反正目的就是制造一个可用空间或未分配的空间
+关闭win10的快速启动以及关闭secure boot
+关机，插上U盘，进入boot，选择
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2017-01-07 12:13" pubdate>
+              2017-01-07
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%BC%80%E5%8F%91/">开发</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/linux/">linux</a>
+            
+              <a href="/tags/windows/">windows</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
 
 
+
+  <nav aria-label="navigation">
+    <span class="pagination" id="pagination">
+      <a class="extend prev" rel="prev" href="/page/4/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/#board">3</a><a class="page-number" href="/page/4/#board">4</a><span class="page-number current">5</span>
+    </span>
+  </nav>
 
 
 
